@@ -7,7 +7,7 @@ require_once ("isLogin.php");
 if(isset($_POST["enviar"]))
 {
     //enviamos los datos a la funcion agregar_usuario
-    agregar_usuario($_POST["user"],$_POST["pass"]);
+    agregar_usuario($_POST["user"],$_POST["pass"],$_POST["name"],$_POST["tel"]);
     //redireccionamos al menu_principal
     header("location:menu_principal.php");
 }
@@ -38,6 +38,10 @@ if(isset($_POST["enviar"]))
                             Usuario *: <input type="text" name="user" value="" required>
                             <br>
                             Contraseña *: <input type="password" name="pass" value="" required>
+                            <br>
+                            Nombre *: <input type="text" name="name" value="" required>
+                            <br>
+                            Telefono: <input type="number" name="tel" value="">
                             <br>
                             <input type="submit" name="enviar" value="Guardar" class="button">
                         </form>

@@ -1,6 +1,5 @@
 <?php
 require_once "isLogin.php";
-
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -26,8 +25,10 @@ require_once "isLogin.php";
                             <ul class="button-group">
                                 <li><a href="registro_de_productos.php" class="button">Registro de Productos</a></li><br>
                                 <li><a href="registro_de_venta.php" class="button">Registro de Ventas</a></li><br>
+                                <li><a href="registro_de_usuario.php" class="button">Detalle de Ventas</a></li>//hacer<br>
                                 <li><a href="registro_de_usuario.php" class="button">Registro de Usuarios</a></li><br>
-                                <li><a href="reporte.php" class="button">Reporte de Ventas</a></li><br>
+                                <li><a href="lista_usuario.php" class="button">Modificar Usuarios</a></li><br>
+                                <li><a href="reporte.php" class="button">Reporte de Ventas</a></li>//modificar<br>
                                 <li><a href="?action=logout" class="button">Cerrar Sesion</a></li>
                             </ul>
                         </div>
