@@ -201,7 +201,7 @@ class mvcInventario
 
                     <div class='form-group'>
                         <label>Precio</label>
-                        <input type='number' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
+                        <input type='number' step='0.01' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
                     </div>
 
              ";

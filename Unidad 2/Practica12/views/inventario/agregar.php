@@ -59,7 +59,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
 
                     <div class="form-group">
                         <label>Precio</label>
-                        <input type="number" class="form-control" name="precio" placeholder="Ingrese Precio" required>
+                        <input type="number" step="0.01" class="form-control" name="precio" placeholder="Ingrese Precio" required>
                     </div>
 
                     <div class="form-group">

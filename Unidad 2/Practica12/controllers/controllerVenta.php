@@ -79,7 +79,7 @@ class mvcVenta
         {
 
             //se manda la informacion al modelo con su respectiva tabla en la que se registrara
-            $resp = CRUDVenta::agregarVentaModel($_SESSION["compra"],$_POST["total"],"Venta","Venta_Producto","Tienda_Producto",$_GET["shop"]);
+            $resp = CRUDVenta::agregarVentaModel($_SESSION["compra"],$_POST["total"],"Venta","Venta_Producto","Tienda_Producto","Historial",$_GET["shop"],$_SESSION["id"],$_SESSION["nombre"]);
 
             //en caso de que se haya registrado correctamente
             if($resp == "success")

@@ -23,7 +23,7 @@ class CRUDVenta
         $stmt -> close();
     }
 
-    public static function agregarVentaModel($data,$total,$tabla1,$tabla2,$tabla3,$tienda)
+    public static function agregarVentaModel($data,$total,$tabla1,$tabla2,$tabla3,$tabla4,$tienda,$usuario,$nombre)
     {
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla1 (total,id_tienda) VALUES (:total,:tienda)");
         $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
@@ -43,6 +43,8 @@ class CRUDVenta
 
         $update = Conexion::conectar() -> prepare("UPDATE $tabla3 SET stock = stock - :cantidad WHERE id_producto = :producto AND id_tienda = :tienda"); 
         
+        $historial = Conexion::conectar() -> prepare("INSERT INTO $tabla4 (id_tienda,id_producto,id_usuario,fecha,hora,nota,referencia,cantidad) VALUES (:tienda,:producto,:usuario,NOW(),NOW(),:nota,:referencia,:cantidad)");
+        
         foreach($_SESSION["compra"] as $producto)
         {
             $insert -> bindParam(":venta",$id,PDO::PARAM_INT);
@@ -55,8 +57,19 @@ class CRUDVenta
             $update -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
             $update -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
             
+            $nota = $nombre . " vendio " . $producto -> cantidad . " producto(s) del inventario";
+            
+            $historial -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
+            $historial -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
+            $historial -> bindParam(":usuario",$usuario,PDO::PARAM_INT);
+            $historial -> bindParam(":nota",$nota,PDO::PARAM_STR);
+            $historial -> bindParam(":referencia",$id,PDO::PARAM_STR);
+            $historial -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
+            
             $insert -> execute();
             $update -> execute();
+            $historial -> execute();
+            
         }
 
         return "success";

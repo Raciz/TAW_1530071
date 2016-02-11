@@ -68,17 +68,18 @@ class mvcController
                 $_SESSION["root"] = $resp["root"];
                 $_SESSION["shop"] = $resp["id_tienda"];
 
-                //y nos redireccionamos
+                //y nos redireccionamos dependiendo si somos o no super usuario
                 if($resp["root"])
                 {
+                    //si somos super usuario nos redireccionara al listado de tiendas
                     header("location:index.php?section=tienda&action=listado");
                 }
                 else
                 {
+                    //si no se direccionara al dashboard de la tienda a la que pertenece
                     header("location:index.php?section=dashboard&shop=".$resp["id_tienda"]);
                 }
             }
-
         }	
     }
 }
