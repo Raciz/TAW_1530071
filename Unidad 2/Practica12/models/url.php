@@ -6,7 +6,7 @@ class url
     public static function urlModel($action)
     {
         //en caso de que se mande un link valido se redircciona a su pagina correspondiene
-        if($action=="producto" || $action=="categoria" || $action=="usuario")
+        if($action=="inventario" || $action=="categoria" || $action=="usuario")
         {
             $url = "views/modules/".$action.".php";
         }
