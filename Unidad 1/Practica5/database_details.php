@@ -15,7 +15,7 @@ if ($conn->connect_error)
 function agregar($nombre,$email,$tel)
 {
     global $conn;
-    
+
     //ejecucion del insert
     $conn->query("INSERT alumnos(nombre,email,telefono) VALUES ('$nombre','$email','$tel')");
 }
@@ -24,10 +24,10 @@ function agregar($nombre,$email,$tel)
 function listado()
 {
     global $conn;
-    
+
     //ejecucion del Select para obtener la informacion 
     $data = $conn->query("SELECT * FROM alumnos");
-    
+
     //retornamos la variable con toda la informacion de los alumnos
     return $data;
 }
@@ -36,11 +36,11 @@ function listado()
 function total_alumnos()
 {
     global $conn;
-    
+
     //ejecucion del Select para obtener el total de filas de la tabla 
     $data = $conn->query("SELECT COUNT(*) as total FROM alumnos");
     $data = $data->fetch_assoc();
-    
+
     //retornamos la variable con el total de alumnos regstrados
     return $data["total"];
 }
@@ -50,7 +50,7 @@ function total_alumnos()
 function eliminar($id)
 {
     global $conn;
-    
+
     //ejecucion el delete para eliminar la infromacion del alumno 
     $data = $conn->query("DELETE FROM alumnos WHERE id = $id");
 }
@@ -59,7 +59,7 @@ function eliminar($id)
 function modificar($id,$nombre,$email,$tel)
 {
     global $conn;
-    
+
     //ejecucion del update para actualizar la infromacion del alumno 
     $data = $conn->query("UPDATE alumnos SET nombre = '$nombre', email = '$email', telefono = '$tel' WHERE id = $id");
 }
@@ -68,7 +68,7 @@ function modificar($id,$nombre,$email,$tel)
 function info_alumno($id)
 {
     global $conn;
-    
+
     //ejecucion del Select para obtener la informacion 
     $data = $conn->query("SELECT * FROM alumnos WHERE id = $id");
     $data = $data->fetch_assoc();

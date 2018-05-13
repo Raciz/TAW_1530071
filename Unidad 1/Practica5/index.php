@@ -63,7 +63,7 @@ require_once("database_details.php");
                                         <td>
                                             <!--boton para eliminar un alumno de la base de datos-->
                                             <button class="button radius tiny secondary" onclick="verificar(<?php echo $row["id"]; ?>)">Eliminar</button>                                               
-                                           <a href="./update_alumno.php?id=<?php echo $row["id"]; ?>" class="button radius tiny secondary">Modificar</a>    
+                                            <a href="./update_alumno.php?id=<?php echo $row["id"]; ?>" class="button radius tiny secondary">Modificar</a>    
                                         </td>
                                     </tr>
                                     <?php 
@@ -98,7 +98,7 @@ require_once("database_details.php");
             {
                 //le preguntamos al usuario si en verdad quiere eliminarlo
                 var opc = confirm('Esta Seguro De Eliminar Este Alumno');
-                
+
                 //en caso de que si lo redirecionamos a del_alumno
                 if(opc == true)
                 {
