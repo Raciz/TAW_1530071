@@ -18,7 +18,7 @@ if(isset($_POST["enviar"]))
     //enviamos los datos a la funcion agregar
     modificar($_POST["id"],$_POST["nombre"],$_POST["email"],$_POST["tel"]);
     //redireccionamos al index
-    header("location:index.php");
+    #header("location:index.php");
 }
 ?>
 

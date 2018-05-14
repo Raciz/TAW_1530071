@@ -6,4 +6,4 @@ read coment
 git init
 git add .
 git commit -m "$coment"
-push -u taw master
+git push -u taw master
