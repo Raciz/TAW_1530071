@@ -1,6 +1,7 @@
 <?php
 //importamos el archivo con la funcion agregar_usuario
 require_once("funciones.php");
+require_once ("isLogin.php");
 
 //ejecutamo la consulta para obtener la informacion de las ventas
 $stmt = $conn -> prepare("SELECT p.nombre,v.cantidad, p.precio*v.cantidad as total FROM productos as p JOIN ventas as v on v.producto = p.id");

@@ -1,3 +1,7 @@
+<?php
+require_once "isLogin.php";
+
+?>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -15,16 +19,16 @@
         <div class="row">
 
             <div class="large-9 columns">
-                <h3>Ejemplos de listado en array</h3>
-                <p>Listado</p>
+                <h3>Menu Principal</h3>
                 <div class="section-container tabs" data-section>
                     <section class="section">
                         <div class="large-9 columns">
-                            <ul class="right button-group">
-                                <li><a href="registro_de_productos.php" class="button">Registro de Productos</a></li>
-                                <li><a href="registro_de_ventas.php" class="button">Registro de Ventas</a></li>
-                                <li><a href="registro_de_usuario.php" class="button">Registro de Usuarios</a></li>
-                                <li><a href="reporte.php" class="button">Reporte de Ventas</a></li>
+                            <ul class="button-group">
+                                <li><a href="registro_de_productos.php" class="button">Registro de Productos</a></li><br>
+                                <li><a href="registro_de_venta.php" class="button">Registro de Ventas</a></li><br>
+                                <li><a href="registro_de_usuario.php" class="button">Registro de Usuarios</a></li><br>
+                                <li><a href="reporte.php" class="button">Reporte de Ventas</a></li><br>
+                                <li><a href="?action=logout" class="button">Cerrar Sesion</a></li>
                             </ul>
                         </div>
                     </section>

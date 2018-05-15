@@ -1,6 +1,7 @@
 <?php
 //importamos el archivo con la funcion agregar_usuario
 require_once("funciones.php");
+require_once ("isLogin.php");
 
 //verificamos que se haya enviado informacion
 if(isset($_POST["enviar"]))

@@ -1,6 +1,7 @@
 <?php
 //importamos el archivo con la funcion agregar_usuario
 require_once("funciones.php");
+require_once ("isLogin.php");
 
 //verificamos que se haya enviado informacion
 if(isset($_POST["enviar"]))
@@ -28,7 +29,7 @@ if(isset($_POST["enviar"]))
         <div class="row">
 
             <div class="large-9 columns">
-                <h3>Registro de Usuarios</h3>
+                <h3>Registro de Venta</h3>
 
                 <div class="section-container tabs" data-section>
                     <section class="section">

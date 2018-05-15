@@ -7,7 +7,7 @@
           </div>
           <div class="large-6 columns">
             <ul class="inline-list right">
-              <li><a href="./index.php">Inicio</a></li>
+              <li><a href="./menu_principal.php">Inicio</a></li>
             </ul>
           </div>
         </div>
