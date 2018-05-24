@@ -1,3 +1,9 @@
+<?php
+if(!(isset($_SESSION) && $_SESSION["superUser"]))
+{
+    header("location:index.php");
+}
+?>
 <center><h1>Listado de Carreras</h1></center>
 
 <a href="index.php?action=agregarC"><button>Agregar Carrera</button></a>

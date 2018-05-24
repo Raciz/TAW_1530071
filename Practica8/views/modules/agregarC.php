@@ -1,3 +1,9 @@
+<?php
+if(!(isset($_SESSION) && $_SESSION["superUser"]))
+{
+    header("location:index.php");
+}
+?>
 <center><h1>Agregar Carrera</h1></center>
 
 <form method="post">

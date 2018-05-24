@@ -1,3 +1,9 @@
+<?php
+if(!(isset($_SESSION) && $_SESSION["superUser"]))
+{
+    header("location:index.php");
+}
+?>
 <center><h1>Agregar Maestro</h1></center>
 
 <form method="post">
@@ -16,7 +22,7 @@
     <input type="password" placeholder="Contraseña" name="password" required>
 
     <select name="super">
-        <option value="0">Es Super Usuario</option>
+        <option value="0">¿Es Super Usuario?</option>
         <option value="0">NO</option>
         <option value="1">Si</option>
     </select>
