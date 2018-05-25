@@ -3,11 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-05-2018 a las 20:55:07
--- Versión del servidor: 5.6.38
+-- Tiempo de generación: 11-02-2016 a las 17:33:39
+-- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +21,31 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `curso_php`
 --
-create table curso_php;
+CREATE DATABASE IF NOT EXISTS `curso_php` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `curso_php`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `descuento` int(11) DEFAULT NULL,
+  `buyprice` int(11) DEFAULT NULL,
+  `saleprice` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id`, `nombre`, `descuento`, `buyprice`, `saleprice`, `price`) VALUES
+(0, '1', 1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -32,7 +58,7 @@ CREATE TABLE `products` (
   `descProduc` varchar(30) NOT NULL,
   `BuyPrice` int(11) NOT NULL,
   `SalePrice` int(11) NOT NULL,
-  `Proce` int(11) NOT NULL
+  `Price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -58,18 +84,9 @@ INSERT INTO `user` (`id`, `email`, `password`) VALUES
 
 -- --------------------------------------------------------
 
-CREATE TABLE producto(id int PRIMARY KEY AUTO_INCREMENT,
-                      nombre varchar(50),
-                      descuento int,
-                      buyprice int,
-                      saleprice int,
-                      price int);
-
 --
 -- Estructura de tabla para la tabla `usuarios`
 --
-
-
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
@@ -83,17 +100,20 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `email`) VALUES
-(1, 'mario2', 'mario2', 'systemas@gmail.com'),
-(2, 'mario2', 'mario2333', 'systemmas@gmail.com'),
-(3, 'Jose Luis', '12345', 'mail@mail.com233'),
 (4, 'mario', 'mario', 'a@d.com'),
-(5, 'mario', 'mario', 'systemas@gmail.com'),
 (6, 'demo 123 user', '331211', 'mail@demo.com'),
-(7, 'elí', 'eli123', 'brian@upv.edu');
+(7, 'elí', 'eli123', 'brian@upv.edu'),
+(8, 'Raciz', 'MLPEGRR5', '1530071@upv.com.mx');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `products`
@@ -133,7 +153,8 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

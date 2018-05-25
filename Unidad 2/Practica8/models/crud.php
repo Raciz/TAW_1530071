@@ -261,5 +261,109 @@ class CRUD
 
 		$stmt->close();
     }
+    
+    
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function tutoradosModel($tabla,$tutor)
+    {
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE tutor = :tutor");
+        $stmt -> bindParam(":tutor",$tutor,PDO::PARAM_STR);
+        $stmt -> execute();
+        return $stmt -> fetchAll();
+
+        $stmt -> close();
+    }
+    
+    public function registroTutoriaModel($data,$tabla)
+    {
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (alumno,tutor,fecha,hora,tipo,tutoria) VALUES (:alumno,:tutor,NOW(),NOW(),:tipo,:tutoria)");
+
+        $stmt -> bindParam(":alumno",$data["alumno"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tutor",$data["tutor"],PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo",$data["tipo"],PDO::PARAM_STR);
+        $stmt -> bindParam(":tutoria",$data["tutoria"],PDO::PARAM_STR);
+        
+
+        if($stmt -> execute())
+        {
+            return "success";
+        }
+        else
+        {
+            print_r($stmt->errorInfo());
+            return "fail";
+        }
+
+        $stmt -> close();
+    }
+    
+    public function listaTutoriaMaestroModel($tabla1,$tabla2,$tabla3,$tutor)
+    {
+        $stmt = Conexion::conectar() -> prepare("SELECT t.id, a.nombre as alumno,m.nombre as tutor, t.fecha, t.hora, t.tipo, t.tutoria FROM $tabla1 as t JOIN $tabla2 as m on t.tutor = m.num_empleado JOIN $tabla3 as a on a.matricula = t.alumno WHERE m.num_empleado = :tutor");
+        $stmt -> bindParam(":tutor",$tutor,PDO::PARAM_STR);
+        $stmt -> execute();
+        return $stmt -> fetchAll();
+
+        $stmt -> close();
+    }
+    
+    public function deleteTutoriaModel($data,$tabla)
+    {
+        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id = :id");
+
+        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+
+        if($stmt -> execute())
+        {
+            return "success";
+        }
+        else
+        {
+            return "fail";
+        }
+
+        $stmt -> close();
+    }
+    
+    public function editTutoriaModel($data,$tabla)
+    {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
+		$stmt->bindParam(":id", $data, PDO::PARAM_INT);	
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
+    }
+    
+    public function updateTutoriaModel($data,$tabla)
+    {
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alumno = :alumno, tipo = :tipo, tutoria = :tutoria WHERE id = :id");
+        
+		$stmt -> bindParam(":alumno", $data["alumno"], PDO::PARAM_INT);
+		$stmt -> bindParam(":tipo", $data["tipo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":tutoria", $data["tutoria"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
+
+		if($stmt -> execute())
+        {
+			return "success";
+		}
+		else
+        {
+			return "fail";
+		}
+		$stmt->close();
+    }
+    
+    public function reporteTutoriaMaestroModel($tabla1,$tabla2,$tabla3)
+    {
+        $stmt = Conexion::conectar() -> prepare("SELECT t.id, a.nombre as alumno,m.nombre as tutor, t.fecha, t.hora, t.tipo, t.tutoria FROM $tabla1 as t JOIN $tabla2 as m on t.tutor = m.num_empleado JOIN $tabla3 as a on a.matricula = t.alumno");
+        $stmt -> execute();
+        return $stmt -> fetchAll();
+
+        $stmt -> close();
+    }
 }
 ?>

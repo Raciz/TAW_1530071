@@ -8,7 +8,7 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 
 <a href="index.php?action=agregarA"><button>Agregar Alumno</button></a>
 
-<table border="1">
+<table id="example" class="display dataTable" style="width:100%">
     <thead>
         <tr>
             <th>Matricula</th>

@@ -60,7 +60,7 @@
 			margin:5px;
 		}
 
-		section form input[type="submit"], button{
+		section form input[type="submit"]{
 			position:relative;
 			margin:20px auto;
 			left:4.5%;
@@ -87,15 +87,12 @@
 
 <body>
 
-<?php include "modules/menu.php"; ?>
-
-
 <section>
 
 <?php 
 
-$mvc = new mvcController();
-$mvc -> urlController();
+$mvc = new MvcController();
+$mvc -> enlacesPaginasController();
 
  ?>
 

@@ -314,16 +314,6 @@ class mvcController
             }
         }
     }
-    /*        
-    public function optionMaestroController()
-    {
-        $data = CRUD::listaMaestroModel("Maestro","Carrera");
-
-        foreach($data as $rows => $row)
-        {
-            echo "<option value=".$row["num_empleado"].">".$row["nombre"]."</option>";
-        }
-    }*/
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public function loginController()
@@ -347,6 +337,180 @@ class mvcController
 
         }	
 
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function registroTutoriaController()
+    {
+        if(isset($_POST["alumno"]))
+        {
+            $data = array("alumno" =>$_POST["alumno"],
+                          "tipo" =>$_POST["tipo"],
+                          "tutoria" =>$_POST["tutoria"],
+                          "tutor" => $_SESSION["maestro"]);
+
+            $resp = CRUD::registroTutoriaModel($data,"Tutoria");
+
+            if($resp == "success")
+            {
+                header("location:index.php?action=tutoria");
+            }
+        }
+    }
+
+    public function tutoradosController()
+    {
+        $data = CRUD::tutoradosModel("Alumno",$_SESSION["maestro"]);
+
+        foreach($data as $rows => $row)
+        {
+            echo "<option value=".$row["matricula"].">".$row["nombre"]."</option>";
+        }
+    }
+
+    public function listaTutoriaMaestroController()
+    {
+        $data = CRUD::listaTutoriaMaestroModel("Tutoria","Maestro","Alumno",$_SESSION["maestro"]);
+
+        foreach($data as $rows => $row)
+        {
+            echo "<tr>
+                <td>".$row["alumno"]."</td>
+                <td>".$row["tutor"]."</td>
+                <td>".$row["fecha"]."</td>
+                <td>".$row["hora"]."</td>
+                <td>".$row["tipo"]."</td>
+                <td>".$row["tutoria"]."</td>
+                <td><a href=index.php?action=editarT&edit=".$row["id"]."><button>Editar</button></a></td>
+                <td><a href=index.php?action=tutoria&del=".$row["id"]."><button>Eliminar</button></a></td>
+            </tr>";
+        }
+    }
+
+    public function deleteTutoriaController()
+    {
+        if(isset($_GET["del"]))
+        {
+            $data = $_GET["del"];
+
+            $resp = CRUD::deleteTutoriaModel($data,"Tutoria");
+
+            if($resp == "success")
+            {
+                header("location:index.php?action=tutoria");
+            }
+        }
+    }
+
+
+    public function editTutoriaController()
+    {
+        $data = $_GET["edit"];
+        $resp = CRUD::editTutoriaModel($data,"Tutoria");
+
+        echo "<input type=hidden name=matricula value=".$resp["id"]." required>
+              <select name='alumno' required>
+                <option value=".$resp["alumno"].">Seleccione Alumno</option>";
+        $registro = new mvcController();
+        $registro -> tutoradosController();
+        echo "</select><br>
+              <select name=tipo required>
+                <option value=".$resp["tipo"].">Seleccione Tipo de Tutoria</option>
+                <option value=Individual>Individual</option>
+                <option value=Grupal>Grupal</option>
+              </select><br>
+              <textarea name=tutoria placeholder=Descripcion de Tutoria>
+                ".$resp["tutoria"]."
+              </textarea>
+              <input type=submit value=Enviar name=enviar>";
+    }
+
+
+    public function updateTutoriaController()
+    {
+        if(isset($_POST["alumno"]))
+        {
+            $data = array("alumno" => $_POST["alumno"],
+                          "tipo" => $_POST["tipo"],
+                          "tutoria" => $_POST["tutoria"],
+                          "id" => $_POST["matricula"]);
+
+            $resp = CRUD::updateTutoriaModel($data,"Tutoria");
+
+            if($resp == "success")
+            {
+                header("location:index.php?action=tutoria");
+            }
+        }
+    }
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function reporteCarreraController()
+    {
+        $data = CRUD::listaCarreraModel("Carrera");
+        foreach($data as $rows => $row)
+        {
+            echo "<tr>
+                <td>".$row["nombre"]."</td>
+            </tr>";
+        }
+    }
+
+    public function reporteMaestroController()
+    {
+        $data = CRUD::listaMaestroModel("Maestro","Carrera");
+
+        foreach($data as $rows => $row)
+        {
+            if($row["superUser"])
+            {
+                $super = "SI";
+            }
+            else
+            {
+                $super = "NO";
+            }
+            echo "<tr>
+                <td>".$row["num_empleado"]."</td>
+                <td>".$row["carrera"]."</td>
+                <td>".$row["nombre"]."</td>
+                <td>".$row["email"]."</td>
+                <td>".$super."</td>
+            </tr>";
+        }
+    }
+    
+    public function reporteAlumnoController()
+    {
+        $data = CRUD::listaAlumnoModel("Alumno","Carrera","Maestro");
+
+        foreach($data as $rows => $row)
+        {
+            echo "<tr>
+                <td>".$row["matricula"]."</td>
+                <td>".$row["nombre"]."</td>
+                <td>".$row["carrera"]."</td>
+                <td>".$row["tutor"]."</td>
+            </tr>";
+        }
+    }
+    
+    public function reporteTutoriaMaestroController()
+    {
+        $data = CRUD::reporteTutoriaMaestroModel("Tutoria","Maestro","Alumno");
+
+        foreach($data as $rows => $row)
+        {
+            echo "<tr>
+                <td>".$row["alumno"]."</td>
+                <td>".$row["tutor"]."</td>
+                <td>".$row["fecha"]."</td>
+                <td>".$row["hora"]."</td>
+                <td>".$row["tipo"]."</td>
+                <td>".$row["tutoria"]."</td>
+            </tr>";
+        }
     }
 }
 ?>
