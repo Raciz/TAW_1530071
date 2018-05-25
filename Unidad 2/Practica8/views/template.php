@@ -5,6 +5,10 @@
         <script src="views/jquery-1.12.4.js" type="text/javascript"></script>
         <script src="views/dataTables.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="views/jquery.dataTables.min.css">
+
+
+        <link href="views/select2.min.css" rel="stylesheet" type="text/css">
+        <script src="views/select2.min.js" type="text/javascript"></script>
         <meta charset="UTF-8">
         <title>Template</title>
 
@@ -56,7 +60,7 @@
                 width:400px;
             }
 
-            section form input, button{
+            section form input, button,select,textarea{
                 display:inline-block;
                 padding:10px;
                 width:95%;

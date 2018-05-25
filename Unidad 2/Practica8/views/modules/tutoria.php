@@ -9,7 +9,7 @@ if(!isset($_SESSION["maestro"]))
 
 <a href="index.php?action=agregarT"><button>Agregar Tutoria</button></a>
 
-<table id="example" class="display dataTable" style="width:100%">
+<table id="listaTutoria" class="display dataTable" style="width:100%">
     <thead>
         <tr>
             <th>Alumno</th>
@@ -43,4 +43,8 @@ if(!isset($_SESSION["maestro"]))
     </tfoot>
 </table>
 
-
+<script>
+    $(document).ready(function() {
+        $('#listaTutoria').DataTable();
+    } );
+</script>

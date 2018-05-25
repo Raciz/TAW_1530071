@@ -15,3 +15,13 @@ if(!isset($_SESSION["maestro"]))
 	?>
 
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('.alumno').select2();
+    });
+
+    $(document).ready(function() {
+        $('.tipo').select2();
+    });
+</script>

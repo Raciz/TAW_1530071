@@ -12,18 +12,19 @@ $registro = new mvcController();
     <input type="text" placeholder="Matricula" name="matricula" required>
     <input type="text" placeholder="Nombre" name="nombre" required>
 
-    <select required name="carrera">
+    <select required name="carrera" class="carrera">
         <option value="">Seleccione Carrera</option>
         <?php
         $registro -> optionCarreraController();
         ?>
     </select>
-
-    <select required name="tutor">
+    <br>
+    <br>
+    <select required name="tutor" class="tutor">
         <option value="">Seleccione Tutor</option>
         <?php
-$registro = new mvcController();
-        
+        $registro = new mvcController();
+
         $registro -> optionMaestroController();
         ?>
     </select>
@@ -34,3 +35,13 @@ $registro = new mvcController();
 <?php
 $registro -> registroAlumnoController();
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('.carrera').select2();
+    });
+
+    $(document).ready(function() {
+        $('.tutor').select2();
+    });
+</script>

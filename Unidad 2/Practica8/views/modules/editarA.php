@@ -15,3 +15,13 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 	?>
 
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('.carrera').select2();
+    });
+
+    $(document).ready(function() {
+        $('.tutor').select2();
+    });
+</script>

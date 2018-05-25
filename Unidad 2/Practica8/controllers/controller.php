@@ -177,7 +177,7 @@ class mvcController
         $resp = CRUD::editMaestroModel($data,"Maestro");
 
         echo "<input type=hidden name=num_empleado value=".$resp["num_empleado"]." required>
-              <select required name=carrera>
+              <select required name=carrera class=carrera>
                     <option value='".$resp["carrera"]."'>Seleccione Carrera</option>";
         $edit = new mvcController();
         $edit -> optionCarreraController();
@@ -185,7 +185,7 @@ class mvcController
               <input type=text placeholder=Nombre name=nombre value='".$resp["nombre"]."' required>
               <input type=email placeholder=Email name=email value=".$resp["email"]." required>
               <input type=password placeholder=Contraseña name=password value='".$resp["password"]."' required>
-              <select name=super>
+              <select name=super class=super>
                 <option value=".$resp["superUser"].">¿Es Super Usuario?</option>
                 <option value=0>NO</option>
                 <option value=1>Si</option>
@@ -283,12 +283,14 @@ class mvcController
 
         echo "<input type=hidden name=matricula value=".$resp["matricula"]." required>
               <input type=text placeholder=Nombre name=nombre value='".$resp["nombre"]."' required>
-              <select required name=carrera>
+              <select required name=carrera class=carrera>
                     <option value='".$resp["carrera"]."'>Seleccione Carrera</option>";
         $edit = new mvcController();
         $edit -> optionCarreraController();
         echo "</select>
-        <select required name=tutor>
+        <br>
+        <br>
+        <select required name=tutor class=tutor>
                     <option value='".$resp["tutor"]."'>Seleccione Tutor</option>";
         $edit = new mvcController();
         $edit -> optionMaestroController();
@@ -410,19 +412,19 @@ class mvcController
         $resp = CRUD::editTutoriaModel($data,"Tutoria");
 
         echo "<input type=hidden name=matricula value=".$resp["id"]." required>
-              <select name='alumno' required>
+              <select name='alumno' class=alumno required>
                 <option value=".$resp["alumno"].">Seleccione Alumno</option>";
         $registro = new mvcController();
         $registro -> tutoradosController();
-        echo "</select><br>
-              <select name=tipo required>
+        echo "</select>
+              <br>
+              <br>
+              <select name=tipo class=tipo required>
                 <option value=".$resp["tipo"].">Seleccione Tipo de Tutoria</option>
                 <option value=Individual>Individual</option>
                 <option value=Grupal>Grupal</option>
               </select><br>
-              <textarea name=tutoria placeholder=Descripcion de Tutoria>
-                ".$resp["tutoria"]."
-              </textarea>
+              <textarea name=tutoria placeholder=Descripcion de Tutoria>".$resp["tutoria"]."</textarea>
               <input type=submit value=Enviar name=enviar>";
     }
 

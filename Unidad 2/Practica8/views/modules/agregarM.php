@@ -8,8 +8,8 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 
 <form method="post">
     <input type="text" placeholder="Numero de Empleado" name="num_empleado" required>
-    
-    <select required name="carrera">
+
+    <select required  name="carrera" class="carrera">
         <option value="">Seleccione Carrera</option>
         <?php
         $registro = new mvcController();
@@ -21,7 +21,7 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     <input type="email" placeholder="Email" name="email" required>
     <input type="password" placeholder="Contraseña" name="password" required>
 
-    <select name="super">
+    <select name="super" class="super">
         <option value="0">¿Es Super Usuario?</option>
         <option value="0">NO</option>
         <option value="1">Si</option>
@@ -33,3 +33,13 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 <?php
 $registro -> registroMaestroController();
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('.carrera').select2();
+    });
+    
+    $(document).ready(function() {
+        $('.super').select2();
+    });
+</script>

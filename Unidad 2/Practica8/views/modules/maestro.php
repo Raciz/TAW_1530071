@@ -8,7 +8,7 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 
 <a href="index.php?action=agregarM"><button>Agregar Maestro</button></a>
 
-<table id="example" class="display dataTable" style="width:100%">
+<table id="listaMaestro" class="display dataTable" style="width:100%">
     <thead>
         <tr>
             <th>Numero de Empleado</th>
@@ -27,6 +27,21 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
         $vista -> deleteMaestroController();
         ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <th>Numero de Empleado</th>
+            <th>Carrera</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Super Usuario</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </tfoot>
 </table>
 
-
+<script>
+    $(document).ready(function() {
+        $('#listaMaestro').DataTable();
+    } );
+</script>
