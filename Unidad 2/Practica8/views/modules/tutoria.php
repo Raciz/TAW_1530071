@@ -1,4 +1,5 @@
 <?php
+//verificamos que el usuario haya iniciado sesion
 if(!isset($_SESSION["maestro"]))
 {
     header("location:index.php");
@@ -7,8 +8,10 @@ if(!isset($_SESSION["maestro"]))
 
 <center><h1>Listado de Tutorias</h1></center>
 
+<!--boton para agregar una nueva tutoria-->
 <a href="index.php?action=agregarT"><button>Agregar Tutoria</button></a>
 
+<!--tabla para mostrar la tutorias impartidas por el maestro logeado-->
 <table id="listaTutoria" class="display dataTable" style="width:100%">
     <thead>
         <tr>
@@ -24,8 +27,13 @@ if(!isset($_SESSION["maestro"]))
     </thead>
     <tbody>
         <?php
+        //creamos un objeto de mvcController
         $vista = new mvcController();
+        
+        //obtenemos la informacion de la tutorias impartidas por este maesto
         $vista -> listaTutoriaMaestroController();
+        
+        //y el controller para eliminar una tutoria
         $vista -> deleteTutoriaController();
         ?>
     </tbody>
@@ -43,7 +51,9 @@ if(!isset($_SESSION["maestro"]))
     </tfoot>
 </table>
 
+
 <script>
+    //convertimos la tabla del listado de tutorias en un datatable
     $(document).ready(function() {
         $('#listaTutoria').DataTable();
     } );

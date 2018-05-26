@@ -1,3 +1,4 @@
+<!--Menu para navegar en el sistema-->
 <nav>
     <ul>
         <li><a href="index.php?action=maestro">Maestros</a></li>

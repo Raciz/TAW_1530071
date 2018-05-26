@@ -43,7 +43,7 @@ class CRUD
         $stmt -> close();
     }
 
-    //modelo para borar una carrera de la base de datos
+    //modelo para borrar una carrera de la base de datos
     public function deleteCarreraModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
@@ -351,40 +351,60 @@ class CRUD
 		$stmt->close();
     }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    //modelo para obtener la informacion para el login
     public function loginModel($data,$tabla)
     {
+        //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT num_empleado, password, superUser FROM $tabla WHERE num_empleado = :id");	
+        
+        //se realiza la asignacion de los datos para la consulta
 		$stmt->bindParam(":id", $data["num_empleado"], PDO::PARAM_STR);
+        
+        //se ejecuta la sentencia
 		$stmt->execute();
 
+        //retornamos la fila obtenida con el select
 		return $stmt->fetch();
 
+        //cerramos la conexion
 		$stmt->close();
     }
     
     
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //modelo para obtener la informacion de los tutorados de un maestro
     public function tutoradosModel($tabla,$tutor)
     {
+        //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE tutor = :tutor");
+        
+        //se realiza la asignacion de los datos para la consulta
         $stmt -> bindParam(":tutor",$tutor,PDO::PARAM_STR);
+        
+        //se ejecuta la sentencia
         $stmt -> execute();
+        
+        //retornamos las filas obtenida con el select
         return $stmt -> fetchAll();
 
+        //cerramos la conexion
         $stmt -> close();
     }
     
+    //modelo para registrar una tutoria en la base de datos
     public function registroTutoriaModel($data,$tabla)
     {
+        //se prepara la sentencia para realizar el insert
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (alumno,tutor,fecha,hora,tipo,tutoria) VALUES (:alumno,:tutor,NOW(),NOW(),:tipo,:tutoria)");
 
+        //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":alumno",$data["alumno"],PDO::PARAM_INT);
         $stmt -> bindParam(":tutor",$data["tutor"],PDO::PARAM_STR);
         $stmt -> bindParam(":tipo",$data["tipo"],PDO::PARAM_STR);
         $stmt -> bindParam(":tutoria",$data["tutoria"],PDO::PARAM_STR);
         
-
         //se ejecuta la sentencia
         if($stmt -> execute())
         {
@@ -398,9 +418,11 @@ class CRUD
             return "fail";
         }
 
+        //cerramos la conexion
         $stmt -> close();
     }
     
+    //modelo para obtener la informacion de las tutorias registradas para un maestro
     public function listaTutoriaMaestroModel($tabla1,$tabla2,$tabla3,$tutor)
     {
         //preparamos la consulta y la ejecutamos
@@ -411,13 +433,17 @@ class CRUD
         //retornamos la informacion de la tabla
         return $stmt -> fetchAll();
 
+        //cerramos la conexion
         $stmt -> close();
     }
     
+    //modelo para borrar una tutoria de la base de datos
     public function deleteTutoriaModel($data,$tabla)
     {
+        //preparamos la sentencia para realizar el delete
         $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id = :id");
 
+        //se realiza la asignacion de los datos a eliminar
         $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
@@ -432,24 +458,36 @@ class CRUD
             return "fail";
         }
 
+        //cerramos la conexion
         $stmt -> close();
     }
     
+    //modelo para modificar la informacion de una tutoria
     public function editTutoriaModel($data,$tabla)
     {
+        //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
+        
+        //se realiza la asignacion de los datos para la consulta
 		$stmt->bindParam(":id", $data, PDO::PARAM_INT);	
+        
+        //se ejecuta la sentencia
 		$stmt->execute();
 
+        //retornamos la fila obtenida con el select
 		return $stmt->fetch();
 
+        //cerramos la conexion
 		$stmt->close();
     }
     
+    //modelo para modificar la informacion de una tutoria registrada en la base de datos
     public function updateTutoriaModel($data,$tabla)
     {
+        //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alumno = :alumno, tipo = :tipo, tutoria = :tutoria WHERE id = :id");
         
+        //se realiza la asignacion de los datos para el update
 		$stmt -> bindParam(":alumno", $data["alumno"], PDO::PARAM_INT);
 		$stmt -> bindParam(":tipo", $data["tipo"], PDO::PARAM_STR);
 		$stmt -> bindParam(":tutoria", $data["tutoria"], PDO::PARAM_STR);
@@ -466,9 +504,12 @@ class CRUD
             //en caso de no ser asi nos retorna fail
 			return "fail";
 		}
+        
+        //cerramos la conexion
 		$stmt->close();
     }
     
+    //modelo para obtener la informacion de todas las tutorias registradas en la base de datos
     public function reporteTutoriaMaestroModel($tabla1,$tabla2,$tabla3)
     {
         //preparamos la consulta y la ejecutamos
@@ -478,6 +519,7 @@ class CRUD
         //retornamos la informacion de la tabla
         return $stmt -> fetchAll();
 
+        //cerramos la conexion
         $stmt -> close();
     }
 }

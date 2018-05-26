@@ -1,12 +1,17 @@
 <?php
+//verificamos que el usuario haya iniciado sesion y que sea super admin
 if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+
+//creamos un objeto de mvcController
 $vista = new mvcController();
 ?>
 
 <center><h1>Listado de Maestros</h1></center>
+
+<!--Tabla para mostrar los maestro registrados en el sistema-->
 <table id="maestro" class="display dataTable" style="width:100%">
     <thead>
         <tr>
@@ -19,6 +24,7 @@ $vista = new mvcController();
     </thead>
     <tbody>
         <?php
+        //traemos la informacion de los maestros
         $vista -> reporteMaestroController();
         ?>
     </tbody>
@@ -37,6 +43,8 @@ $vista = new mvcController();
 <br>
 <br>
 <br>
+
+<!--Tabla para mostrar los alumnos registrados en el sistema-->
 <center><h1>Listado de Alumno</h1></center>
 <table id="alumno" class="display dataTable" style="width:100%">
     <thead>
@@ -49,6 +57,7 @@ $vista = new mvcController();
     </thead>
     <tbody>
         <?php
+        //traemos la informacion de los alumno
         $vista -> reporteAlumnoController();
         ?>
     </tbody>
@@ -67,6 +76,7 @@ $vista = new mvcController();
 <br>
 <br>
 <center><h1>Listado de Tutorias</h1></center>
+<!--Tabla para mostrar las tutorias registradas en el sistema-->
 <table id="tutoria" class="display dataTable" style="width:100%">
     <thead>
         <tr>
@@ -80,6 +90,7 @@ $vista = new mvcController();
     </thead>
     <tbody>
         <?php
+        //traemos la informacion de las tutorias
         $vista -> reporteTutoriaMaestroController();
         ?>
     </tbody>
@@ -96,14 +107,15 @@ $vista = new mvcController();
 </table>
 
 <script>
+    //convertimos las tabla de los listado en datatables
     $(document).ready(function() {
         $('#maestro').DataTable();
     } );
-    
+
     $(document).ready(function() {
         $('#alumno').DataTable();
     } );
-    
+
     $(document).ready(function() {
         $('#tutoria').DataTable();
     } );
