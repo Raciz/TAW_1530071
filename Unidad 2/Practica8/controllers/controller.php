@@ -1,52 +1,72 @@
 <?php
+//clase para controar todo lo realizado en el sistema
 class mvcController
 {
+    //Control para invocar la platilla con el diseño del sitio
     public function template()
     {
-        include "views/template.php";
+        //incluimos el archivo con la plantilla
+        include "views/template.ph p";
     }
 
+    //Control para manejar el redireccionamiento de las distintas secciones del sitio
     public function urlController()
     {
+        //verifica si de debe dirigir a una pagina en especifico con GET
         if(isset($_GET["action"]))
         {
+            //encaso de ser asi guarda el nombre de la pagina
             $link = $_GET["action"];
         }
         else
         {
+            //en caso de no ser asi se le direccionara al index
             $link = "index";
         }
-
+        
+        //se llama al modelo utilizado para el direccionaiento 
         $url = url::urlModel($link);
-
+        
+        //y se incluye la pagina a la qu se va a derireccionar
         include $url;
     }
 
+    //Control para manejar el registro de una nueva carrera en el sistema
     public function registroCarreraController()
     {
+        //se verifica si mediante el formulario de registro se envio informacion
         if(isset($_POST["carrera"]))
         {
+            //se gardan la informacion de la carrera
             $data = $_POST["carrera"];
-
+            
+            //se manda la informacion al modelo con su respectiva tabla en la que se registrara
             $resp = CRUD::registroCarreraModel($data,"Carrera");
-
+            
+            //en caso de que se haya registrado corectamente
             if($resp == "success")
             {
+                //nos redireccionara a carrera
                 header("location:index.php?action=carrera");
             }
             else
             {
+                //sino mandara un mensaje de error
                 echo "error";
             }
         }
     }
 
+    //Control para mostrar un listado de las carreras registradas en el sistema
     public function listaCarreraController()
     {
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion de las carreras
         $data = CRUD::listaCarreraModel("Carrera");
 
+        //se imprime la informacion de cada una de las carreras registradas
         foreach($data as $rows => $row)
         {
+            //e imprimimos cada una de las carreras con su respectivo boton de editar y eliminar
             echo "<tr>
                 <td>".$row["nombre"]."</td>
                 <td><a href=index.php?action=editarC&edit=".$row["id"]."><button>Editar</button></a></td>
@@ -54,86 +74,118 @@ class mvcController
             </tr>";
         }
     }
-
+    
+    //Control para mostrar las carreras en un select
     public function optionCarreraController()
     {
+        //se le manda al modelo el nombre de la tabla a mostrar su informacion
         $data = CRUD::listaCarreraModel("Carrera");
-
+        
+        //mostramos el nombre de cada una de las carreras
         foreach($data as $rows => $row)
         {
+            //se muestra cada una en un option del select
             echo "<option value=".$row["id"].">".$row["nombre"]."</option>";
         }
     }
 
+    //Control para borrar una carrera del sistema
     public function deleteCarreraController()
     {
+        //se verifica si se envio el id de la carrera a eliminar
         if(isset($_GET["del"]))
         {
+            //de ser asi se guarda el id de la carrera
             $data = $_GET["del"];
-
+            
+            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteCarreraModel($data,"Carrera");
-
+            
+            //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
+                //nos redireccionara a carrera
                 header("location:index.php?action=carrera");
             }
         }
     }
 
+    //Control para poder mostrar la informacion de una carrera a editar
     public function editCarreraController()
     {
+        //se obtiene el id de la carrera a mostrar su informacion
         $data = $_GET["edit"];
+        
+        //se manda el id de la carrera y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editCarreraModel($data,"Carrera");
-
+        
+        //se imprime la informacion de la carrera en inputs de un formulario
         echo "
              <input type=hidden value=".$resp["id"]." name=id>
 			 <input type=text value='".$resp["nombre"]."' name=nombre required>
              <input type=submit value=Actualizar name=enviar>
              ";
     }
-
+    
+    //Control para modificar la informacion de una carrera
     public function updateCarreraController()
     {
+        //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["nombre"]))
         {
+            //se guarda la informacion de la carrera
             $data = array("id"=>$_POST["id"],"nombre"=>$_POST["nombre"]);
+            
+            //se manda la informacion de la carrera y la tabla en la que esta almacenada
             $resp = CRUD::updateCarreraModel($data,"Carrera");
-
+            
+            //en caso de que se haya editado correctamente 
             if($resp == "success")
             {
+                //nos direccionara a carrera
                 header("location:index.php?action=carrera");
             }
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //Control para registrar un maestro en el sistema
     public function registroMaestroController()
     {
+        //se verifica que se haya enviado la informacion del maestro desde un formulario
         if(isset($_POST["num_empleado"]))
         {
+            //se guarda la informacion del maestro a registrar
             $data = array("num_empleado" => $_POST["num_empleado"],
                           "carrera" => $_POST["carrera"],
                           "nombre" => $_POST["nombre"],
                           "email" => $_POST["email"],
                           "password" => $_POST["password"],
                           "super" => $_POST["super"]);
-
+            
+            //se manda la informacion del maestro junto con la tabla en donde se va a registrar
             $resp = CRUD::registroMaestroModel($data,"Maestro");
-
+            
+            //en caso de que se haya registrado correctamente
             if($resp == "success")
             {
+                //nos direccionara a maestro
                 header("location:index.php?action=maestro");
             }
         }
     }
 
+    //Control para mostrar un listado de los maestros registrados en el sistema
     public function listaMaestroController()
     {
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion de los maestros 
         $data = CRUD::listaMaestroModel("Maestro","Carrera");
-
+        
+        //se imprime la informacion de cada uno de los maestros registrados
         foreach($data as $rows => $row)
         {
+            //e imprimimos cada uno de los maestros con su respectivo boton de editar y eliminar
             if($row["superUser"])
             {
                 $super = "SI";
@@ -154,28 +206,37 @@ class mvcController
         }
     }
 
-
+    //Control para eliminar un maestro del sistema
     public function deleteMaestroController()
     {
+        //se verifica si se envio el id del maestro a eliminar
         if(isset($_GET["del"]))
         {
+            //de ser asi se guarda el id del maestro
             $data = $_GET["del"];
 
+            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteMaestroModel($data,"Maestro");
 
+            //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
+                //nos redireccionara a maestro
                 header("location:index.php?action=maestro");
             }
         }
     }
 
-
+    //Control para poder mostrar la informacion de un maestro a editar
     public function editMaestroController()
     {
+        //se obtinen el id del maestro a mostrar su informacion
         $data = $_GET["edit"];
+        
+        //se manda al modelo el id y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editMaestroModel($data,"Maestro");
 
+        //se imprime la informacion del maestro en inputs de un formulario
         echo "<input type=hidden name=num_empleado value=".$resp["num_empleado"]." required>
               <select required name=carrera class=carrera>
                     <option value='".$resp["carrera"]."'>Seleccione Carrera</option>";
@@ -194,10 +255,13 @@ class mvcController
              ";
     }
 
+    //Control para modificar la informacion de un maestro
     public function updateMaestroController()
     {
+        //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["num_empleado"]))
         {
+            //se guarda la informacion del maestro
             $data = array("num_empleado" => $_POST["num_empleado"],
                           "carrera" => $_POST["carrera"],
                           "nombre" => $_POST["nombre"],
@@ -205,51 +269,68 @@ class mvcController
                           "password" => $_POST["password"],
                           "super" => $_POST["super"]);
 
+            //se manda la informacion del maestro y la tabla en la que esta almacenada
             $resp = CRUD::updateMaestroModel($data,"Maestro");
 
+            //en caso de que se haya editado correctamente 
             if($resp == "success")
             {
+                //nos direccionara a maestro
                 header("location:index.php?action=maestro");
             }
         }
     }
 
+    //Control para mostrar las carreras en un select
     public function optionMaestroController()
     {
+        //se le mada al modelo el nombre de la tabla a mostrar su informacion
         $data = CRUD::listaMaestroModel("Maestro","Carrera");
 
+        //mostramos el nombr de cada una de las carreras
         foreach($data as $rows => $row)
         {
+            //se muestra cada uno en un option del select
             echo "<option value=".$row["num_empleado"].">".$row["nombre"]."</option>";
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //Control para manejar el registro de un nuevo alumno en el sistema
     public function registroAlumnoController()
     {
+        //se verifica si mediante el formulario de registro se envio informacion
         if(isset($_POST["matricula"]))
         {
+            //se guarda la informacion del alumno
             $data = array("matricula" => $_POST["matricula"],
                           "nombre" => $_POST["nombre"],
                           "carrera" => $_POST["carrera"],
                           "tutor" => $_POST["tutor"]);
 
+            //se le manda la informacion al modelo con su respectiva tabla en la que se registrara
             $resp = CRUD::registroAlumnoModel($data,"Alumno");
 
+            //en caso de que se haya registrado correctamente
             if($resp == "success")
             {
+                //nos redireccionara a alumno
                 header("location:index.php?action=alumno");
             }
         }
     }
 
+    //Control para mostrar un listado de los alumnos registrados en el sistema
     public function listaAlumnoController()
     {
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion de los alumnos
         $data = CRUD::listaAlumnoModel("Alumno","Carrera","Maestro");
 
+        //se imprime la informacion de cada uno de los alumnos registrados
         foreach($data as $rows => $row)
         {
+            //e imprimimos cada uno de los alumno con su respectivo boton de editar y eliminar
             echo "<tr>
                 <td>".$row["matricula"]."</td>
                 <td>".$row["nombre"]."</td>
@@ -261,26 +342,37 @@ class mvcController
         }
     }
 
+    //Control para eliminar un alumno del sistema
     public function deleteAlumnoController()
     {
+        //se verifica si se envio el id del alumno a eliminar 
         if(isset($_GET["del"]))
         {
+            //de ser asi se guarda el id del alumno
             $data = $_GET["del"];
 
+            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteAlumnoModel($data,"Alumno");
 
+            //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
+                //nos redirecciona a alumno
                 header("location:index.php?action=alumno");
             }
         }
     }
 
+    //control para poder mostrar la informacion de un maestro a editar
     public function editAlumnoController()
     {
+        //se obtiene el id del alumno a mostrar su informacion
         $data = $_GET["edit"];
+        
+        //se manda al modelo el id y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editAlumnoModel($data,"Alumno");
 
+        //se imprime la informacion del maestro en inputs de un formulario
         echo "<input type=hidden name=matricula value=".$resp["matricula"]." required>
               <input type=text placeholder=Nombre name=nombre value='".$resp["nombre"]."' required>
               <select required name=carrera class=carrera>
@@ -298,9 +390,10 @@ class mvcController
               <input type=submit value=Actualizar name=enviar>";
     }
 
-
+    //Control para modificar la informacion de un alumno
     public function updateAlumnoController()
     {
+        //se verifica si mediante el formulario se envio la informacion
         if(isset($_POST["matricula"]))
         {
             $data = array("matricula" => $_POST["matricula"],
@@ -308,52 +401,66 @@ class mvcController
                           "carrera" => $_POST["carrera"],
                           "tutor" => $_POST["tutor"]);
 
+            //se manda la informacion del alumno y la tabla en la que esta almacenada
             $resp = CRUD::updateAlumnoModel($data,"Alumno");
 
+            //en caso de que se haya editado correctamente 
             if($resp == "success")
             {
+                //nos direccionara a alumno
                 header("location:index.php?action=alumno");
             }
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    //Control para manejar el acceso al sistema
     public function loginController()
     {
-
+        //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["num_empleado"]))
         {
+            //se guarda la informacion del login
             $data = array("num_empleado"=>$_POST["num_empleado"], 
                           "password"=>$_POST["password"]);
 
+            //se manda al modelo la informacion del login
             $resp = CRUD::loginModel($data,"Maestro");
 
+            //se verifica que la informacion mandada por el formulario sea igual a la devuelta por el modelo
             if($resp["num_empleado"] == $_POST["num_empleado"] && $resp["password"] == $_POST["password"])
             {
+                //en caso de que coincida se inicia sesion y se guardan cierto datos del maestro
                 session_start();
                 $_SESSION["maestro"] = $resp["num_empleado"];
                 $_SESSION["superUser"] = $resp["superUser"];
-
+                
+                //y nos redirecciona a tutoria
                 header("location:index.php?action=tutoria");
             }
 
         }	
-
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //control para registrar una tutoria
     public function registroTutoriaController()
     {
+        //se verifica que se haya mandado informacion del formulario
         if(isset($_POST["alumno"]))
         {
+            //se guarda la informacion de la tutoria
             $data = array("alumno" =>$_POST["alumno"],
                           "tipo" =>$_POST["tipo"],
                           "tutoria" =>$_POST["tutoria"],
                           "tutor" => $_SESSION["maestro"]);
 
+            //se manda al modelo la informacion de la tutoria
             $resp = CRUD::registroTutoriaModel($data,"Tutoria");
 
+            //en caso de que se haya almacenado correctamente  nos derirecciona a tutoria
             if($resp == "success")
             {
                 header("location:index.php?action=tutoria");
@@ -361,20 +468,26 @@ class mvcController
         }
     }
 
+    //control para devolver los tutorados de un maestro
     public function tutoradosController()
     {
+        //se manda al modelo la informacion del maestro
         $data = CRUD::tutoradosModel("Alumno",$_SESSION["maestro"]);
 
+        //y se imprime a cada uno de los tutorados del maestro en options de un select
         foreach($data as $rows => $row)
         {
             echo "<option value=".$row["matricula"].">".$row["nombre"]."</option>";
         }
     }
 
+    //control para mostrar cada una de las tutorias que hecho un maestro
     public function listaTutoriaMaestroController()
     {
+        //se manda al modelo la informacion del maestro y el nombre de las tablas involucradas en esto
         $data = CRUD::listaTutoriaMaestroModel("Tutoria","Maestro","Alumno",$_SESSION["maestro"]);
 
+        //se imprime la informacion de casa uno de las tutorias impartidas por el maestro
         foreach($data as $rows => $row)
         {
             echo "<tr>
@@ -390,22 +503,28 @@ class mvcController
         }
     }
 
+    //control para eliminar una tutoria del sistema
     public function deleteTutoriaController()
     {
+        //se verifica que se envio el id de la tutoria a eliminar
         if(isset($_GET["del"]))
         {
+            //de ser asi se guarda el id del alumno
             $data = $_GET["del"];
-
+            
+            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteTutoriaModel($data,"Tutoria");
 
+            //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
+                //nos redirecciona a alumno
                 header("location:index.php?action=tutoria");
             }
         }
     }
 
-
+    
     public function editTutoriaController()
     {
         $data = $_GET["edit"];
@@ -428,29 +547,37 @@ class mvcController
               <input type=submit value=Enviar name=enviar>";
     }
 
-
+    //control para modificarla informacion de una tutoria
     public function updateTutoriaController()
     {
+        //se verifica si mediante el formulario se envio la informacion
         if(isset($_POST["alumno"]))
         {
             $data = array("alumno" => $_POST["alumno"],
                           "tipo" => $_POST["tipo"],
                           "tutoria" => $_POST["tutoria"],
                           "id" => $_POST["matricula"]);
-
+            
+            //se manda la informacion del alumno y la tabla en la que esta almacenada
             $resp = CRUD::updateTutoriaModel($data,"Tutoria");
 
+            //en caso de que se haya editado correctamente 
             if($resp == "success")
             {
+                //nos direccionara a alumno
                 header("location:index.php?action=tutoria");
             }
         }
     }
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //control para mostrar todas las carreras registradas en el sistema
     public function reporteCarreraController()
     {
+        //se manda al modelo la tabla en donde estan almacenada
         $data = CRUD::listaCarreraModel("Carrera");
+        
+        //se imprime cada una de las carreras registradas
         foreach($data as $rows => $row)
         {
             echo "<tr>
@@ -459,10 +586,13 @@ class mvcController
         }
     }
 
+    //control para mostrar todos los maestros registrados en el sistema
     public function reporteMaestroController()
     {
+        //se manda al modelo la tabla en donde estan almacenada
         $data = CRUD::listaMaestroModel("Maestro","Carrera");
 
+        //se imprime cada uno de los maestros registrados
         foreach($data as $rows => $row)
         {
             if($row["superUser"])
@@ -483,10 +613,13 @@ class mvcController
         }
     }
     
+    //control para mostrar todos los alumnos registrados en el sistema
     public function reporteAlumnoController()
     {
+        //se manda al modelo la tabla en donde estan almacenada
         $data = CRUD::listaAlumnoModel("Alumno","Carrera","Maestro");
 
+        //se imprime cada uno de los maestros registrados
         foreach($data as $rows => $row)
         {
             echo "<tr>
@@ -500,8 +633,10 @@ class mvcController
     
     public function reporteTutoriaMaestroController()
     {
+        //se manda al modelo la tabla en donde estan almacenada
         $data = CRUD::reporteTutoriaMaestroModel("Tutoria","Maestro","Alumno");
 
+        //se imprime cada uno de los maestros registrados
         foreach($data as $rows => $row)
         {
             echo "<tr>
