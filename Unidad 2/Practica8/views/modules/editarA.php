@@ -8,12 +8,17 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 <h1>Modificar Alumno</h1>
 
 <form method="post">
-	
-	<?php
-	$editar = new mvcController();
-	$editar -> editAlumnoController();
-	$editar -> updateAlumnoController();
-	?>
+
+    <?php
+    //creamos un objeto de mvcController
+    $editar = new mvcController();
+
+    //obtenemos la informacion del alumno a modificar
+    $editar -> editAlumnoController();
+
+    //obtenemos el controller para modificar su informacion en el sistema
+    $editar -> updateAlumnoController();
+    ?>
 
 </form>
 
@@ -25,4 +30,5 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     $(document).ready(function() {
         $('.tutor').select2();
     });
+
 </script>

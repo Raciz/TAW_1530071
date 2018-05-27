@@ -23,10 +23,10 @@ class mvcController
             //en caso de no ser asi se le direccionara al index
             $link = "index";
         }
-        
+
         //se llama al modelo utilizado para el direccionaiento 
         $url = url::urlModel($link);
-        
+
         //y se incluye la pagina a la qu se va a derireccionar
         include $url;
     }
@@ -39,10 +39,10 @@ class mvcController
         {
             //se gardan la informacion de la carrera
             $data = $_POST["carrera"];
-            
+
             //se manda la informacion al modelo con su respectiva tabla en la que se registrara
             $resp = CRUD::registroCarreraModel($data,"Carrera");
-            
+
             //en caso de que se haya registrado corectamente
             if($resp == "success")
             {
@@ -74,13 +74,13 @@ class mvcController
             </tr>";
         }
     }
-    
+
     //Control para mostrar las carreras en un select
     public function optionCarreraController()
     {
         //se le manda al modelo el nombre de la tabla a mostrar su informacion
         $data = CRUD::listaCarreraModel("Carrera");
-        
+
         //mostramos el nombre de cada una de las carreras
         foreach($data as $rows => $row)
         {
@@ -97,10 +97,10 @@ class mvcController
         {
             //de ser asi se guarda el id de la carrera
             $data = $_GET["del"];
-            
+
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteCarreraModel($data,"Carrera");
-            
+
             //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
@@ -115,10 +115,10 @@ class mvcController
     {
         //se obtiene el id de la carrera a mostrar su informacion
         $data = $_GET["edit"];
-        
+
         //se manda el id de la carrera y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editCarreraModel($data,"Carrera");
-        
+
         //se imprime la informacion de la carrera en inputs de un formulario
         echo "
              <input type=hidden value=".$resp["id"]." name=id>
@@ -126,7 +126,7 @@ class mvcController
              <input type=submit value=Actualizar name=enviar>
              ";
     }
-    
+
     //Control para modificar la informacion de una carrera
     public function updateCarreraController()
     {
@@ -135,10 +135,10 @@ class mvcController
         {
             //se guarda la informacion de la carrera
             $data = array("id"=>$_POST["id"],"nombre"=>$_POST["nombre"]);
-            
+
             //se manda la informacion de la carrera y la tabla en la que esta almacenada
             $resp = CRUD::updateCarreraModel($data,"Carrera");
-            
+
             //en caso de que se haya editado correctamente 
             if($resp == "success")
             {
@@ -163,10 +163,10 @@ class mvcController
                           "email" => $_POST["email"],
                           "password" => $_POST["password"],
                           "super" => $_POST["super"]);
-            
+
             //se manda la informacion del maestro junto con la tabla en donde se va a registrar
             $resp = CRUD::registroMaestroModel($data,"Maestro");
-            
+
             //en caso de que se haya registrado correctamente
             if($resp == "success")
             {
@@ -181,7 +181,7 @@ class mvcController
     {
         //se le manda al modelo el nombre de la tabla a mostrar la informacion de los maestros 
         $data = CRUD::listaMaestroModel("Maestro","Carrera");
-        
+
         //se imprime la informacion de cada uno de los maestros registrados
         foreach($data as $rows => $row)
         {
@@ -232,7 +232,7 @@ class mvcController
     {
         //se obtinen el id del maestro a mostrar su informacion
         $data = $_GET["edit"];
-        
+
         //se manda al modelo el id y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editMaestroModel($data,"Maestro");
 
@@ -368,26 +368,32 @@ class mvcController
     {
         //se obtiene el id del alumno a mostrar su informacion
         $data = $_GET["edit"];
-        
+
         //se manda al modelo el id y el nombre de la tabla donde esta almacenada
         $resp = CRUD::editAlumnoModel($data,"Alumno");
 
         //se imprime la informacion del maestro en inputs de un formulario
         echo "<input type=hidden name=matricula value=".$resp["matricula"]." required>
+        <label>Nombre: </label>
               <input type=text placeholder=Nombre name=nombre value='".$resp["nombre"]."' required>
-              <select required name=carrera class=carrera>
+              <br>
+              <br>
+              <label>Carrera: </label>
+              <select required name='carrera' id='carrera' class='carrera'>
                     <option value='".$resp["carrera"]."'>Seleccione Carrera</option>";
-        $edit = new mvcController();
-        $edit -> optionCarreraController();
+                    $edit = new mvcController();
+                    $edit -> optionCarreraController();
         echo "</select>
         <br>
         <br>
+        <label>Tutor: </label>
         <select required name=tutor class=tutor>
                     <option value='".$resp["tutor"]."'>Seleccione Tutor</option>";
-        $edit = new mvcController();
-        $edit -> optionMaestroController();
+                    $edit -> optionMaestroController();
         echo "</select>
               <input type=submit value=Actualizar name=enviar>";
+
+
     }
 
     //Control para modificar la informacion de un alumno
@@ -414,7 +420,7 @@ class mvcController
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
+
     //Control para manejar el acceso al sistema
     public function loginController()
     {
@@ -435,7 +441,7 @@ class mvcController
                 session_start();
                 $_SESSION["maestro"] = $resp["num_empleado"];
                 $_SESSION["superUser"] = $resp["superUser"];
-                
+
                 //y nos redirecciona a tutoria
                 header("location:index.php?action=tutoria");
             }
@@ -511,7 +517,7 @@ class mvcController
         {
             //de ser asi se guarda el id del alumno
             $data = $_GET["del"];
-            
+
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUD::deleteTutoriaModel($data,"Tutoria");
 
@@ -524,7 +530,7 @@ class mvcController
         }
     }
 
-    
+
     public function editTutoriaController()
     {
         $data = $_GET["edit"];
@@ -557,7 +563,7 @@ class mvcController
                           "tipo" => $_POST["tipo"],
                           "tutoria" => $_POST["tutoria"],
                           "id" => $_POST["matricula"]);
-            
+
             //se manda la informacion del alumno y la tabla en la que esta almacenada
             $resp = CRUD::updateTutoriaModel($data,"Tutoria");
 
@@ -576,7 +582,7 @@ class mvcController
     {
         //se manda al modelo la tabla en donde estan almacenada
         $data = CRUD::listaCarreraModel("Carrera");
-        
+
         //se imprime cada una de las carreras registradas
         foreach($data as $rows => $row)
         {
@@ -612,7 +618,7 @@ class mvcController
             </tr>";
         }
     }
-    
+
     //control para mostrar todos los alumnos registrados en el sistema
     public function reporteAlumnoController()
     {
@@ -630,7 +636,7 @@ class mvcController
             </tr>";
         }
     }
-    
+
     public function reporteTutoriaMaestroController()
     {
         //se manda al modelo la tabla en donde estan almacenada
