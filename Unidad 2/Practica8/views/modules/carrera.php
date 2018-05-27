@@ -1,13 +1,15 @@
 <?php
+//se verifica que el usuario haya iniciado sesion y sea super usuario
 if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
 ?>
 <center><h1>Listado de Carreras</h1></center>
-
+<!--boton para agregar una nueva carrera-->
 <a href="index.php?action=agregarC"><button>Agregar Carrera</button></a>
 
+<!--tabla para mostrar la informacion de las carreras registradas en el sistema-->
 <table id="listaCarrera" class="display dataTable" style="width:100%">
     <thead>
         <tr>
@@ -18,8 +20,14 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     </thead>
     <tbody>
         <?php
+        
+        //creamos un objeto de mvcController
         $vista = new mvcController();
+        
+        //obtenemos la informacion de las carreras
         $vista -> listaCarreraController();
+        
+        //obtenemos el controller para eliminar una carrera
         $vista -> deleteCarreraController();
         ?>
     </tbody>
@@ -33,6 +41,7 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 </table>
 
 <script>
+    //convertimos la tabla en dataTable
     $(document).ready(function() {
         $('#listaCarrera').DataTable();
     } );

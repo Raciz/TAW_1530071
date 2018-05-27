@@ -1,4 +1,5 @@
 <?php
+//se verifica que el usuario haya iniciado sesion y sea super usuario
 if(!isset($_SESSION["maestro"]))
 {
     header("location:index.php");

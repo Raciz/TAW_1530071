@@ -6,7 +6,7 @@ class mvcController
     public function template()
     {
         //incluimos el archivo con la plantilla
-        include "views/template.ph p";
+        include "views/template.php";
     }
 
     //Control para manejar el redireccionamiento de las distintas secciones del sitio

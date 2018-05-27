@@ -1,5 +1,5 @@
 <?php
-//verificamos que el usuario haya iniciado sesion y que sea super admin
+//verificamos que el usuario haya iniciado sesion y que sea super usuario
 if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
