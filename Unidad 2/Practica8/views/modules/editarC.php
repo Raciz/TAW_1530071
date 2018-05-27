@@ -4,15 +4,20 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+
+//creamos un objeto de mvcController 
+$editar = new mvcController();
+
+//obtenemos el controller para modificar su informacion en el sistema
+$editar -> updateCarreraController();
 ?>
 <h1>Modificar Carrera</h1>
 
 <form method="post">
 	
 	<?php
-	$editar = new mvcController();
+  //obtenemos la informacion de la carrera
 	$editar -> editCarreraController();
-	$editar -> updateCarreraController();
 	?>
 
 </form>

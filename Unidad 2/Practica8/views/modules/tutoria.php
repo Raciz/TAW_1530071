@@ -4,6 +4,12 @@ if(!isset($_SESSION["maestro"]))
 {
     header("location:index.php");
 }
+
+//creamos un objeto de mvcController
+$vista = new mvcController();
+
+//y el controller para eliminar una tutoria
+$vista -> deleteTutoriaController();
 ?>
 
 <center><h1>Listado de Tutorias</h1></center>
@@ -27,14 +33,8 @@ if(!isset($_SESSION["maestro"]))
     </thead>
     <tbody>
         <?php
-        //creamos un objeto de mvcController
-        $vista = new mvcController();
-        
         //obtenemos la informacion de la tutorias impartidas por este maesto
         $vista -> listaTutoriaMaestroController();
-        
-        //y el controller para eliminar una tutoria
-        $vista -> deleteTutoriaController();
         ?>
     </tbody>
     <tfoot>

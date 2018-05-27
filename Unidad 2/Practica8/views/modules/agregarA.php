@@ -5,15 +5,20 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     header("location:index.php");
 }
 
+//creamos un objeto de mvcController
 $registro = new mvcController();
+
+//obtenemos el controler para registrar alumnos
+$registro -> registroAlumnoController();
 ?>
 <center><h1>Agregar Alumno</h1></center>
 
 <!--Formulario para agregar un nuevo alumno-->
 <form method="post">
+    <label>Matricula:</label>
     <input type="text" placeholder="Matricula" name="matricula" required>
+    <label>Nombre:</label>
     <input type="text" placeholder="Nombre" name="nombre" required>
-    <br>
     <br>
     <label>Carrera:</label>
     <select required name="carrera" class="carrera">
@@ -23,7 +28,6 @@ $registro = new mvcController();
         $registro -> optionCarreraController();
         ?>
     </select>
-    <br>
     <br>
     <label>Tutor:</label>
     <select required name="tutor" class="tutor">
@@ -38,8 +42,7 @@ $registro = new mvcController();
 </form>
 
 <?php
-//obtenemos el controler para registrar alumnos
-$registro -> registroAlumnoController();
+
 ?>
 
 <script>

@@ -4,6 +4,12 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+
+//creamos un objeto de mvcController
+$vista = new mvcController();
+
+//obtenemos el controller para borrar un alumno
+$vista -> deleteAlumnoController();
 ?>
 <center><h1>Listado de Alumno</h1></center>
 
@@ -24,14 +30,8 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     </thead>
     <tbody>
         <?php
-        //creamos un objeto de mvcController
-        $vista = new mvcController();
-        
         //obtenemos la informacion de los alumnos
         $vista -> listaAlumnoController();
-        
-        //obtenemos el controller para borrar un alumno
-        $vista -> deleteAlumnoController();
         ?>
     </tbody>
     <tfoot>

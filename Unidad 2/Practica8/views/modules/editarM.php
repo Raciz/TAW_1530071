@@ -4,20 +4,25 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+//creamos un objeto de mvcController
+$editar = new mvcController();
+//obtenemos el controller para actualizar la informacion en el sistema
+$editar -> updateMaestroController();
+
 ?>
 <h1>Modificar Maestro</h1>
 
 <form method="post">
 	
 	<?php
-	$editar = new mvcController();
+  //obtenemos la informacion del maestro
 	$editar -> editMaestroController();
-	$editar -> updateMaestroController();
 	?>
 
 </form>
 
 <script>
+  //convertimos los selects en select2
     $(document).ready(function() {
         $('.carrera').select2();
     });

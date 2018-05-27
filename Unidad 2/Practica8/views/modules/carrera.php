@@ -4,6 +4,12 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+
+//creamos un objeto de mvcController
+$vista = new mvcController();
+
+//obtenemos el controller para eliminar una carrera
+$vista -> deleteCarreraController();
 ?>
 <center><h1>Listado de Carreras</h1></center>
 <!--boton para agregar una nueva carrera-->
@@ -20,15 +26,8 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
     </thead>
     <tbody>
         <?php
-        
-        //creamos un objeto de mvcController
-        $vista = new mvcController();
-        
         //obtenemos la informacion de las carreras
         $vista -> listaCarreraController();
-        
-        //obtenemos el controller para eliminar una carrera
-        $vista -> deleteCarreraController();
         ?>
     </tbody>
     <tfoot>

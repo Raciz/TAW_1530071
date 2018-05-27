@@ -4,10 +4,10 @@
 class conexion
 {
     //funcion para retornar una conexion a la base de datos
-    public function conectar()
+    public static function conectar()
     {
         //creamos la conexion
-        $conn = new PDO("mysql:host=localhost;dbname=Tutorias","root","");
+        $conn = new PDO("mysql:host=localhost;dbname=Tutorias","root","mlpegrr5");
         
         //y la retornamos
         return $conn;

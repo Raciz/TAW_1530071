@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 //clase para controar todo lo realizado en el sistema
 class mvcController
 {
@@ -122,6 +125,7 @@ class mvcController
         //se imprime la informacion de la carrera en inputs de un formulario
         echo "
              <input type=hidden value=".$resp["id"]." name=id>
+             <label>Nombre:</label>
 			 <input type=text value='".$resp["nombre"]."' name=nombre required>
              <input type=submit value=Actualizar name=enviar>
              ";
@@ -238,21 +242,48 @@ class mvcController
 
         //se imprime la informacion del maestro en inputs de un formulario
         echo "<input type=hidden name=num_empleado value=".$resp["num_empleado"]." required>
-              <select required name=carrera class=carrera>
+              <label>Carrera: <label>
+              <select required id=carrera name=carrera class=carrera>
                     <option value='".$resp["carrera"]."'>Seleccione Carrera</option>";
         $edit = new mvcController();
         $edit -> optionCarreraController();
         echo "</select>
+              <label>Nombre: <label>
               <input type=text placeholder=Nombre name=nombre value='".$resp["nombre"]."' required>
+              <label>Correo: <label>
               <input type=email placeholder=Email name=email value=".$resp["email"]." required>
+              <label>Contraseña: <label>
               <input type=password placeholder=Contraseña name=password value='".$resp["password"]."' required>
-              <select name=super class=super>
+              <br>
+              <label>Super Usuario: <label>
+              <select id='S' name='super' class='super'>
                 <option value=".$resp["superUser"].">¿Es Super Usuario?</option>
                 <option value=0>NO</option>
                 <option value=1>Si</option>
               </select>
               <input type=submit value=Actualizar name=enviar>
              ";
+      
+          echo "<script>
+                var carrera = document.getElementById('carrera');
+               var select2 = document.getElementById('S');
+                
+                for(var i = 1; i < carrera.options.length; i++)
+                {
+                    if(carrera.options[i].value ==".$resp["carrera"].")
+                    {
+                        carrera.selectedIndex = i;
+                    }
+                }
+                for(var i = 1; i < S.options.length; i++)
+                {
+                    if(S.options[i].value ==".$resp["superUser"].")
+                    {
+                        S.selectedIndex = i;
+                    }
+                }
+               
+                </script>";
     }
 
     //Control para modificar la informacion de un maestro
@@ -387,13 +418,32 @@ class mvcController
         <br>
         <br>
         <label>Tutor: </label>
-        <select required name=tutor class=tutor>
+        <select required id='tutor' name='tutor' class='tutor'>
                     <option value='".$resp["tutor"]."'>Seleccione Tutor</option>";
                     $edit -> optionMaestroController();
         echo "</select>
               <input type=submit value=Actualizar name=enviar>";
 
-
+        echo "<script>
+                var carrera = document.getElementById('carrera');
+               var tutor = document.getElementById('tutor');
+                
+                for(var i = 1; i < carrera.options.length; i++)
+                {
+                    if(carrera.options[i].value ==".$resp["carrera"].")
+                    {
+                        carrera.selectedIndex = i;
+                    }
+                }
+                for(var i = 1; i < tutor.options.length; i++)
+                {
+                    if(tutor.options[i].value =='".$resp["tutor"]."')
+                    {
+                        tutor.selectedIndex = i;
+                    }
+                }
+               
+                </script>";
     }
 
     //Control para modificar la informacion de un alumno
@@ -537,20 +587,44 @@ class mvcController
         $resp = CRUD::editTutoriaModel($data,"Tutoria");
 
         echo "<input type=hidden name=matricula value=".$resp["id"]." required>
-              <select name='alumno' class=alumno required>
+              <label>Tutorado: </label>
+              <select name='alumno' class='alumno' id='alumno'>
                 <option value=".$resp["alumno"].">Seleccione Alumno</option>";
         $registro = new mvcController();
         $registro -> tutoradosController();
         echo "</select>
               <br>
-              <br>
-              <select name=tipo class=tipo required>
+              <label>Tipo:</label>
+              <select id='tipo' name='tipo' class='tipo' required>
                 <option value=".$resp["tipo"].">Seleccione Tipo de Tutoria</option>
                 <option value=Individual>Individual</option>
                 <option value=Grupal>Grupal</option>
-              </select><br>
+              </select>
+              <br>
+              <label>Descripcion de Tutoria: </label>
               <textarea name=tutoria placeholder=Descripcion de Tutoria>".$resp["tutoria"]."</textarea>
               <input type=submit value=Enviar name=enviar>";
+      
+      echo "<script>
+               var alumno = document.getElementById('alumno');
+               var tipo = document.getElementById('tipo');
+                
+                for(var i = 1; i < alumno.options.length; i++)
+                {
+                    if(alumno.options[i].value ==".$resp["alumno"].")
+                    {
+                        alumno.selectedIndex = i;
+                    }
+                }
+                for(var i = 1; i < tipo.options.length; i++)
+                {
+                    if(tipo.options[i].value =='".$resp["tipo"]."')
+                    {
+                        tipo.selectedIndex = i;
+                    }
+                }
+               
+                </script>";
     }
 
     //control para modificarla informacion de una tutoria

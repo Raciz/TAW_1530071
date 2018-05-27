@@ -5,7 +5,7 @@ require_once "conexion.php";
 class CRUD
 {
     //modelo para registrar carrera en la base de datos
-    public function registroCarreraModel($data,$tabla)
+    public static function registroCarreraModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre) VALUES (:nombre)");
@@ -30,7 +30,7 @@ class CRUD
     }
 
     //modelo para obtener la informacion de las carreras registradas
-    public function listaCarreraModel($tabla)
+    public static function listaCarreraModel($tabla)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
@@ -44,7 +44,7 @@ class CRUD
     }
 
     //modelo para borrar una carrera de la base de datos
-    public function deleteCarreraModel($data,$tabla)
+    public static function deleteCarreraModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
         $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id = :id");
@@ -69,7 +69,7 @@ class CRUD
     }
 
     //modelo para modificar la informacion de una carrera
-    public function editCarreraModel($data,$tabla)
+    public static function editCarreraModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
@@ -88,7 +88,7 @@ class CRUD
     }
 
     //modelo para modificar la informacion de una carrera registrada en la base de datos
-    public function updateCarreraModel($data,$tabla)
+    public static function updateCarreraModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre WHERE id = :id");
@@ -116,7 +116,7 @@ class CRUD
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //modelo para registrar un maestro en la base de datos 
-    public function registroMaestroModel($data,$tabla)
+    public static function registroMaestroModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (num_empleado,carrera,nombre,email,password,superUser) VALUES (:num_empleado,:carrera,:nombre,:email,:password,:superUser)");
@@ -146,7 +146,7 @@ class CRUD
     }
 
     //modelo para obtener la informacion de los maestro registrados
-    public function listaMaestroModel($tabla1,$tabla2)
+    public static function listaMaestroModel($tabla1,$tabla2)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT m.num_empleado,c.nombre as carrera,m.nombre,m.email,m.superUser FROM $tabla1 as m JOIN $tabla2 as c on m.carrera = c.id");
@@ -160,7 +160,7 @@ class CRUD
     }
     
     //modelo para borrar un maestro de la base de datos
-    public function deleteMaestroModel($data,$tabla)
+    public static function deleteMaestroModel($data,$tabla)
     {
         //se prepara la consulta para realizar el delete
         $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE num_empleado = :id");
@@ -185,7 +185,7 @@ class CRUD
     }
 
     //modelo para modificar la informacion de una carrera
-    public function editMaestroModel($data,$tabla)
+    public static function editMaestroModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE num_empleado = :id");
@@ -204,7 +204,7 @@ class CRUD
     }
 
     //modelo para modificar la informacion de un maestro registrado en la base de datos
-    public function updateMaestroModel($data,$tabla)
+    public static function updateMaestroModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET carrera = :carrera, nombre = :nombre, email = :email, password = :password, superUser = :super WHERE num_empleado = :num_empleado");
@@ -236,7 +236,7 @@ class CRUD
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     //modelo para registrar un alumno en la base de datos
-    public function registroAlumnoModel($data,$tabla)
+    public static function registroAlumnoModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (matricula,nombre,carrera,tutor) VALUES (:matricula,:nombre,:carrera,:tutor)");
@@ -264,7 +264,7 @@ class CRUD
     }
 
     //modelo para obtener la informacion de los alumnos registrados
-    public function listaAlumnoModel($tabla1,$tabla2,$tabla3)
+    public static function listaAlumnoModel($tabla1,$tabla2,$tabla3)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT a.matricula,a.nombre,c.nombre as carrera, m.nombre as tutor FROM $tabla1 as a JOIN $tabla2 as c on a.carrera = c.id JOIN $tabla3 as m on a.tutor = m.num_empleado");
@@ -279,7 +279,7 @@ class CRUD
    
     
     //modelo para borar un alumno de la base de datos
-    public function deleteAlumnoModel($data,$tabla)
+    public static function deleteAlumnoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
         $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE matricula = :id");
@@ -304,7 +304,7 @@ class CRUD
     }
 
     //modelo para modificar la informacion de un alumno
-    public function editAlumnoModel($data,$tabla)
+    public static function editAlumnoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE matricula = :id");
@@ -324,7 +324,7 @@ class CRUD
 
 
     //modelo para modificar la informacion de un alumno registrado en la base de datos
-    public function updateAlumnoModel($data,$tabla)
+    public static function updateAlumnoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, carrera = :carrera, tutor = :tutor WHERE matricula = :matricula");
@@ -353,7 +353,7 @@ class CRUD
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     //modelo para obtener la informacion para el login
-    public function loginModel($data,$tabla)
+    public static function loginModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT num_empleado, password, superUser FROM $tabla WHERE num_empleado = :id");	
@@ -375,7 +375,7 @@ class CRUD
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //modelo para obtener la informacion de los tutorados de un maestro
-    public function tutoradosModel($tabla,$tutor)
+    public static function tutoradosModel($tabla,$tutor)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE tutor = :tutor");
@@ -394,7 +394,7 @@ class CRUD
     }
     
     //modelo para registrar una tutoria en la base de datos
-    public function registroTutoriaModel($data,$tabla)
+    public static function registroTutoriaModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (alumno,tutor,fecha,hora,tipo,tutoria) VALUES (:alumno,:tutor,NOW(),NOW(),:tipo,:tutoria)");
@@ -423,7 +423,7 @@ class CRUD
     }
     
     //modelo para obtener la informacion de las tutorias registradas para un maestro
-    public function listaTutoriaMaestroModel($tabla1,$tabla2,$tabla3,$tutor)
+    public static function listaTutoriaMaestroModel($tabla1,$tabla2,$tabla3,$tutor)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT t.id, a.nombre as alumno,m.nombre as tutor, t.fecha, t.hora, t.tipo, t.tutoria FROM $tabla1 as t JOIN $tabla2 as m on t.tutor = m.num_empleado JOIN $tabla3 as a on a.matricula = t.alumno WHERE m.num_empleado = :tutor");
@@ -438,7 +438,7 @@ class CRUD
     }
     
     //modelo para borrar una tutoria de la base de datos
-    public function deleteTutoriaModel($data,$tabla)
+    public static function deleteTutoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
         $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id = :id");
@@ -463,7 +463,7 @@ class CRUD
     }
     
     //modelo para modificar la informacion de una tutoria
-    public function editTutoriaModel($data,$tabla)
+    public static function editTutoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
@@ -482,7 +482,7 @@ class CRUD
     }
     
     //modelo para modificar la informacion de una tutoria registrada en la base de datos
-    public function updateTutoriaModel($data,$tabla)
+    public static function updateTutoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alumno = :alumno, tipo = :tipo, tutoria = :tutoria WHERE id = :id");
@@ -510,7 +510,7 @@ class CRUD
     }
     
     //modelo para obtener la informacion de todas las tutorias registradas en la base de datos
-    public function reporteTutoriaMaestroModel($tabla1,$tabla2,$tabla3)
+    public static function reporteTutoriaMaestroModel($tabla1,$tabla2,$tabla3)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT t.id, a.nombre as alumno,m.nombre as tutor, t.fecha, t.hora, t.tipo, t.tutoria FROM $tabla1 as t JOIN $tabla2 as m on t.tutor = m.num_empleado JOIN $tabla3 as a on a.matricula = t.alumno");

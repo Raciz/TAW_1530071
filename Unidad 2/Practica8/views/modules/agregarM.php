@@ -3,29 +3,32 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 {
     header("location:index.php");
 }
+//creamos un objeto de mvcController
+$registro = new mvcController();
+
+//obtenemos el controller para registrar un maestro
+$registro -> registroMaestroController();
 ?>
 <center><h1>Agregar Maestro</h1></center>
 
 <form method="post">
+    <label>Numero de Empleado:</label>
     <input type="text" placeholder="Numero de Empleado" name="num_empleado" required>
-    <br>
     <br>
     <label>Carrera:</label>
     <select required  name="carrera" class="carrera">
         <option value="">Seleccione Carrera</option>
         <?php
-        //creamos un objeto de mvcController
-        $registro = new mvcController();
-        
         //obtenemos el nombre de las carreras registradas en el sistema
         $registro -> optionCarreraController();
         ?>
     </select>
-
+    <label>Nombre:</label>
     <input type="text" placeholder="Nombre" name="nombre" required>
+    <label>Correo:</label>
     <input type="email" placeholder="Email" name="email" required>
+    <label>Contraseña:</label>
     <input type="password" placeholder="Contraseña" name="password" required>
-    <br>
     <br>
     <label>Super Usuario: </label>
     <select name="super" class="super">
@@ -36,11 +39,6 @@ if(!(isset($_SESSION) && $_SESSION["superUser"]))
 
     <input type="submit" value="Enviar" name="enviar">
 </form>
-
-<?php
-//obtenemos el controller para registrar un maestro
-$registro -> registroMaestroController();
-?>
 
 <script>
     //convertimos los selects en select2

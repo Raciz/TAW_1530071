@@ -4,6 +4,11 @@ if(!isset($_SESSION["maestro"]))
 {
     header("location:index.php");
 }
+//Creamos un objeto de mvcController
+$registro = new mvcController();
+
+//obtenemos el controller para registrar una tutoria
+$registro -> registroTutoriaController();
 ?>
 <center><h1>Agregar Tutoria</h1></center>
 <!--Formulario para agregar una nueva tutoria-->
@@ -12,14 +17,10 @@ if(!isset($_SESSION["maestro"]))
     <select name="alumno" class="alumno" required>
         <option value="">Seleccione Alumno</option>
         <?php
-        //Creamos un objeto de mvcController
-        $registro = new mvcController();
-        
         //obtenemos a los tutorados del maestro
         $registro -> tutoradosController();
         ?>
     </select>
-    <br>
     <br>
     <label>Tipo de Tutoria: </label>
     <select name="tipo" class="tipo" required>
@@ -28,16 +29,11 @@ if(!isset($_SESSION["maestro"]))
         <option value="Grupal">Grupal</option>
     </select>
     <br>
-    <br>
     <label>Descripcion de la Tutoria: </label>
     <textarea name="tutoria" placeholder="Descripcion de Tutoria"></textarea>
 
     <input type="submit" value="Enviar" name="enviar">
 </form>
-
-<?php
-$registro -> registroTutoriaController();
-?>
 
 <script>
     //convertimos los selects en select2
