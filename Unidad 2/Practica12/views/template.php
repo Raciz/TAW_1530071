@@ -34,7 +34,8 @@
         <link rel="stylesheet" href="views/media/plugins/timepicker/bootstrap-timepicker.min.css">
         <!-- Select2 -->
         <link rel="stylesheet" href="views/media/bower_components/select2/dist/css/select2.min.css">
-
+        <!-- DataTables -->
+        <link rel="stylesheet" href="views/media/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -324,6 +325,9 @@
         <script src="views/media/plugins/timepicker/bootstrap-timepicker.min.js"></script>
         <!-- iCheck 1.0.1 -->
         <script src="views/media/plugins/iCheck/icheck.min.js"></script>
+        <!-- DataTables -->
+        <script src="views/media/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="views/media/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
         <script>
             $(
@@ -334,6 +338,18 @@
 
                     //Date picker
                     $('#datepicker').datepicker({autoclose: true})
+
+                    $('#example1').DataTable
+                    (
+                        {
+                            'paging'      : true,
+                            'lengthChange': false,
+                            'searching'   : true,
+                            'ordering'    : true,
+                            'info'        : true,
+                            'autoWidth'   : false
+                        }
+                    )
                 }
             )
         </script>

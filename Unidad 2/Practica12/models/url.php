@@ -3,12 +3,12 @@
 class url
 {
     //modelo para realizar e l redireccionamiento del sitio
-    public static function urlModel($section,$action)
+    public static function urlModel($action)
     {
         //en caso de que se mande un link valido se redircciona a su pagina correspondiene
-        if($action=="producto" || $section=="categoria" || $section=="usuario")
+        if($action=="producto" || $action=="categoria" || $action=="usuario")
         {
-            $url = "views/models/".$action.".php";
+            $url = "views/modules/".$action.".php";
         }
         else //sino se le manda al login
         {

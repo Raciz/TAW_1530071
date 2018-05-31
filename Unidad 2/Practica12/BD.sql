@@ -1,9 +1,6 @@
 DROP DATABASE Inventario;
 CREATE DATABASE Inventario;
 
-
-CREATE TABLE Categoria();
-
 CREATE TABLE Producto(id_producto int AUTO_INCREMENT PRIMARY KEY,
                       codigo_producto char(20),
                       nombre_producto varchar(255),
@@ -12,6 +9,11 @@ CREATE TABLE Producto(id_producto int AUTO_INCREMENT PRIMARY KEY,
                       stock int,
                       id_categoria int,
                       FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario));
+
+CREATE TABLE Categoria(id_categoria AUTO_INCREMENT PRIMARY KEY,
+                       nombre_categoria,
+                       descripcion_categoria,
+                       fecha_de_registro date);
 
 CREATE TABLE Usuario(id_usuario int PRIMARY KEY,
                      nombre varchar(50),
