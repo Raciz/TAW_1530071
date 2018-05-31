@@ -15,19 +15,20 @@ class mvcController
     public function urlController()
     {
         //verifica si de debe dirigir a una pagina en especifico con GET
-        if(isset($_GET["action"]))
+        if(isset($_GET["section"]) && isset($_GET["action"]))
         {
-            //encaso de ser asi guarda el nombre de la pagina
-            $link = $_GET["action"];
+            $section = $_GET["section"];
+            $action = $_GET["action"];
         }
         else
         {
             //en caso de no ser asi se le direccionara al index
-            $link = "index";
+            $section = "index";
+            $action = "index";
         }
 
         //se llama al modelo utilizado para el direccionaiento 
-        $url = url::urlModel($link);
+        $url = url::urlModel($section,$action);
 
         //y se incluye la pagina a la qu se va a derireccionar
         include $url;
