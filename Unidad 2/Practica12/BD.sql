@@ -1,6 +1,19 @@
 DROP DATABASE Inventario;
 CREATE DATABASE Inventario;
 
+CREATE TABLE Categoria(id_categoria int AUTO_INCREMENT PRIMARY KEY,
+                       nombre_categoria varchar(50),
+                       descripcion_categoria varchar(255),
+                       fecha_de_registro date);
+
+CREATE TABLE Usuario(id_usuario int PRIMARY KEY AUTO_INCREMENT,
+                     nombre varchar(50),
+                     apellido varchar(50),
+                     usuario varchar(64),
+                     password varchar(255),
+                     email varchar(54),
+                     fecha_de_registro date);
+
 CREATE TABLE Producto(id_producto int AUTO_INCREMENT PRIMARY KEY,
                       codigo_producto char(20),
                       nombre_producto varchar(255),
@@ -8,20 +21,9 @@ CREATE TABLE Producto(id_producto int AUTO_INCREMENT PRIMARY KEY,
                       precio double,
                       stock int,
                       id_categoria int,
-                      FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario));
+                      FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria));
 
-CREATE TABLE Categoria(id_categoria AUTO_INCREMENT PRIMARY KEY,
-                       nombre_categoria,
-                       descripcion_categoria,
-                       fecha_de_registro date);
 
-CREATE TABLE Usuario(id_usuario int PRIMARY KEY,
-                     nombre varchar(50),
-                     apellido varchar(50),
-                     usuario varchar(64),
-                     password varchar(255),
-                     correo varchar(54),
-                     fecha_de_registro date);
 
 CREATE TABLE Historial(id_historial int AUTO_INCREMENT PRIMARY KEY,
                        id_producto int,
@@ -30,5 +32,5 @@ CREATE TABLE Historial(id_historial int AUTO_INCREMENT PRIMARY KEY,
                        nota varchar(255),
                        referencia varchar(100),
                        cantidad int,
-                       FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
-                       FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario));
+                       FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
+                       FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario));

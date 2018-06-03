@@ -3,12 +3,20 @@
 class url
 {
     //modelo para realizar e l redireccionamiento del sitio
-    public static function urlModel($action)
+    public static function urlModel($section,$action)
     {
         //en caso de que se mande un link valido se redircciona a su pagina correspondiene
-        if($action=="inventario" || $action=="categoria" || $action=="usuario")
+        if(($section=="inventario" || $section=="categoria" || $section=="usuario") && ($action=="listado" || $action=="agregar"))
         {
-            $url = "views/modules/".$action.".php";
+            $url = "views/".$section."/".$action.".php";
+        }
+        elseif($section=="dashboard")
+        {
+            $url = "views/modules/dashboard.php";
+        }
+        elseif($section=="logout")
+        {
+            $url = "views/modules/logout.php";
         }
         else //sino se le manda al login
         {

@@ -12,6 +12,23 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
+
+            <?php
+            if(!empty($_SESSION["mensaje"]))
+            {
+                $_SESSION["mensaje"]="";
+                echo"
+                <div class='alert alert-success alert-dismissible'>
+                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                    <h4>
+                        <i class='icon fa fa-check'></i> Registro Exitoso
+                    </h4>
+                    Se ha registrado un nuevo usuario en el sistema
+                </div>
+                ";
+            }
+            ?>
+
             <div class="box">
                 <div class="box-header">
                     <div class="row">
@@ -19,10 +36,13 @@
                             <h3 class="box-title">Listado de Usuarios</h3>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success pull-right">Agregar Usuario</button>
+                            <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-info">
+                                <i class="fa fa-user-plus"></i> Agregar Usuario
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -37,16 +57,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan</td>
-                                <td>Perez</td>
-                                <td>test@test.com</td>
-                                <td>11/11/1111</td>
-                                <td>
-
-                                </td>
-                            </tr>
+                            <?php
+                            $listado = new mvcUsuario();
+                            $listado -> listadoUsuarioController();
+                            ?>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -67,5 +81,11 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+
+    <?php
+    include_once "views/usuario/agregar.php";
+    ?>
+    <!-- /.modal -->
 </section>
 <!-- /.content -->
+

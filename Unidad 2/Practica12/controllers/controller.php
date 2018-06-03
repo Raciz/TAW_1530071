@@ -14,22 +14,63 @@ class mvcController
     //Control para manejar el redireccionamiento de las distintas secciones del sitio
     public function urlController()
     {
-        //verifica si de debe dirigir a una pagina en especifico con GET
-        if(isset($_GET["action"]))
+        //verifica si de debe dirigir a una seccion en especifico con GET
+        if(isset($_GET["section"]))
         {
-            $action = $_GET["action"];
+            //se obtiene la seccion de direccionar
+            $section = $_GET["section"];
         }
         else
         {
             //en caso de no ser asi se le direccionara al index
-            $action = "index";
+            $section = "index";
+        }
+
+        //se verifica si en dicha seccion se realizara una accion en especifico
+        if(isset($_GET["action"]))
+        {
+            //se obtiene la accion a realizar
+            $action = $_GET["action"];
+        }
+        else
+        {
+            //sino entonces no se realizara alguna accion en la seccion
+            $action = "";
         }
 
         //se llama al modelo utilizado para el direccionaiento 
-        $url = url::urlModel($action);
+        $url = url::urlModel($section,$action);
 
         //y se incluye la pagina a la qu se va a derireccionar
         include $url;
+    }
+
+    //Control para manejar el acceso al sistema
+    public function loginController()
+    {
+        print_r($_SESSION);
+        //se verifica si mediante el formulario se envio informacion
+        if(isset($_POST["user"]))
+        {
+            //se guarda la informacion del login
+            $data = array("usuario"=>$_POST["user"],
+                          "password"=>$_POST["password"]);
+
+            //se manda al modelo la informacion del login
+            $resp = CRUD::loginModel($data,"Usuario");
+
+            //se verifica que la informacion mandada por el formulario sea igual a la devuelta por el modelo
+            if((($resp["usuario"] == $_POST["user"]) || ($resp["email"] == $_POST["user"])) && $resp["password"] == $_POST["password"])
+            {
+                //en caso de que coincida se inicia sesion y se guardan cierto datos del usuario
+                $_SESSION["nombre"] = $resp["nombre"]." ".$resp["apellido"];
+                $_SESSION["password"] = $resp["password"];
+
+                //y nos redirecciona a dashboard
+                header("location:index.php?section=dashboard");
+            }
+
+        }	
     }
 }
 ?>

@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+session_start();
+?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -37,15 +39,39 @@
         <!-- DataTables -->
         <link rel="stylesheet" href="views/media/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
+
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    </head>
-    <body class="sidebar-mini wysihtml5-supported fixed skin-green">
-        <div class="wrapper">
+        <style>
+            .example-modal .modal 
+            {
+                position: relative;
+                top: auto;
+                bottom: auto;
+                right: auto;
+                left: auto;
+                display: block;
+                z-index: 1;
+            }
 
+            .example-modal .modal 
+            {
+                background: transparent !important;
+            }
+        </style>
+
+    </head>
+    
+    <?php
+    if(isset($_SESSION["nombre"]))
+    {
+    ?>
+    <body class="sidebar-mini wysihtml5-supported fixed skin-green">
+
+        <div class="wrapper">
             <header class="main-header">
                 <!-- Logo -->
-                <a href="index2.html" class="logo">
+                <a class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>TAW</b></span>
                     <!-- logo for regular state and mobile devices -->
@@ -64,25 +90,25 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="views/media/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">Alexander Pierce</span>
+                                    <span class="hidden-xs">
+                                        <?php
+                                            echo $_SESSION["nombre"];
+                                        ?>
+                                    </span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="views/media/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
                                         <p>
-                                            Alexander Pierce - Web Developer
+                                            <?php
+                                            echo $_SESSION["nombre"];
+                                            ?>
                                         </p>
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Cerrar Sesion</a>
-                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <a href="index.php?section=logout" class="btn btn-default btn-flat">Cerrar Sesion</a>
                                     </li>
                                 </ul>
                             </li>
@@ -94,20 +120,40 @@
                     </div>
                 </nav>
             </header>
-
+            <?php
+    }
+            ?>
             <!-- incluimos el menu -->
-            <?php include "modules/menu.php"; ?>
+            <?php 
+            if(isset($_SESSION["nombre"]))
+            {
+                include "modules/menu.php";
+            }
+            ?>
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <?php 
-                //creamos un objeto de mvcController
-                $mvc = new mvcController();
-                //y obtenemos el controlador para el redireccionamiento
-                $mvc -> urlController();
-                ?>
-            </div>
+            <?php 
+            if(isset($_SESSION["nombre"]))
+            {
+                echo "<div class='content-wrapper'>";
+            }
+
+            //creamos un objeto de mvcController
+            $mvc = new mvcController();
+            //y obtenemos el controlador para el redireccionamiento
+            $mvc -> urlController();
+
+            if(isset($_SESSION["nombre"]))
+            {
+                echo "</div>";
+            }
+            ?>
+
             <!-- /.content-wrapper -->
+            <?php
+            if(isset($_SESSION["nombre"]))
+            {
+            ?>
             <footer class="main-footer">
                 <strong>Copyright &copy; 2018 <a href="#">Francisco Isaac Perales Morales</a>.</strong> Todos Los Derechos Reservados.
             </footer>
@@ -189,7 +235,9 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-
+        <?php
+            }
+        ?>
         <!-- jQuery 3 -->
         <script src="views/media/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
