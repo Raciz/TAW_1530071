@@ -48,7 +48,6 @@ class mvcController
     //Control para manejar el acceso al sistema
     public function loginController()
     {
-        print_r($_SESSION);
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["user"]))
         {

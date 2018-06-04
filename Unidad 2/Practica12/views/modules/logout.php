@@ -1,6 +1,8 @@
 <?php
-//iniciamos y destruimos la sesion para cerrar la sesion del usuario
-unset($_SESSION);
+//destruimos la sesion para cerrar la sesion del usuario
 session_destroy();
-header("location:index.php");
+
+echo"<script>
+        window.location.replace('index.php');
+     </script>";
 ?>

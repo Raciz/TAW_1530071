@@ -8,8 +8,11 @@
                 <img src="views/media/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p>
+                    <?php
+                    echo $_SESSION["nombre"];
+                    ?>
+                </p>
             </div>
         </div>
 

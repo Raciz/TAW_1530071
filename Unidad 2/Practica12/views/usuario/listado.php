@@ -16,16 +16,46 @@
             <?php
             if(!empty($_SESSION["mensaje"]))
             {
+
+                if($_SESSION["mensaje"]=="agregar")
+                {
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Registro Exitoso
+                        </h4>
+                        Se ha registrado un nuevo usuario en el sistema
+                    </div>
+                    ";
+                }
+                elseif ($_SESSION["mensaje"]=="eliminar")
+                {
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Borrado Exitoso
+                        </h4>
+                        Se ha eliminado el usuario del sistema
+                    </div>
+                    ";
+
+                }
+                elseif ($_SESSION["mensaje"]=="editar")
+                {
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Editado Exitoso
+                        </h4>
+                        La Información del usuario ha sido actualizada
+                    </div>
+                    ";
+
+                }
                 $_SESSION["mensaje"]="";
-                echo"
-                <div class='alert alert-success alert-dismissible'>
-                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                    <h4>
-                        <i class='icon fa fa-check'></i> Registro Exitoso
-                    </h4>
-                    Se ha registrado un nuevo usuario en el sistema
-                </div>
-                ";
             }
             ?>
 
@@ -84,6 +114,8 @@
 
     <?php
     include_once "views/usuario/agregar.php";
+    include_once "views/usuario/eliminar.php";
+    include_once "views/usuario/editar.php";
     ?>
     <!-- /.modal -->
 </section>

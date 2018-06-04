@@ -41,11 +41,6 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                         <label>Contraseña</label>
                         <input type="password" class="form-control" name="contraseña" placeholder="Ingrese Contraseña" required>
                     </div>
-
-                    <div class="form-group">
-                        <label>Repetir Contraseña</label>
-                        <input type="password" class="form-control" name="contraseñaR" placeholder="Repetir Contraseña" required>
-                    </div>
                     
                 </div>
                 <div class="modal-footer">
