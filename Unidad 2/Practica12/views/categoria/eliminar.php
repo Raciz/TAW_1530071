@@ -8,14 +8,14 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para eliminar un usuario
+//verificamos si se debe mandar a llamar el controller para eliminar una categoria
 if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 {
-    //se crea un onjeto de mvcUsuario
-    $eliminar = new mvcUsuario();
+    //se crea un onjeto de mvcCategorias
+    $eliminar = new mvcCategoria();
 
-    //se manda a llamar el controller para eliminar un usuario
-    $eliminar -> eliminarUsuarioController();
+    //se manda a llamar el controller para eliminar un categoria
+    $eliminar -> eliminarCategoriaController();
 }
 ?>
 
@@ -28,7 +28,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
-            <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=eliminar">
+            <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=categoria&action=eliminar">
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->
@@ -70,7 +70,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
         //obtenemos el objeto del input hidden
         var input = document.getElementById("del");
 
-        //le asignamos a value del que es el id del usuario a eliminar 
+        //le asignamos a value del que es el id de la categoria a eliminar 
         input.setAttribute("value",del);
     }
 

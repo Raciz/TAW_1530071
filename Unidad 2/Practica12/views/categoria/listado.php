@@ -41,7 +41,7 @@
                         <h4>
                             <i class='icon fa fa-check'></i> Borrado Exitoso
                         </h4>
-                        Se ha eliminado la sistema del sistema
+                        Se ha eliminado la categoria del sistema del sistema
                     </div>
                     ";
 
@@ -115,8 +115,8 @@
     </div>
     <?php
     include_once "views/categoria/agregar.php";
-    #include_once "views/usuario/eliminar.php";
-    #include_once "views/usuario/editar.php";
+    include_once "views/categoria/eliminar.php";
+    #include_once "views/categoria/editar.php";
     ?>
 </section>
 <!-- /.content -->

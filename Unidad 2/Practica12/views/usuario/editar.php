@@ -8,14 +8,19 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
+//verificamos si se debe mandar a llamar el controller para modificar un usuario
 if(isset($_GET["action"]) && $_GET["action"]=="editar")
 {
+    //creamos un objeto de mvcUsuario
     $modificar = new mvcUsuario();
+
+    //se manda a llamar el controller para modificar la informacion de un usuario
     $modificar -> modificarUsuarioController();
 }
 ?>
 
 <?php
+//verificamos si se requiere desplegar el modal para modificar la informacion del usuario
 if (isset($_GET["edit"]))
 {
 ?>
@@ -29,13 +34,17 @@ if (isset($_GET["edit"]))
             <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=editar">
                 <div class="modal-body">
                     <?php
+                    //creamos un objeto de mvcUsuario
                     $editar = new mvcUsuario();
+                    
+                    //mandamos a llamar a el controller para obtener la informacion del usuario
                     $editar -> editarUsuarioController();
                     ?>               
                 </div>
                 <div class="modal-footer">
+                    <!--Botones para guardar o cancelar con la modificacion de la informacion del usuario-->
                     <a href="index.php?section=usuario&action=listado"><button type="button" class="btn btn-primary">Cancelar</button></a>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
 
