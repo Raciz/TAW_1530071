@@ -77,7 +77,7 @@ if(!isset($_SESSION["nombre"]))
             }
             ?>
 
-            <div class="box">
+            <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
                         <div class="col-xs-6">

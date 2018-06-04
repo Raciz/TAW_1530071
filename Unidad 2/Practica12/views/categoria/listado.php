@@ -1,3 +1,14 @@
+<?php
+//verificamos si el usuario ya ha iniciado session
+if(!isset($_SESSION["nombre"]))
+{
+    //si no ha iniciado sesion, lo redireccionara al login
+    echo "<script>
+            window.location.replace('index.php');
+          </script>";
+}
+?>
+
 <section class="content-header">
     <h1>
         Categorias
@@ -12,8 +23,8 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            
-                        <?php
+
+            <?php
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
@@ -27,7 +38,7 @@
                         <h4>
                             <i class='icon fa fa-check'></i> Registro Exitoso
                         </h4>
-                        Se ha registrado una nueva categoria en el sistema
+                        Se ha registrado una nueva categoria en el sistema.
                     </div>
                     ";
                 }
@@ -41,7 +52,7 @@
                         <h4>
                             <i class='icon fa fa-check'></i> Borrado Exitoso
                         </h4>
-                        Se ha eliminado la categoria del sistema del sistema
+                        Se ha eliminado la categoria del sistema del sistema.
                     </div>
                     ";
 
@@ -56,18 +67,18 @@
                         <h4>
                             <i class='icon fa fa-check'></i> Editado Exitoso
                         </h4>
-                        La Información de la categoria ha sido actualizada
+                        La Información de la categoria ha sido actualizada.
                     </div>
                     ";
 
                 }
-                
+
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
             ?>
-            
-            <div class="box">
+
+            <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
                         <div class="col-xs-6">

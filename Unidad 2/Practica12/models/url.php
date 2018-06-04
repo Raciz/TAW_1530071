@@ -10,6 +10,10 @@ class url
         {
             $url = "views/".$section."/".$action.".php";
         }
+        elseif($section == "producto")
+        {
+            $url = "views/inventario/".$section.".php";
+        }
         elseif($section=="dashboard")
         {
             $url = "views/modules/dashboard.php";

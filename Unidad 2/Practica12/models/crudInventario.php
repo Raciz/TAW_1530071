@@ -1,11 +1,11 @@
 <?php
 require_once "conexion.php";
 
-//clase para realizar operaciones a la base de datos para la seccion de usuarios
+//clase para realizar operaciones a la base de datos para la seccion de inventario
 class CRUDInventario
 {
     //modelo para registrar un producto en la base de datos
-    public static function agregarInventarioModel($data,$tabla)
+    public static function agregarInventarioModel($data,$tabla,&$idProduct)
     {
         //se prepara la sentencia para realizar el insert
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (codigo_producto,nombre_producto,fecha_de_registro,precio,stock,img,id_categoria) VALUES (:codigo,:nombre,NOW(),:precio,:stock,:img,:categoria)");
@@ -22,6 +22,12 @@ class CRUDInventario
         //se ejecuta la sentencia
         if($stmt -> execute())
         {
+            //obtenemos el id del producto insertado
+            $idProduct = Conexion::conectar() -> prepare("SELECT MAX(id_producto) as id FROM $tabla");
+            $idProduct = $idProduct -> execute();
+            $idProduct = $idProduct -> fetch();
+            $idProduct = $idProduct["id"];
+            
             //si se ejecuto correctamente nos retorna success
             return "success";
         }
@@ -35,8 +41,40 @@ class CRUDInventario
         $stmt -> close();
     }
     
-    /*/modelo para obtener la informacion de los usuarios registradas
-    public static function listadoUsuarioModel($tabla)
+    //modelo para crear un registro en el historial de un producto
+    public static function historialInventarioModel($tabla,$data,$userid,$username,$product)
+    {
+        //se prepara la sentencia para realizar el insert
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (id_producto,id_usuario,fecha,hora,referencia,cantidad,nota) VALUES (:producto,:usuario,NOW(),NOW(),:referencia,:cantidad,:nota)");
+
+        $nota = $username." agregó ".$data["stock"]." producto(s) al inventario";
+        
+        //se realiza la asignacion de los datos a insertar
+        $stmt -> bindParam(":usuario",$userid,PDO::PARAM_INT);
+        $stmt -> bindParam(":producto",$product,PDO::PARAM_INT);
+        $stmt -> bindParam(":referencia",$data["codigo"],PDO::PARAM_STR);
+        $stmt -> bindParam(":cantidad",$data["stock"],PDO::PARAM_STR);
+        $stmt -> bindParam(":nota",$nota,PDO::PARAM_STR);
+
+        //se ejecuta la sentencia
+        if($stmt -> execute())
+        {
+            //si se ejecuto correctamente nos retorna success
+            return "success";
+        }
+        else
+        {
+            
+            //en caso de no ser asi nos retorna fail
+            return "fail";
+        }
+
+        //cerramos la conexion
+        $stmt -> close();
+    }
+    
+    //modelo para obtener la informacion de los producto registrados en el sistema
+    public static function listadoInventarioModel($tabla)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
@@ -49,7 +87,7 @@ class CRUDInventario
         $stmt -> close();
     }
     
-    //modelo para borrar un usuario de la base de datos
+    /*/modelo para borrar un usuario de la base de datos
     public static function eliminarUsuarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete

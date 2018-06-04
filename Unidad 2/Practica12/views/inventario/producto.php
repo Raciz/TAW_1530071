@@ -22,45 +22,30 @@ if(!isset($_SESSION["nombre"]))
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            
+
             <?php
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
                 //si session en mensaje es agregar
-                if($_SESSION["mensaje"]=="agregar")
+                if($_SESSION["mensaje"]=="editar")
                 {
                     //se muestra el alert de agregar
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
                         <h4>
-                            <i class='icon fa fa-check'></i> Registro Exitoso
+                            <i class='icon fa fa-check'></i> Editado Exitoso
                         </h4>
-                        Se ha registrado un nuevo producto en el sistema.
+                         La Información del producto ha sido actualizada.
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
-                elseif ($_SESSION["mensaje"]=="eliminar")
-                {
-                    //se muestra el alert de eliminar
-                    echo"
-                    <div class='alert alert-success alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-check'></i> Borrado Exitoso
-                        </h4>
-                        Se ha eliminado el producto del sistema.
-                    </div>
-                    ";
 
-                }
-                
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
-            
+
             //verificamos si se va a mostrar un mensaje de aviso al suceder un error
             if(!empty($_SESSION["error"]))
             {
@@ -108,63 +93,59 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                
+
                 //se elimina el contenido de session en mensaje
                 $_SESSION["error"]="";
             }
             ?>
-            
+            <!-- /.col -->
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-6">
+
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h3 class="box-title">Listado de Productos</h3>
-                        </div>
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-info">
-                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar Producto
-                            </button>
+                            <h3 class="box-title">Imagen del Producto</h3>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Stock</th>
-                                <th>Imagen</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $listado = new mvcInventario();
-                            $listado -> listadoInventarioController();
-                            ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Stock</th>
-                                <th>Imagen</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+
                 </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
         </div>
-        <!-- /.col -->
+
+        <div class="col-xs-6">
+
+            <div class="box box-success">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h3 class="box-title">Informacion del Producto</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
     </div>
+
     <?php
-    include_once "views/inventario/agregar.php";
+    #include_once "views/inventario/agregar.php";
     ?>
 </section>
 <!-- /.content -->

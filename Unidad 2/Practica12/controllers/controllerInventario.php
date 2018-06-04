@@ -17,7 +17,7 @@ class mvcInventario
                           "categoria" => $_POST["categoria"],
                           "precio" => $_POST["precio"],
                           "stock" => $_POST["stock"],
-                          "img" => "#");
+                          "img" => "views/media/img/noimg.png");
 
             //se verifica si se envio una imagen para el producto
             if(!empty($_FILES["img"]["name"]))
@@ -75,15 +75,16 @@ class mvcInventario
                     $_SESSION["error"] = "type";
                     //nos redireccionamos al listado de inventario
                     echo "<script>
-                                    window.location.replace('index.php?section=inventario&action=listado');
-                                 </script>";
+                            window.location.replace('index.php?section=inventario&action=listado');
+                          </script>";
                     //y se detiene la ejecucion del script
                     exit;
                 }
             }
             
-            $resp1 = CRUDInventario::agregarInventarioModel($data,"Inventario");
-            $resp2 = CRUDInventario::historialInventarioModel($data,"Historial");
+            $idProduct = "";
+            $resp1 = CRUDInventario::agregarInventarioModel($data,"Producto",$idProduct);
+            $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$idProduct);
 
             //en caso de que se haya registrado correctamente
             if($resp1 == "success" && $resp2 == "success")
@@ -103,35 +104,34 @@ class mvcInventario
             }
         }
     }
-    /*
-    //Control para mostrar un listado de los usuarios registrados en el sistema
-    function listadoUsuarioController()
+    
+    //Control para mostrar un listado de los producto registrados en el sistema
+    function listadoInventarioController()
     {
-        //se le manda al modelo el nombre de la tabla a mostrar la informacion de los usuarios 
-        $data = CRUDUsuario::listadoUsuarioModel("Usuario");
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion de los productos
+        $data = CRUDInventario::listadoInventarioModel("Producto");
 
-        //se imprime la informacion de cada uno de los usuarios registrados
+        //se imprime la informacion de cada uno de los producto registrados en el sistema
         foreach($data as $rows => $row)
         {
-            //e imprimimos la informacion de cada uno de los usuarios con su respectivo boton de editar y eliminar
+            //e imprimimos la informacion de cada uno de los productos
             echo "<tr>
-                <td>".$row["id_usuario"]."</td>
-                <td>".$row["nombre"]."</td>
-                <td>".$row["apellido"]."</td>
-                <td>".$row["email"]."</td>
-                <td>".$row["fecha_de_registro"]."</td>
+                <td>".$row["codigo_producto"]."</td>
+                <td>".$row["nombre_producto"]."</td>
+                <td>".$row["stock"]."</td>
+                <td>
+                    <center>
+                        <img height=100 width=100 src='".$row["img"]."'>
+                    </center>
+                </td>
                 <td>
                     <center>
                         <div class='btn-group'>
-                            <a href='index.php?section=usuario&action=listado&edit=".$row["id_usuario"]."'>
-                                <button type='button' title='Editar Usuario' class='btn btn-default'>
+                            <a href='index.php?section=producto&product=".$row["id_producto"]."'>
+                                <button type='button' title='Editar Stock' class='btn btn-default'>
                                     <i class='fa fa-edit'></i>
                                 </button>
                             </a>
-
-                            <button type='button' title='Eliminar Usuario' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_usuario"].")'>
-                                <i class='fa fa-trash-o'></i>
-                            </button>
                         </div>
                     </center>
                 </td>
@@ -139,7 +139,7 @@ class mvcInventario
         }
     }
 
-    //Control para borrar un usuario del sistema
+    /*/Control para borrar un usuario del sistema
     public function eliminarUsuarioController()
     {
         //se verifica si se envio el id del usuario a eliminar
