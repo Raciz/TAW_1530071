@@ -2,20 +2,17 @@
 require_once "conexion.php";
 
 //clase para realizar operaciones a la base de datos para la seccion de usuarios
-class CRUDUsuario
+class CRUDCategoria
 {
-    //modelo para registrar un usuario en la base de datos
-    public static function agregarUsuarioModel($data,$tabla)
+    //modelo para registrar una categoria en la base de datos
+    public static function agregarCategoriaModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre,apellido,usuario,password,email,fecha_de_registro) VALUES (:nombre,:apellido,:usuario,:password,:email,NOW())");
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre_categoria,descripcion_categoria,fecha_de_registro) VALUES (:nombre,:descripcion,NOW())");
 
         //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":nombre",$data["nombre"],PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido",$data["apellido"],PDO::PARAM_STR);
-        $stmt -> bindParam(":usuario",$data["usuario"],PDO::PARAM_STR);
-        $stmt -> bindParam(":password",$data["password"],PDO::PARAM_STR);
-        $stmt -> bindParam(":email",$data["email"],PDO::PARAM_STR);
+        $stmt -> bindParam(":descripcion",$data["descripcion"],PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -32,9 +29,9 @@ class CRUDUsuario
         //cerramos la conexion
         $stmt -> close();
     }
-    
-    //modelo para obtener la informacion de los usuarios registradas
-    public static function listadoUsuarioModel($tabla)
+
+    //modelo para obtener la informacion de las categorias registradas
+    public static function listadoCategoriaModel($tabla)
     {
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
@@ -47,11 +44,11 @@ class CRUDUsuario
         $stmt -> close();
     }
     
-    //modelo para borrar un usuario de la base de datos
-    public static function eliminarUsuarioModel($data,$tabla)
+    //modelo para borrar una categoria de la base de datos
+    public static function eliminarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_usuario = :id");
+        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_categoria = :id");
 
         //se realiza la asignacion de los datos a eliminar
         $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
@@ -71,9 +68,10 @@ class CRUDUsuario
         //cerramos la conexion
         $stmt -> close();
     }
+  /*  
     
     //modelo para modificar la informacion de un usuario
-    public static function editarUsuarioModel($data,$tabla)
+    public static function editarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id");
@@ -92,7 +90,7 @@ class CRUDUsuario
     }
     
     //modelo para modificar la informacion de un usuario registrada en la base de datos
-    public static function modificarUsuarioModel($data,$tabla)
+    public static function modificarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, usuario = :usuario, password = :password, email = :email WHERE id_usuario = :id");
@@ -119,6 +117,6 @@ class CRUDUsuario
 
         //cerramos la conexion
         $stmt->close();
-    }
+    }*/
 }
 ?>

@@ -1,3 +1,13 @@
+<?php
+//verificamos si el usuario ya ha iniciado session
+if(!isset($_SESSION["nombre"]))
+{
+    //si no ha iniciado sesion, lo redireccionara al login
+    echo "<script>
+            window.location.replace('index.php');
+          </script>";
+}
+?>
 <section class="content-header">
     <h1>
         Usuarios
@@ -14,11 +24,13 @@
         <div class="col-xs-12">
 
             <?php
+            //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-
+                //si session en mensaje es agregar
                 if($_SESSION["mensaje"]=="agregar")
                 {
+                    //se muestra el alert de agregar
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -29,8 +41,10 @@
                     </div>
                     ";
                 }
+                //si session en mensaje es eliminar
                 elseif ($_SESSION["mensaje"]=="eliminar")
                 {
+                    //se muestra el alert de eliminar
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -42,8 +56,10 @@
                     ";
 
                 }
+                //si session en mensaje es editar
                 elseif ($_SESSION["mensaje"]=="editar")
                 {
+                    //se muestra el alert de editar
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -55,6 +71,8 @@
                     ";
 
                 }
+                
+                //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
             ?>

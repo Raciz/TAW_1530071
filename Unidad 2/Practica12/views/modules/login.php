@@ -1,4 +1,13 @@
 <?php
+//verificamos si el usuario ya ha iniciado session
+if(isset($_SESSION["nombre"]))
+{
+    //en caso de ser asi, lo redireccionara al dashboard
+    echo "<script>
+            window.location.replace('index.php?section=dashboard');
+          </script>";
+}
+
 $login = new mvcController();
 $login -> loginController();
 ?>
@@ -14,7 +23,7 @@ $login -> loginController();
             </p>
 
             <form method="post" autocomplete="off">
-                
+
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" placeholder="Ingrese Usuario O Correo" name="user">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -23,13 +32,13 @@ $login -> loginController();
                     <input type="password" class="form-control" placeholder="Ingrese Contraseña" name="password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-                    <div class="row">
-                        <!-- /.col -->
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar Sesion</button>
-                        </div>
-                        <!-- /.col -->
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar Sesion</button>
                     </div>
+                    <!-- /.col -->
+                </div>
             </form>
         </div>
         <!-- /.login-box-body -->

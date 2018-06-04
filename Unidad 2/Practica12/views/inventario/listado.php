@@ -19,7 +19,9 @@
                             <h3 class="box-title">Listado de Productos</h3>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success pull-right">Agregar Producto</button>
+                            <button type="button" class="btn btn-success pull-right">
+                                <i class="fa fa-plus"></i>Agregar Producto
+                            </button>
                         </div>
                     </div>
                 </div>
