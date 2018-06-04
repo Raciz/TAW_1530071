@@ -24,7 +24,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
 if (isset($_GET["edit"]))
 {
 ?>
-<!--modal para agregar un nuevo usuario-->
+<!--modal para editar la informacion del usuario-->
 <div class="modal modal-info fade in" id="modal-info" style="display: block; padding-right: 15px;">
     <div class="modal-dialog">
         <div class="modal-content">

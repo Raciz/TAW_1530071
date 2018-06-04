@@ -2,20 +2,22 @@
 require_once "conexion.php";
 
 //clase para realizar operaciones a la base de datos para la seccion de usuarios
-class CRUDUsuario
+class CRUDInventario
 {
-    //modelo para registrar un usuario en la base de datos
-    public static function agregarUsuarioModel($data,$tabla)
+    //modelo para registrar un producto en la base de datos
+    public static function agregarInventarioModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre,apellido,usuario,password,email,fecha_de_registro) VALUES (:nombre,:apellido,:usuario,:password,:email,NOW())");
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (codigo_producto,nombre_producto,fecha_de_registro,precio,stock,img,id_categoria) VALUES (:codigo,:nombre,NOW(),:precio,:stock,:img,:categoria)");
 
         //se realiza la asignacion de los datos a insertar
+        $stmt -> bindParam(":codigo",$data["codigo"],PDO::PARAM_STR);
         $stmt -> bindParam(":nombre",$data["nombre"],PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido",$data["apellido"],PDO::PARAM_STR);
-        $stmt -> bindParam(":usuario",$data["usuario"],PDO::PARAM_STR);
-        $stmt -> bindParam(":password",$data["password"],PDO::PARAM_STR);
-        $stmt -> bindParam(":email",$data["email"],PDO::PARAM_STR);
+        $stmt -> bindParam(":precio",$data["precio"],PDO::PARAM_STR);
+        $stmt -> bindParam(":stock",$data["stock"],PDO::PARAM_STR);
+        $stmt -> bindParam(":img",$data["img"],PDO::PARAM_STR);
+        $stmt -> bindParam(":categoria",$data["categoria"],PDO::PARAM_STR);
+        
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -33,7 +35,7 @@ class CRUDUsuario
         $stmt -> close();
     }
     
-    //modelo para obtener la informacion de los usuarios registradas
+    /*/modelo para obtener la informacion de los usuarios registradas
     public static function listadoUsuarioModel($tabla)
     {
         //preparamos la consulta y la ejecutamos
@@ -119,6 +121,6 @@ class CRUDUsuario
 
         //cerramos la conexion
         $stmt->close();
-    }
+    }*/
 }
 ?>

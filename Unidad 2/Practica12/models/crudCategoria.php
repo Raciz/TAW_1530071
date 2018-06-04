@@ -1,7 +1,7 @@
 <?php
 require_once "conexion.php";
 
-//clase para realizar operaciones a la base de datos para la seccion de usuarios
+//clase para realizar operaciones a la base de datos para la seccion de caegoria
 class CRUDCategoria
 {
     //modelo para registrar una categoria en la base de datos
@@ -68,13 +68,12 @@ class CRUDCategoria
         //cerramos la conexion
         $stmt -> close();
     }
-  /*  
     
-    //modelo para modificar la informacion de un usuario
+    //modelo para obtener la informacion de una categoria
     public static function editarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_categoria = :id");
         
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -89,19 +88,16 @@ class CRUDCategoria
         $stmt->close();
     }
     
-    //modelo para modificar la informacion de un usuario registrada en la base de datos
+    //modelo para modificar la informacion de una categoria registrada en la base de datos
     public static function modificarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, usuario = :usuario, password = :password, email = :email WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre_categoria = :nombre, descripcion_categoria = :descripcion WHERE id_categoria = :id");
 
         //se realiza la asignacion de los datos para el update
         $stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
         $stmt -> bindParam(":nombre", $data["nombre"], PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido", $data["apellido"], PDO::PARAM_STR);
-        $stmt -> bindParam(":usuario", $data["usuario"], PDO::PARAM_STR);
-        $stmt -> bindParam(":password", $data["password"], PDO::PARAM_STR);
-        $stmt -> bindParam(":email", $data["email"], PDO::PARAM_STR);
+        $stmt -> bindParam(":descripcion", $data["descripcion"], PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -117,6 +113,6 @@ class CRUDCategoria
 
         //cerramos la conexion
         $stmt->close();
-    }*/
+    }
 }
 ?>

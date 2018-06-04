@@ -8,12 +8,17 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
+//verificamos si se debe llamar al controller para agregar un nuevo usuario
 if(isset($_GET["action"]) && $_GET["action"]=="agregar")
 {
+    //se crea un objeto de mvcUsuario
     $agregar = new mvcUsuario();
+    
+    //se manda a llamar el controller para agregar un nuevo usuario al sistema 
     $agregar -> agregarUsuarioController();
 }
 ?>
+
 <!--modal para agregar un nuevo usuario-->
 <div class="modal modal-info fade" id="modal-info">
     <div class="modal-dialog">
@@ -23,6 +28,8 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Nuevo Usuario</h4>
             </div>
+            
+            <!--Formulario para introducir los datos del nuevo usuario-->
             <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=agregar">
                 <div class="modal-body">
 

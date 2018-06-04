@@ -31,7 +31,6 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                         <input type="text" class="form-control" name="nombre" placeholder="Ingrese Nombre" required>
                     </div>
 
-
                     <div class="form-group">
                         <label>Descripción</label>
                         <textarea name="descripcion" class="form-control" rows="3" placeholder="Ingrese Descripción"></textarea>

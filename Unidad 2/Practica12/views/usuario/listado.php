@@ -135,7 +135,6 @@ if(!isset($_SESSION["nombre"]))
     include_once "views/usuario/eliminar.php";
     include_once "views/usuario/editar.php";
     ?>
-    <!-- /.modal -->
 </section>
 <!-- /.content -->
 

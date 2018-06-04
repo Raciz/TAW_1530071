@@ -19,7 +19,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 }
 ?>
 
-<!--Modal para la confirmacion del borrado de un usuario-->
+<!--Modal para la confirmacion del borrado de una categoria-->
 <div class="modal modal-info fade" id="modal-info-eliminar" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -19,12 +19,13 @@
                             <h3 class="box-title">Listado de Productos</h3>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success pull-right">
-                                <i class="fa fa-plus"></i>Agregar Producto
+                            <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-info">
+                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar Producto
                             </button>
                         </div>
                     </div>
                 </div>
+                
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -65,6 +66,8 @@
         </div>
         <!-- /.col -->
     </div>
-    <!-- /.row -->
+    <?php
+    include_once "views/inventario/agregar.php";
+    ?>
 </section>
 <!-- /.content -->

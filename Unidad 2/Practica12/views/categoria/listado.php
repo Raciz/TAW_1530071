@@ -116,7 +116,7 @@
     <?php
     include_once "views/categoria/agregar.php";
     include_once "views/categoria/eliminar.php";
-    #include_once "views/categoria/editar.php";
+    include_once "views/categoria/editar.php";
     ?>
 </section>
 <!-- /.content -->
