@@ -125,12 +125,12 @@ class mvcCategoria
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["nombre"]))
         {
-            //se guardan la informacion de usuario
+            //se guardan la informacion de la categoria
             $data = array("id" => $_POST["id"],
                           "nombre" => $_POST["nombre"], 
                           "descripcion" => $_POST["descripcion"]);
             
-            //se manda la informacion del usuario y la tabla en la que esta almacenada
+            //se manda la informacion de la categoria y la tabla en la que esta almacenada
             $resp = CRUDCategoria::modificarCategoriaModel($data,"Categoria");
 
             //en caso de que se haya editado correctamente 

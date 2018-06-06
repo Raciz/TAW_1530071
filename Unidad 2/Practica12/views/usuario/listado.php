@@ -8,6 +8,8 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 ?>
+
+<!--mostramos al usuario en que seccion del sistema se encuentra-->
 <section class="content-header">
     <h1>
         Usuarios
@@ -77,6 +79,7 @@ if(!isset($_SESSION["nombre"]))
             }
             ?>
 
+            <!--caja para mostrar el listado de usuarios registrados en el sistema-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -93,6 +96,7 @@ if(!isset($_SESSION["nombre"]))
 
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <!--tabla para mostrar el listado de usuarios en el sistema-->
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -106,7 +110,10 @@ if(!isset($_SESSION["nombre"]))
                         </thead>
                         <tbody>
                             <?php
+                            //creamos un objeto de mvcUsuario
                             $listado = new mvcUsuario();
+                            
+                            //se manda a llamar el control para enlistar a los usuarios registrados en el sistema
                             $listado -> listadoUsuarioController();
                             ?>
                         </tbody>
@@ -131,6 +138,7 @@ if(!isset($_SESSION["nombre"]))
     <!-- /.row -->
 
     <?php
+    //incluimos los archivos con los modales para agregar, editar y eliminar un usuario
     include_once "views/usuario/agregar.php";
     include_once "views/usuario/eliminar.php";
     include_once "views/usuario/editar.php";

@@ -14,6 +14,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
     $agregar -> agregarCategoriaController();
 }
 ?>
+
 <!--modal para agregar un nuevo usuario-->
 <div class="modal modal-info fade" id="modal-info">
     <div class="modal-dialog">
@@ -23,6 +24,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Nueva Categoria</h4>
             </div>
+            <!--formulario para mostrar los datos a ingresar registrar la tutoria-->            
             <form role="form" method="post" autocomplete="off" action="index.php?section=categoria&action=agregar">
                 <div class="modal-body">
 
@@ -37,8 +39,9 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     </div>
 
                 </div>
+                <!--boton para enviar la informacon ingresada en le sistema-->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-outline">Registrar</button>
                 </div>
             </form>
 

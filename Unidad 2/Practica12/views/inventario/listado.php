@@ -8,6 +8,8 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 ?>
+
+<!--section para mostrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Inventario
@@ -22,7 +24,7 @@ if(!isset($_SESSION["nombre"]))
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            
+
             <?php
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
@@ -56,11 +58,11 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                
+
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
-            
+
             //verificamos si se va a mostrar un mensaje de aviso al suceder un error
             if(!empty($_SESSION["error"]))
             {
@@ -108,12 +110,13 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                
+
                 //se elimina el contenido de session en mensaje
                 $_SESSION["error"]="";
             }
             ?>
-            
+
+            <!-- caja para mostrar la el listado de productos-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -127,9 +130,10 @@ if(!isset($_SESSION["nombre"]))
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <!--tabla para mostrar la informacion de los productos-->
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -142,7 +146,10 @@ if(!isset($_SESSION["nombre"]))
                         </thead>
                         <tbody>
                             <?php
+                            //creamos un objeto de mvcInventario
                             $listado = new mvcInventario();
+                            
+                            //se manda a llamar el control para enlistar los procuctos
                             $listado -> listadoInventarioController();
                             ?>
                         </tbody>
@@ -164,6 +171,7 @@ if(!isset($_SESSION["nombre"]))
         <!-- /.col -->
     </div>
     <?php
+    //incluimos el archivo con el modal para agregar productos
     include_once "views/inventario/agregar.php";
     ?>
 </section>

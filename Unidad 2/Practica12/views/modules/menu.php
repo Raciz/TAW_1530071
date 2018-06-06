@@ -2,7 +2,7 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <!-- lista para mostrar el menu de navegacion del sistema -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU PRINCIPAL</li>
             <li>

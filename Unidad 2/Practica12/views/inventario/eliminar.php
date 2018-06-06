@@ -28,6 +28,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
+            <!--formulario para pedir al usuario su contraseña para confirmar el borrado del producto-->
             <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=producto&product=<?php echo $_GET["product"]?>&action=eliminar">
                 <div class="modal-body">
 

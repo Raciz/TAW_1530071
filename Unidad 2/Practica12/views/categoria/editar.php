@@ -31,6 +31,7 @@ if (isset($_GET["edit"]))
             <div class="modal-header">
                 <h4 class="modal-title">Editar Categoria</h4>
             </div>
+            <!--formualrio para confirmar la eliminacion de una categoria-->
             <form role="form" method="post" autocomplete="off" action="index.php?section=categoria&action=editar">
                 <div class="modal-body">
                     <?php
@@ -42,9 +43,9 @@ if (isset($_GET["edit"]))
                     ?>               
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para guardar o cancelar con la modificacion de la informacion de la categoria-->
+                    <!--Botones para guardar o cancelar la modificacion de la informacion de la categoria-->
                     <a href="index.php?section=categoria&action=listado"><button type="button" class="btn btn-primary">Cancelar</button></a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-outline">Guardar</button>
                 </div>
             </form>
 

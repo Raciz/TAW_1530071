@@ -28,6 +28,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Editar Producto</h4>
             </div>
+            <!--Formulario para editar la informacion del producto-->
             <form role="form" method="post" autocomplete="off" action="index.php?section=producto&product=<?php echo $_GET["product"]; ?>&action=editar">
                 <div class="modal-body">
                     <?php

@@ -4,14 +4,14 @@ ini_set("display_errors", 1);
 
 class mvcInventario
 {
-    //Control para manejar el registro de un nuevo usuario en el sistema
+    //Control para manejar el registro de un nuevo producto en el sistema
     function agregarInventarioController()
     {
         //se verifica si mediante el formulario de registro se envio informacion
         if(isset($_POST["nombre"]))
         {
 
-            //se guardan la informacion de usuario
+            //se guardan la informacion del producto
             $data = array("nombre" => $_POST["nombre"],
                           "codigo" => $_POST["codigo"],
                           "categoria" => $_POST["categoria"],
@@ -83,6 +83,8 @@ class mvcInventario
             }
 
             $idProduct = "";
+            
+            //se manda la infomacion nesesaria a los modelos para ingresar el producto en el sistema
             $resp1 = CRUDInventario::agregarInventarioModel($data,"Producto",$idProduct);
             $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$idProduct);
 
@@ -92,7 +94,7 @@ class mvcInventario
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "agregar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de productos
                 echo "<script>
                         window.location.replace('index.php?section=inventario&action=listado');
                       </script>";
@@ -137,8 +139,8 @@ class mvcInventario
             </tr>";
         }
     }
-    
-        
+
+
     //Control para mostrar el historial de un producto
     function listadoHistorialInventarioController()
     {
@@ -169,6 +171,8 @@ class mvcInventario
 
         //se le manda al modelo el nombre de la tabla y el id del producto para extraer su informacion
         $data = CRUDInventario::infoInventarioModel("Producto",$id);
+        
+        //imprimimos la informacion del producto con los botones de modificar stock, editar y eliminar informacion
         echo"
         <div class='row'>
         <div class='col-xs-6'>
@@ -227,10 +231,10 @@ class mvcInventario
                         <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$data["id_producto"].")'>
                             <i class='fa fa-trash-o'></i> Eliminar
                         </a>
-                        <a class='btn btn-app'>
+                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-stock' onclick='typeOfUpdate(1)'>
                             <i class='fa fa-plus-square-o'></i> Agregar Stock
                         </a>
-                        <a class='btn btn-app'>
+                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-stock' onclick='typeOfUpdate(-1)'>
                             <i class='fa fa-minus-square-o'></i> Eliminar Stock
                         </a>
                     <center>
@@ -278,7 +282,7 @@ class mvcInventario
 
         //se manda el id del producto y el nombre de la tabla donde esta almacenada
         $resp = CRUDInventario::editarInventarioModel($data,"Producto");
-        
+
         //se imprime la informacion del producto en inputs de un formulario
         echo "
                     <input type=hidden value=".$resp["id_producto"]." name='id'>
@@ -304,11 +308,12 @@ class mvcInventario
 
                     <div class='form-group'>
                         <label>Precio</label>
-                        <input type='text' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
+                        <input type='number' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
                     </div>
 
              ";
 
+        //script para seleccionar en el select el option de la categoria al que pertenece el producto
         echo "<script>
                 var categoria = document.getElementById('categoria');
 
@@ -343,9 +348,38 @@ class mvcInventario
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara a la descripcion del producto
                 echo "<script>
                         window.location.replace('index.php?section=producto&product=".$data["id"]."');
+                      </script>";
+            }
+        }
+    }
+
+    //control para modificar el inventario de los productos
+    public function stockInventarioController()
+    {
+        //se verifica si mediante el formulario se envio la informacion
+        if(isset($_POST["cantidad"]))
+        {
+            //se guarda la informacion de la modificacion del inventario
+            $data = array("stock" => $_POST["type"] * $_POST["cantidad"],
+                          "codigo" => $_POST["referencia"]);
+
+            //se le manda la informacion a los modelos para modificar la informacion del stock del producto
+            $resp1 = CRUDInventario::updateStockInventarioModel("Producto",$data,$_GET["product"]);
+            
+            $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$_GET["product"]);
+
+            //en caso de haberse actualizado correctamente
+            if($resp1 == "success" && $resp2 == "success")
+            {
+                //asignamos el tipo de mensaje a mostrar
+                $_SESSION["mensaje"] = "stock";
+
+                //nos redireccionara a la descripcion del producto
+                echo "<script>
+                        window.location.replace('index.php?section=producto&product=".$_GET["product"]."');
                       </script>";
             }
         }

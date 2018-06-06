@@ -9,6 +9,7 @@ if(!isset($_SESSION["nombre"]))
 }
 ?>
 
+<!--section para mosrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Categorias
@@ -91,8 +92,11 @@ if(!isset($_SESSION["nombre"]))
                         </div>
                     </div>
                 </div>
-                <!-- /.box-header -->
+
+                <!-- caja para mostrar la el listado de categorias -->
                 <div class="box-body">
+
+                    <!-- tabla para mostrar la el listado de categoriaa -->
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -104,7 +108,9 @@ if(!isset($_SESSION["nombre"]))
                         </thead>
                         <tbody>
                             <?php
+                            //creamos un objeto de mvcCategoria
                             $listado = new mvcCategoria();
+                            //se manda a llamar el controller para mostrar el listado de categorias
                             $listado -> listadoCategoriaController();
                             ?>
                         </tbody>
@@ -125,6 +131,7 @@ if(!isset($_SESSION["nombre"]))
         <!-- /.col -->
     </div>
     <?php
+    //incluimos los archivos con los modales para agregar, editar y eliminar una categoria
     include_once "views/categoria/agregar.php";
     include_once "views/categoria/eliminar.php";
     include_once "views/categoria/editar.php";

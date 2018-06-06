@@ -3,6 +3,7 @@ session_start();
 ?>
 <html>
     <head>
+        <!--importacion de los archivos con los estilos del template-->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Sistema de Inventarios</title>
@@ -42,6 +43,7 @@ session_start();
 
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <!--codigo css para añadir estilo a ciertas partes del template-->
         <style>
             .example-modal .modal 
             {
@@ -58,17 +60,17 @@ session_start();
             {
                 background: transparent !important;
             }
-            
+
             .ocultar
             {
                 display: none;
             }
-            
+
             .info_product
             {
                 font-size: 20px;
             }
-            
+
             .image
             {
                 width: 300px;
@@ -77,8 +79,9 @@ session_start();
         </style>
 
     </head>
-    
+
     <?php
+    //verificamos si el usuario a iniciado sesion para mostrar el menu superior del sistema
     if(isset($_SESSION["nombre"]))
     {
     ?>
@@ -107,7 +110,7 @@ session_start();
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="hidden-xs">
                                         <?php
-                                            echo $_SESSION["nombre"];
+        echo $_SESSION["nombre"];
                                         ?>
                                     </span>
                                 </a>
@@ -116,7 +119,7 @@ session_start();
                                     <li class="user-header">
                                         <p>
                                             <?php
-                                            echo $_SESSION["nombre"];
+        echo $_SESSION["nombre"];
                                             ?>
                                         </p>
                                         <br>
@@ -139,7 +142,8 @@ session_start();
     }
             ?>
             <!-- incluimos el menu -->
-            <?php 
+            <?php
+            //verificamos si esta logeado para mostrar el menu lateral del sistema
             if(isset($_SESSION["nombre"]))
             {
                 include "modules/menu.php";
@@ -166,6 +170,7 @@ session_start();
 
             <!-- /.content-wrapper -->
             <?php
+            //verificamos si esta logeado para mostrar el menu footer del sistema
             if(isset($_SESSION["nombre"]))
             {
             ?>
@@ -182,7 +187,7 @@ session_start();
                 <div class="tab-content">
                     <!-- Home tab content -->
                     <div class="tab-pane" id="control-sidebar-home-tab">
-                       
+
                     </div>
                     <!-- /.tab-pane -->
                 </div>

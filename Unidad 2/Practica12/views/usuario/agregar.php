@@ -60,7 +60,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-outline">Registrar</button>
                 </div>
             </form>
 

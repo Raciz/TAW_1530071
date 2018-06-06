@@ -1,7 +1,7 @@
 <?php
 require_once "conexion.php";
 
-//clase para realizar operaciones a la base de datos para la seccion de caegoria
+//clase para realizar operaciones a la base de datos para la seccion de categoria
 class CRUDCategoria
 {
     //modelo para registrar una categoria en la base de datos

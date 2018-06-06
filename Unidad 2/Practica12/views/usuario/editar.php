@@ -31,6 +31,7 @@ if (isset($_GET["edit"]))
             <div class="modal-header">
                 <h4 class="modal-title">Editar Usuario</h4>
             </div>
+            <!--formulario para editar la informacion de un usuario-->
             <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=editar">
                 <div class="modal-body">
                     <?php
@@ -44,7 +45,7 @@ if (isset($_GET["edit"]))
                 <div class="modal-footer">
                     <!--Botones para guardar o cancelar con la modificacion de la informacion del usuario-->
                     <a href="index.php?section=usuario&action=listado"><button type="button" class="btn btn-primary">Cancelar</button></a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-outline">Guardar</button>
                 </div>
             </form>
 

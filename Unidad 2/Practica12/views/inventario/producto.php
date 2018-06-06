@@ -18,6 +18,8 @@ if(!isset($_GET["product"]))
 }
 
 ?>
+
+<!--section para mosrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Inventario
@@ -48,6 +50,20 @@ if(!isset($_GET["product"]))
                             <i class='icon fa fa-check'></i> Editado Exitoso
                         </h4>
                          La Información del producto ha sido actualizada.
+                    </div>
+                    ";
+                }
+                //si session en mensaje es Stock
+                elseif($_SESSION["mensaje"]=="stock")
+                {
+                    //se muestra el alert de stock
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Registro Exitoso
+                        </h4>
+                         Se ha actualizado el stock del producto.
                     </div>
                     ";
                 }
@@ -113,7 +129,10 @@ if(!isset($_GET["product"]))
     </div>
 
     <?php
+    //creamos un objeto de mvcInventario
     $info = new mvcInventario();
+    
+    //se manda a llamar a el control para mostrar la informacion del producto
     $info -> infoInventarioController();
     ?>
     
@@ -132,6 +151,7 @@ if(!isset($_GET["product"]))
 
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <!--Tabla para mostrar el historial del producto-->
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -144,7 +164,10 @@ if(!isset($_GET["product"]))
                         </thead>
                         <tbody>
                             <?php
+                            //se crea un objeto de mvcInventario
                             $listado = new mvcInventario();
+                            
+                            //se manda a llamar el control para traer el historial del estock del producto
                             $listado -> listadoHistorialInventarioController();
                             ?>
                         </tbody>
@@ -165,8 +188,10 @@ if(!isset($_GET["product"]))
         </div>
     </div>
     <?php
+    //incluimos los archivos con los modales para actualizar el stock y editar y eliminar el producto
     include_once "views/inventario/editar.php";
     include_once "views/inventario/eliminar.php";
+    include_once "views/inventario/actualizarStock.php";
     ?>
 </section>
 <!-- /.content -->

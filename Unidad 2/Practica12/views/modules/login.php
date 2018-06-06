@@ -8,10 +8,15 @@ if(isset($_SESSION["nombre"]))
           </script>";
 }
 
+//creamos un objeto de mvcController
 $login = new mvcController();
+
+//se manda a llamar el control para manejar el inicio de sesion
 $login -> loginController();
 ?>
+
 <body class="hold-transition login-page">
+    <!--caja para mostrar el formlario de inicio de sesion-->
     <div class="login-box">
         <div class="login-logo">
             <h1>Inventario TAW</h1>
@@ -22,6 +27,7 @@ $login -> loginController();
                 Iniciar Sesion
             </p>
 
+            <!--formulario para ingresar la informacion para que un usuario pueda iniciar sesion en el sistema-->
             <form method="post" autocomplete="off">
 
                 <div class="form-group has-feedback">
