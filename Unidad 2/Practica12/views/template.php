@@ -255,7 +255,8 @@ session_start();
         <!-- DataTables -->
         <script src="views/media/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="views/media/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
+        <!-- ChartJS -->
+        <script src="views/media/bower_components/chart.js/Chart.js"></script>
         <script>
             $(
                 function ()
@@ -275,6 +276,14 @@ session_start();
                             'ordering'    : true,
                             'info'        : true,
                             'autoWidth'   : false
+                        }
+                    )
+
+                    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck
+                    (
+                        {
+                            checkboxClass: 'icheckbox_minimal-blue',
+                            radioClass   : 'iradio_minimal-blue'
                         }
                     )
                 }

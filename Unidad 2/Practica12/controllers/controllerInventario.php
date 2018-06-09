@@ -16,7 +16,6 @@ class mvcInventario
                           "codigo" => $_POST["codigo"],
                           "categoria" => $_POST["categoria"],
                           "precio" => $_POST["precio"],
-                          "stock" => $_POST["stock"],
                           "img" => "views/media/img/noimg.png");
 
             //se verifica si se envio una imagen para el producto
@@ -82,14 +81,12 @@ class mvcInventario
                 }
             }
 
-            $idProduct = "";
             
             //se manda la infomacion nesesaria a los modelos para ingresar el producto en el sistema
-            $resp1 = CRUDInventario::agregarInventarioModel($data,"Producto",$idProduct);
-            $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$idProduct);
+            $resp = CRUDInventario::agregarInventarioModel($data,"Producto");
 
             //en caso de que se haya registrado correctamente
-            if($resp1 == "success" && $resp2 == "success")
+            if($resp == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "agregar";
@@ -111,7 +108,7 @@ class mvcInventario
     function listadoInventarioController()
     {
         //se le manda al modelo el nombre de la tabla a mostrar la informacion de los productos
-        $data = CRUDInventario::listadoInventarioModel("Producto");
+        $data = CRUDInventario::listadoInventarioModel("Producto","Categoria");
 
         //se imprime la informacion de cada uno de los producto registrados en el sistema
         foreach($data as $rows => $row)
@@ -120,7 +117,7 @@ class mvcInventario
             echo "<tr>
                 <td>".$row["codigo_producto"]."</td>
                 <td>".$row["nombre_producto"]."</td>
-                <td>".$row["stock"]."</td>
+                <td>".$row["categoria"]."</td>
                 <td>
                     <center>
                         <img height=100 width=100 src='".$row["img"]."'>
@@ -128,12 +125,7 @@ class mvcInventario
                 </td>
                 <td>
                     <center>
-                        <div class='btn-group'>
-                            <br>
-                            <a href='index.php?section=producto&product=".$row["id_producto"]."' class='btn btn-app' title='Editar Stock'>
-                                <i class='fa fa-edit'></i> Editar Stock
-                            </a>
-                        </div>
+                       
                     </center>
                 </td>
             </tr>";

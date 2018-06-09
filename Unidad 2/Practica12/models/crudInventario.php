@@ -5,16 +5,15 @@ require_once "conexion.php";
 class CRUDInventario
 {
     //modelo para registrar un producto en la base de datos
-    public static function agregarInventarioModel($data,$tabla,&$idProduct)
+    public static function agregarInventarioModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (codigo_producto,nombre_producto,fecha_de_registro,precio,stock,img,id_categoria) VALUES (:codigo,:nombre,NOW(),:precio,:stock,:img,:categoria)");
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (codigo_producto,nombre_producto,fecha_de_registro,precio,img,id_categoria) VALUES (:codigo,:nombre,NOW(),:precio,:img,:categoria)");
 
         //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":codigo",$data["codigo"],PDO::PARAM_STR);
         $stmt -> bindParam(":nombre",$data["nombre"],PDO::PARAM_STR);
         $stmt -> bindParam(":precio",$data["precio"],PDO::PARAM_STR);
-        $stmt -> bindParam(":stock",$data["stock"],PDO::PARAM_STR);
         $stmt -> bindParam(":img",$data["img"],PDO::PARAM_STR);
         $stmt -> bindParam(":categoria",$data["categoria"],PDO::PARAM_STR);
 
@@ -22,12 +21,6 @@ class CRUDInventario
         //se ejecuta la sentencia
         if($stmt -> execute())
         {
-            //obtenemos el id del producto insertado
-            $id = Conexion::conectar() -> prepare("SELECT MAX(id_producto) as id FROM $tabla");
-            $id -> execute();
-            $idProduct = $id -> fetch();
-            $idProduct = $idProduct["id"];
-
             //si se ejecuto correctamente nos retorna success
             return "success";
         }
@@ -120,12 +113,12 @@ class CRUDInventario
     }
 
     //modelo para obtener la informacion de los producto registrados en el sistema
-    public static function listadoInventarioModel($tabla)
+    public static function listadoInventarioModel($tabla1,$tabla2)
     {
         //preparamos la consulta y la ejecutamos
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
+        $stmt = Conexion::conectar() -> prepare("SELECT p.nombre_producto , p.img, p.codigo_producto,c.nombre_categoria as categoria FROM $tabla1 as p JOIN $tabla2 as c on p.id_categoria = c.id_categoria");
         $stmt -> execute();
-
+        
         //retornamos la informacion de la tabla
         return $stmt -> fetchAll();
 

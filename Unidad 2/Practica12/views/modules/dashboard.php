@@ -83,5 +83,27 @@ if(!isset($_SESSION["nombre"]))
         <!-- /.col -->
     </div>
     <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-info box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Productos Con Bajo Stock </h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="">
+                    
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
 </section>
 <!-- /.content -->

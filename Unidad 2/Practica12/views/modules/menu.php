@@ -5,12 +5,30 @@
         <!-- lista para mostrar el menu de navegacion del sistema -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU PRINCIPAL</li>
+            <?php
+            if($_SESSION["root"])
+            {
+            ?>
+            <li>
+                <a href="index.php?section=tienda&action=listado">
+                    <i class="fa fa-home"></i> 
+                    <span>Tienda</span>
+                </a>
+            </li>
+            <?php
+            }
+            else
+            {
+            ?>
             <li>
                 <a href="index.php?section=dashboard">
                     <i class="fa fa-dashboard"></i> 
                     <span>Dashboard</span>
                 </a>
             </li>
+            <?php
+            }
+            ?>
             <li>
                 <a href="index.php?section=categoria&action=listado">
                     <i class="fa fa-tags"></i> 

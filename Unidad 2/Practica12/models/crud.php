@@ -8,7 +8,7 @@ class CRUD
     public static function loginModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT usuario, email, password, nombre, apellido, id_usuario FROM $tabla WHERE email = :id OR usuario = :id");	
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE email = :id OR usuario = :id");	
         
         //se realiza la asignacion de los datos para la consulta
 		$stmt->bindParam(":id", $data["usuario"], PDO::PARAM_STR);

@@ -63,11 +63,6 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     </div>
 
                     <div class="form-group">
-                        <label>Stock</label>
-                        <input type="number" class="form-control" name="stock" placeholder="Ingrese Stock Inicial" required>
-                    </div>
-
-                    <div class="form-group">
                         <label>Imagen (tamaño maximo: 300 KB)</label>
                         <input type="file" name="img" accept="image/jpeg, image/png">
                     </div>
