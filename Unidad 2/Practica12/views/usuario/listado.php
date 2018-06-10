@@ -9,17 +9,6 @@ if(!isset($_SESSION["nombre"]))
 }
 ?>
 
-<!--mostramos al usuario en que seccion del sistema se encuentra-->
-<section class="content-header">
-    <h1>
-        Usuarios
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Inicio</a></li>
-        <li class="active">Usuarios</li>
-    </ol>
-</section>
-
 <!-- Main content -->
 <section class="content">
     <div class="row">

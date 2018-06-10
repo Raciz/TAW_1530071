@@ -19,8 +19,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
 }
 ?>
 
+<?php
+//verificamos si se requiere desplegar el modal para modificar la informacion del producto
+if (isset($_GET["edit"]))
+{
+?>
 <!--modal para editar la informacion del producto-->
-<div class="modal modal-info fade" id="modal-info">
+<div class="modal modal-info fade in" id="modal-info" style="display: block; padding-right: 15px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,7 +34,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                 <h4 class="modal-title">Editar Producto</h4>
             </div>
             <!--Formulario para editar la informacion del producto-->
-            <form role="form" method="post" autocomplete="off" action="index.php?section=producto&product=<?php echo $_GET["product"]; ?>&action=editar">
+            <form role="form" method="post" autocomplete="off" action="index.php?section=producto&action=editar">
                 <div class="modal-body">
                     <?php
                     //creamos un objeto de mvcInventario
@@ -41,7 +46,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                 </div>
                 <div class="modal-footer">
                     <!--Botones para guardar o cancelar con la modificacion de la informacion del producto-->
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
+                    <a href="index.php?section=categoria&action=listado"><button type="button" class="btn btn-primary">Cancelar</button></a>
                     <button type="submit" class="btn btn-outline pull-right">Guardar</button>
                 </div>
             </form>
@@ -51,3 +56,6 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
     </div>
     <!-- /.modal-dialog -->
 </div>
+<?php
+}
+?>

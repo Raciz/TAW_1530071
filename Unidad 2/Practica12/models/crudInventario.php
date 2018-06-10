@@ -116,7 +116,7 @@ class CRUDInventario
     public static function listadoInventarioModel($tabla1,$tabla2)
     {
         //preparamos la consulta y la ejecutamos
-        $stmt = Conexion::conectar() -> prepare("SELECT p.nombre_producto , p.img, p.codigo_producto,c.nombre_categoria as categoria FROM $tabla1 as p JOIN $tabla2 as c on p.id_categoria = c.id_categoria");
+        $stmt = Conexion::conectar() -> prepare("SELECT p.id_producto, p.nombre_producto , p.img, p.codigo_producto,c.nombre_categoria as categoria FROM $tabla1 as p JOIN $tabla2 as c on p.id_categoria = c.id_categoria");
         $stmt -> execute();
         
         //retornamos la informacion de la tabla

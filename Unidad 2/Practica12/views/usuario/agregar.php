@@ -30,7 +30,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
             </div>
             
             <!--Formulario para introducir los datos del nuevo usuario-->
-            <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=agregar">
+            <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=agregar&shop=<?php echo $_GET["shop"]; ?>">
                 <div class="modal-body">
 
                     <div class="form-group">
@@ -56,6 +56,18 @@ if(isset($_GET["action"]) && $_GET["action"]=="agregar")
                     <div class="form-group">
                         <label>Contraseña</label>
                         <input type="password" class="form-control" name="contraseña" placeholder="Ingrese Contraseña" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Super Admin</label>
+                        <br>
+                        <label>
+                            <input value="1" type="radio" name="root" class="minimal" required> Si
+                        </label>
+                        <br>
+                        <label>
+                            <input value="0" type="radio" name="root" class="minimal" required> No
+                        </label>
                     </div>
                     
                 </div>

@@ -8,7 +8,7 @@ class CRUDUsuario
     public static function agregarUsuarioModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre,apellido,usuario,password,email,fecha_de_registro) VALUES (:nombre,:apellido,:usuario,:password,:email,NOW())");
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (nombre,apellido,usuario,password,email,fecha_de_registro,id_tienda,root) VALUES (:nombre,:apellido,:usuario,:password,:email,NOW(),:tienda,:root)");
 
         //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":nombre",$data["nombre"],PDO::PARAM_STR);
@@ -16,6 +16,8 @@ class CRUDUsuario
         $stmt -> bindParam(":usuario",$data["usuario"],PDO::PARAM_STR);
         $stmt -> bindParam(":password",$data["password"],PDO::PARAM_STR);
         $stmt -> bindParam(":email",$data["email"],PDO::PARAM_STR);
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
+        $stmt -> bindParam(":root",$data["root"],PDO::PARAM_INT);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -37,7 +39,9 @@ class CRUDUsuario
     public static function listadoUsuarioModel($tabla)
     {
         //preparamos la consulta y la ejecutamos
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE NOT id_usuario = :id AND id_tienda = :tienda");
+        $stmt -> bindParam(":id",$_SESSION["id"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tienda",$_GET["shop"],PDO::PARAM_INT);
         $stmt -> execute();
 
         //retornamos la informacion de la tabla

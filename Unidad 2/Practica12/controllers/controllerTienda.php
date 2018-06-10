@@ -61,7 +61,9 @@ class mvcTienda
                 <td>".$row["estado"]."</td>
                 <td>
                     <center>
-                        
+                        <a class='btn btn-app' href='index.php?section=dashboard&shop=".$row["id_tienda"]."'>
+                            <i class='fa fa-home'></i> Entrar A Tienda
+                        </a>
                     </center>
                 </td>
             </tr>";
@@ -134,7 +136,7 @@ class mvcTienda
 
              ";
     }
-    
+
     //Control para modificar la informacion de un usuario
     public function modificarUsuarioController()
     {
@@ -148,7 +150,7 @@ class mvcTienda
                           "usuario" => $_POST["usuario"],
                           "password" => $_POST["contraseña"],
                           "email" => $_POST["email"]);
-            
+
             //se manda la informacion del usuario y la tabla en la que esta almacenada
             $resp = CRUDUsuario::modificarUsuarioModel($data,"Usuario");
 
@@ -157,7 +159,7 @@ class mvcTienda
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
-                
+
                 //nos redireccionara al listado de usuarios
                 echo "<script>
                         window.location.replace('index.php?section=usuario&action=listado');

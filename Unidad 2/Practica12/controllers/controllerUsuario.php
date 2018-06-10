@@ -15,7 +15,9 @@ class mvcUsuario
                           "apellido" => $_POST["apellido"],
                           "usuario" => $_POST["usuario"],
                           "password" => $_POST["contraseña"],
-                          "email" => $_POST["email"]);
+                          "email" => $_POST["email"],
+                          "tienda" => $_GET["shop"],
+                          "root" => $_POST["root"]);
 
             //se manda la informacion al modelo con su respectiva tabla en la que se registrara
             $resp = CRUDUsuario::agregarUsuarioModel($data,"Usuario");
@@ -28,7 +30,7 @@ class mvcUsuario
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
                       </script>";
             }
             else
@@ -58,12 +60,11 @@ class mvcUsuario
                 <td>
                     <center>
                         <div class='btn-group'>
-                            <a href='index.php?section=usuario&action=listado&edit=".$row["id_usuario"]."'>
-                                <button type='button' title='Editar Usuario' class='btn btn-default'>
+
+                                <button type='button' title='Editar Usuario' class='btn btn-default' data-toggle='modal' data-target='#modal-info-confirm-edit' onclick='idEdit(".$row["id_usuario"].")'>
                                     <i class='fa fa-edit'></i>
                                 </button>
-                            </a>
-                            
+
                             <button type='button' title='Eliminar Usuario' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_usuario"].")'>
                                 <i class='fa fa-trash-o'></i>
                             </button>
@@ -104,7 +105,7 @@ class mvcUsuario
     public function editarUsuarioController()
     {
         //se obtiene el id del usuario a mostrar su informacion
-        $data = $_GET["edit"];
+        $data = $_POST["edit"];
 
         //se manda el id del usuario y el nombre de la tabla donde esta almacenada
         $resp = CRUDUsuario::editarUsuarioModel($data,"Usuario");
@@ -140,7 +141,7 @@ class mvcUsuario
 
              ";
     }
-    
+
     //Control para modificar la informacion de un usuario
     public function modificarUsuarioController()
     {
@@ -154,7 +155,7 @@ class mvcUsuario
                           "usuario" => $_POST["usuario"],
                           "password" => $_POST["contraseña"],
                           "email" => $_POST["email"]);
-            
+
             //se manda la informacion del usuario y la tabla en la que esta almacenada
             $resp = CRUDUsuario::modificarUsuarioModel($data,"Usuario");
 
@@ -163,10 +164,10 @@ class mvcUsuario
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
-                
+
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
                       </script>";
             }
         }

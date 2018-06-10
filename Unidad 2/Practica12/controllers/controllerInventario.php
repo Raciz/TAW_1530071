@@ -125,7 +125,17 @@ class mvcInventario
                 </td>
                 <td>
                     <center>
-                       
+                       <div class='btn-group'>
+                            <a href='index.php?section=inventario&action=listado&edit=".$row["id_producto"]."'>
+                                <button type='button' title='Editar Producto' class='btn btn-default'>
+                                    <i class='fa fa-edit'></i>
+                                </button>
+                            </a>
+                            
+                            <button type='button' title='Eliminar Producto' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_producto"].")'>
+                                <i class='fa fa-trash-o'></i>
+                            </button>
+                        </div>
                     </center>
                 </td>
             </tr>";
@@ -269,9 +279,6 @@ class mvcInventario
     //Control para poder mostrar la informacion de un producto a editar
     public function editarInventarioController()
     {
-        //se obtiene el id del producto a mostrar su informacion
-        $data = $_GET["product"];
-
         //se manda el id del producto y el nombre de la tabla donde esta almacenada
         $resp = CRUDInventario::editarInventarioModel($data,"Producto");
 
