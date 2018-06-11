@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-06-2018 a las 08:57:20
+-- Tiempo de generación: 11-06-2018 a las 19:18:43
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -120,7 +120,8 @@ CREATE TABLE `Tienda` (
 --
 
 INSERT INTO `Tienda` (`id_tienda`, `nombre`, `direccion`, `estado`) VALUES
-(2, 'Soriana 2.0', '12 y 13 Berriozabal 2.0', 0);
+(2, 'Soriana 2.0', '12 y 13 Berriozabal 2.0', 0),
+(3, 'Wal-Mart', '6 Ocampo', 1);
 
 -- --------------------------------------------------------
 
@@ -168,6 +169,46 @@ INSERT INTO `Usuario` (`id_usuario`, `nombre`, `apellido`, `usuario`, `password`
 (1, 'Francisco Isaac', 'Perales Morales', 'admin', 'admin', '1530071@upv.edu.mx', '2018-06-08', 1, NULL),
 (6, 'Juan', 'Perez', 'juan', 'qweqewqqwr', '1430034@upv.edu.mx', '2018-06-10', 0, 2);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Venta`
+--
+
+CREATE TABLE `Venta` (
+  `id_venta` int(11) NOT NULL,
+  `total` double DEFAULT NULL,
+  `id_tienda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Venta`
+--
+
+INSERT INTO `Venta` (`id_venta`, `total`, `id_tienda`) VALUES
+(7, 1000, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Venta_Producto`
+--
+
+CREATE TABLE `Venta_Producto` (
+  `id_venta` int(11) NOT NULL,
+  `id_tienda` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `total` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Venta_Producto`
+--
+
+INSERT INTO `Venta_Producto` (`id_venta`, `id_tienda`, `id_producto`, `cantidad`, `total`) VALUES
+(7, 2, 3, 1, 1000);
+
 --
 -- Índices para tablas volcadas
 --
@@ -214,6 +255,19 @@ ALTER TABLE `Usuario`
   ADD KEY `id_tienda` (`id_tienda`);
 
 --
+-- Indices de la tabla `Venta`
+--
+ALTER TABLE `Venta`
+  ADD PRIMARY KEY (`id_venta`);
+
+--
+-- Indices de la tabla `Venta_Producto`
+--
+ALTER TABLE `Venta_Producto`
+  ADD PRIMARY KEY (`id_venta`,`id_tienda`,`id_producto`),
+  ADD KEY `id_tienda` (`id_tienda`,`id_producto`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -239,13 +293,19 @@ ALTER TABLE `Producto`
 -- AUTO_INCREMENT de la tabla `Tienda`
 --
 ALTER TABLE `Tienda`
-  MODIFY `id_tienda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tienda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `Venta`
+--
+ALTER TABLE `Venta`
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -276,6 +336,13 @@ ALTER TABLE `Tienda_Producto`
 --
 ALTER TABLE `Usuario`
   ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `Tienda` (`id_tienda`);
+
+--
+-- Filtros para la tabla `Venta_Producto`
+--
+ALTER TABLE `Venta_Producto`
+  ADD CONSTRAINT `Venta_Producto_ibfk_1` FOREIGN KEY (`id_tienda`,`id_producto`) REFERENCES `Tienda_Producto` (`id_tienda`, `id_producto`),
+  ADD CONSTRAINT `Venta_Producto_ibfk_2` FOREIGN KEY (`id_venta`) REFERENCES `Venta` (`id_venta`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
