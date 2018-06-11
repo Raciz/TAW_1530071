@@ -8,19 +8,19 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para eliminar un producto del sistema
+//verificamos si se debe mandar a llamar el controller para eliminar un usuario
 if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 {
-    //se crea un onjeto de mvcProducto
-    $eliminar = new mvcInventario();
+    //se crea un onjeto de mvcUsuario
+    $eliminar = new mvcTienda();
 
-    //se manda a llamar el controller para eliminar un producto
-    $eliminar -> eliminarInventarioController();
+    //se manda a llamar el controller para eliminar un usuario
+    $eliminar -> eliminarTiendaController();
 }
 ?>
 
-<!--Modal para la confirmacion del borrado de un producto-->
-<div class="modal modal-info fade" id="eliminar-producto" style="display: none;">
+<!--Modal para la confirmacion del borrado de un usuario-->
+<div class="modal modal-info fade" id="eliminar-tienda" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,12 +28,12 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
-            <!--formulario para pedir al usuario su contraseña para confirmar el borrado del producto-->
-            <form id="formDelP" role="form" method="post" autocomplete="off" action="index.php?section=inventario&action=eliminar">
+            <!--formulario para pedir al usuario su contraseña para confirmar el borrado de un usuario-->
+            <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=tienda&action=eliminar">
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->
-                    <div class="alert alert-danger alert-dismissible ocultar" id="errorDelP">
+                    <div class="alert alert-danger alert-dismissible ocultar" id="error">
                         <button type="button" class="close" onclick="ocultar()">×</button>
                         <h4><i class="icon fa fa-ban"></i>Error</h4>
                         La Contraseña es Incorrecta
@@ -41,13 +41,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 
                     <!--input para ingresar la contraseña del usuario logeado-->
                     <div class="form-group">
-                        <input type="hidden" id="delP" name="delP">
+                        <input type="hidden" id="del" name="del">
                         <label>Ingrese Su Contraseña Para Confirmar</label>
-                        <input type="password" class="form-control" id="passDelP" name="contraseña" placeholder="Ingrese Contraseña" required>
+                        <input type="password" class="form-control" id="pass" name="contraseña" placeholder="Ingrese Contraseña" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para continuar o cancelar con la eliminacion del producto-->
+                    <!--Botones para continuar o cancelar con la eliminacion del usuario-->
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline">Confirmar</button>
                 </div>
@@ -60,16 +60,16 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 
 <script>
     //variable para modificar el formulario
-    var error = document.getElementById("errorDelP");
+    var error = document.getElementById("error");
 
     //variable para modificar el alert de error
-    var form = document.getElementById("formDelP");
+    var form = document.getElementById("form");
 
     //funcion para obtener el id del usuario a eliminar
-    function idDelP(del)
+    function idDel(del)
     {
         //obtenemos el objeto del input hidden
-        var input = document.getElementById("delP");
+        var input = document.getElementById("del");
 
         //le asignamos a value del que es el id del usuario a eliminar 
         input.setAttribute("value",del);
@@ -89,7 +89,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
         function validar(e)
         {
             //obtenemos la contraseña ingresada en el input
-            var pass = document.getElementById("passDelP").value;
+            var pass = document.getElementById("pass").value;
 
             //verificamos si coinciden las contraseñas
             if('<?php echo $_SESSION["password"]?>' != pass)

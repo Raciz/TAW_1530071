@@ -174,6 +174,7 @@ if(!isset($_SESSION["nombre"]))
     //incluimos el archivo con el modal para agregar productos
     include_once "views/inventario/agregar.php";
     include_once "views/inventario/editar.php";
+    include_once "views/inventario/eliminar.php";
     ?>
 </section>
 <!-- /.content -->

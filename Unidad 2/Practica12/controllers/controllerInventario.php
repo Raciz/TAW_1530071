@@ -132,7 +132,7 @@ class mvcInventario
                                 </button>
                             </a>
                             
-                            <button type='button' title='Eliminar Producto' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_producto"].")'>
+                            <button type='button' title='Eliminar Producto' class='btn btn-default' data-toggle='modal' data-target='#eliminar-producto' onclick='idDelP(".$row["id_producto"].")'>
                                 <i class='fa fa-trash-o'></i>
                             </button>
                         </div>
@@ -253,17 +253,16 @@ class mvcInventario
     public function eliminarInventarioController()
     {
         //se verifica si se envio el id del producto a eliminar
-        if(isset($_POST["del"]))
+        if(isset($_POST["delP"]))
         {
             //de ser asi se guarda el id del producto
-            $data = $_POST["del"];
+            $data = $_POST["delP"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp1 = CRUDInventario::eliminarHistorialInventarioModel($data,"Historial");
-            $resp2 = CRUDInventario::eliminarInventarioModel($data,"Producto");
+            $resp = CRUDInventario::eliminarInventarioModel($data,"Historial","Tienda_Producto","Producto");
 
             //en caso de haberse eliminado correctamente
-            if($resp1 == "success" && $resp2 == "success")
+            if($resp == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminar";

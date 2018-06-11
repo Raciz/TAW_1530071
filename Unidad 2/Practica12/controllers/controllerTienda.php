@@ -61,6 +61,9 @@ class mvcTienda
                 <td>".$row["estado"]."</td>
                 <td>
                     <center>
+                        <button class='btn btn-app' data-toggle='modal' data-target='#eliminar-tienda' onclick='idDel(".$row["id_tienda"].")'>
+                            <i class='fa fa-trash'></i> Eliminar
+                        </button>
                         <a class='btn btn-app' href='index.php?section=dashboard&shop=".$row["id_tienda"]."'>
                             <i class='fa fa-home'></i> Entrar A Tienda
                         </a>
@@ -70,8 +73,8 @@ class mvcTienda
         }
     }
 
-    /*/Control para borrar un usuario del sistema
-    public function eliminarUsuarioController()
+    //Control para borrar un usuario del sistema
+    public function eliminarTiendaController()
     {
         //se verifica si se envio el id del usuario a eliminar
         if(isset($_POST["del"]))
@@ -80,7 +83,7 @@ class mvcTienda
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Usuario");
+            $resp = CRUDTienda::eliminarTiendaModel($data,"Historial","Tienda_Producto","Tienda");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -90,13 +93,13 @@ class mvcTienda
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=tienda&action=listado');
                       </script>";
             }
         }
     }
 
-    //Control para poder mostrar la informacion de un usuario a editar
+    /*/Control para poder mostrar la informacion de un usuario a editar
     public function editarUsuarioController()
     {
         //se obtiene el id del usuario a mostrar su informacion

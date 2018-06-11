@@ -14,60 +14,6 @@ if(!isset($_SESSION["nombre"]))
     <div class="row">
         <div class="col-xs-12">
 
-            <?php
-            //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
-            if(!empty($_SESSION["mensaje"]))
-            {
-                //si session en mensaje es agregar
-                if($_SESSION["mensaje"]=="agregar")
-                {
-                    //se muestra el alert de agregar
-                    echo"
-                    <div class='alert alert-success alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-check'></i> Registro Exitoso
-                        </h4>
-                        Se ha registrado un nuevo usuario en el sistema
-                    </div>
-                    ";
-                }
-                //si session en mensaje es eliminar
-                elseif ($_SESSION["mensaje"]=="eliminar")
-                {
-                    //se muestra el alert de eliminar
-                    echo"
-                    <div class='alert alert-warning alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-warning'></i> Advertencia
-                        </h4>
-                        Se ha eliminado un usuario del sistema
-                    </div>
-                    ";
-
-                }
-                //si session en mensaje es editar
-                elseif ($_SESSION["mensaje"]=="editar")
-                {
-                    //se muestra el alert de editar
-                    echo"
-                    <div class='alert alert-success alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-check'></i> Editado Exitoso
-                        </h4>
-                        La Información del usuario ha sido actualizada
-                    </div>
-                    ";
-
-                }
-                
-                //se elimina el contenido de session en mensaje
-                $_SESSION["mensaje"]="";
-            }
-            ?>
-
             <!--caja para mostrar el listado de usuarios registrados en el sistema-->
             <div class="box box-success">
                 <div class="box-header">

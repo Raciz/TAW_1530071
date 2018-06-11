@@ -46,17 +46,31 @@ class CRUDTienda
         $stmt -> close();
     }
     
-    /*/modelo para borrar un usuario de la base de datos
-    public static function eliminarUsuarioModel($data,$tabla)
+    //modelo para borrar una tienda de la base de datos
+    public static function eliminarTiendaModel($data,$tabla1,$tabla2,$tabla3)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_usuario = :id");
+        $stmt1 = Conexion::conectar() -> prepare("DELETE FROM $tabla1 WHERE id_tienda = :id");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
 
+        //preparamos la sentencia para realizar el delete
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_tienda = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
+        
+        //preparamos la sentencia para realizar el delete
+        $stmt3 = Conexion::conectar() -> prepare("DELETE FROM $tabla3 WHERE id_tienda = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt3 -> bindParam(":id",$data,PDO::PARAM_INT);
+        
+        
+        
         //se ejecuta la sentencia
-        if($stmt -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute() && $stmt3 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
@@ -71,7 +85,7 @@ class CRUDTienda
         $stmt -> close();
     }
     
-    //modelo para obtener la informacion de un usuario
+    /*/modelo para obtener la informacion de un usuario
     public static function editarUsuarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select

@@ -29,7 +29,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
             <!--formulario para pedir al usuario su contraseña para confirmar el borrado de un usuario-->
-            <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=eliminar">
+            <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=eliminar&shop=<?php echo $_GET["shop"]; ?>">
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->

@@ -5,6 +5,7 @@ session_start();
     <head>
         <!--importacion de los archivos con los estilos del template-->
         <meta charset="utf-8">
+        <link rel="icon" href="views/media/img/favicon.png" sizes="16x16">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Sistema de Inventarios</title>
         <!-- Tell the browser to be responsive to screen width -->
@@ -268,6 +269,18 @@ session_start();
                     $('#datepicker').datepicker({autoclose: true})
 
                     $('#example1').DataTable
+                    (
+                        {
+                            'paging'      : true,
+                            'lengthChange': false,
+                            'searching'   : true,
+                            'ordering'    : true,
+                            'info'        : true,
+                            'autoWidth'   : false
+                        }
+                    )
+                    
+                    $('#example2').DataTable
                     (
                         {
                             'paging'      : true,

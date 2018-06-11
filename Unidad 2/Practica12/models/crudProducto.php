@@ -93,7 +93,7 @@ class CRUDProducto
     }
 
     
-    //modelo para actualizar el stock de un producto
+    /*/modelo para actualizar el stock de un producto
     public static function updateStockInventarioModel ($tabla,$data,$product)
     {
         //obtenemos el stock actual del producto
@@ -126,13 +126,13 @@ class CRUDProducto
 
         //cerramos la conexion
         $stmt -> close();
-    }
+    }*/
 
     //modelo para obtener la informacion de los producto registrados en la tienda 
     public static function listadoProductoTiendaModel($tabla1,$tabla2,$tienda)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT p.nombre_producto, pt.stock FROM $tabla1 as p JOIN $tabla2 as pt on p.id_producto = pt.id_producto WHERE pt.id_tienda = :tienda");
+        $stmt = Conexion::conectar() -> prepare("SELECT p.nombre_producto, pt.stock, p.id_producto FROM $tabla1 as p JOIN $tabla2 as pt on p.id_producto = pt.id_producto WHERE pt.id_tienda = :tienda");
         
         //asignamos las variables para filtrar los resultados
         $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
@@ -148,7 +148,7 @@ class CRUDProducto
     }
 
     /*/modelo para obtener el historial de un producto 
-    public static function listadoHistorialInventarioModel($tabla,$id)
+    public static function listadoHistorialModel($tabla,$id)
     {
         //preparamos la consulta
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
@@ -183,19 +183,27 @@ class CRUDProducto
 
         //cerramos la conexion
         $stmt -> close();
-    }
+    }*/
 
     //modelo para borrar el historial de un producto de la base de datos
-    public static function eliminarHistorialInventarioModel($data,$tabla)
+    public static function eliminarProductoModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
+        $stmt1 = Conexion::conectar() -> prepare("DELETE FROM $tabla1 WHERE id_producto = :producto AND id_tienda = :tienda");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt1 -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt1 -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
 
+        //preparamos la sentencia para realizar el delete
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_producto = :producto AND id_tienda = :tienda");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt2 -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt2 -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
+        
         //se ejecuta la sentencia
-        if($stmt -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
@@ -210,32 +218,8 @@ class CRUDProducto
         $stmt -> close();
     }
 
-    //modelo para borrar un producto de la base de datos
-    public static function eliminarInventarioModel($data,$tabla)
-    {
-        //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
 
-        //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
-
-        //se ejecuta la sentencia
-        if($stmt -> execute())
-        {
-            //si se ejecuto correctamente nos retorna success
-            return "success";
-        }
-        else
-        {
-            //en caso de no ser asi nos retorna fail
-            return "fail";
-        }
-
-        //cerramos la conexion
-        $stmt -> close();
-    }
-
-    //modelo para obtener la informacion de un producto
+    /*/modelo para obtener la informacion de un producto
     public static function editarInventarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select

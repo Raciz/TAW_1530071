@@ -19,9 +19,9 @@ class mvcProducto
                           "usuario" => $_SESSION["id"],
                           "nombre" => $_SESSION["nombre"]);
 
-           
 
-            
+
+
             //se manda la infomacion nesesaria a los modelos para ingresar el producto en la tienda
             $resp1 = CRUDProducto::agregarProductoModel($data,"Tienda_Producto");
             $resp2 = CRUDProducto::agregarHistorialModel($data,"Historial");
@@ -30,7 +30,7 @@ class mvcProducto
             if($resp1 == "success" && $resp2 == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
-                $_SESSION["mensaje"] = "agregar";
+                $_SESSION["mensaje"] = "agregarP";
 
                 //nos redireccionara a la tienda
                 echo "<script>
@@ -58,7 +58,7 @@ class mvcProducto
             echo "<option value=".$row["id_producto"].">".$row["nombre_producto"]."</option>";
         }
     }
-    
+
     //Control para mostrar un listado de los producto registrados en la tienda
     function listadoProductoTiendaController()
     {
@@ -68,14 +68,18 @@ class mvcProducto
         //se imprime la informacion de cada uno de los producto registrados en la tienda
         foreach($data as $rows => $row)
         {
-            print_r($row);
             //e imprimimos la informacion de cada uno de los productos
             echo "<tr>
                 <td>".$row["nombre_producto"]."</td>
                 <td>".$row["stock"]."</td>
                 <td>
                     <center>
-                       
+                       <button class='btn btn-app' data-toggle='modal' data-target='#eliminar-producto' onclick='idDelP(".$row["id_producto"].")'>
+                            <i class='fa fa-trash'></i> Eliminar
+                       </button>
+                       <a class='btn btn-app'>
+                            <i class='fa fa-edit'></i> Modificar Stock
+                       </a>
                     </center>
                 </td>
             </tr>";
@@ -113,7 +117,7 @@ class mvcProducto
 
         //se le manda al modelo el nombre de la tabla y el id del producto para extraer su informacion
         $data = CRUDInventario::infoInventarioModel("Producto",$id);
-        
+
         //imprimimos la informacion del producto con los botones de modificar stock, editar y eliminar informacion
         echo"
         <div class='row'>
@@ -187,36 +191,36 @@ class mvcProducto
         </div>
         </div>
         ";
-    }
+    }*/
 
-    //Control para borrar un producto del sistema
-    public function eliminarInventarioController()
+    //Control para borrar un producto de la tienda
+    public function eliminarProductoController()
     {
         //se verifica si se envio el id del producto a eliminar
-        if(isset($_POST["del"]))
+        if(isset($_POST["delP"]))
         {
             //de ser asi se guarda el id del producto
-            $data = $_POST["del"];
+            $data = array("producto" => $_POST["delP"],
+                          "tienda" => $_GET["shop"]);
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp1 = CRUDInventario::eliminarHistorialInventarioModel($data,"Historial");
-            $resp2 = CRUDInventario::eliminarInventarioModel($data,"Producto");
+            $resp = CRUDProducto::eliminarProductoModel($data,"Historial","Tienda_Producto");
 
             //en caso de haberse eliminado correctamente
-            if($resp1 == "success" && $resp2 == "success")
+            if($resp == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
-                $_SESSION["mensaje"] = "eliminar";
+                $_SESSION["mensaje"] = "eliminarP";
 
                 //nos redireccionara al listado de productos
                 echo "<script>
-                        window.location.replace('index.php?section=inventario&action=listado');
+                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
                       </script>";
             }
         }
     }
 
-    //Control para poder mostrar la informacion de un producto a editar
+    /*/Control para poder mostrar la informacion de un producto a editar
     public function editarInventarioController()
     {
         //se manda el id del producto y el nombre de la tabla donde esta almacenada
@@ -307,7 +311,7 @@ class mvcProducto
 
             //se le manda la informacion a los modelos para modificar la informacion del stock del producto
             $resp1 = CRUDInventario::updateStockInventarioModel("Producto",$data,$_GET["product"]);
-            
+
             $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$_GET["product"]);
 
             //en caso de haberse actualizado correctamente

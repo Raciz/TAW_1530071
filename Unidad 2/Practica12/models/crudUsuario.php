@@ -52,16 +52,22 @@ class CRUDUsuario
     }
     
     //modelo para borrar un usuario de la base de datos
-    public static function eliminarUsuarioModel($data,$tabla)
+    public static function eliminarUsuarioModel($data,$tabla1,$tabla2)
     {
+        //preparamos la sentencia para realizar el update
+        $stmt1 = Conexion::conectar() -> prepare("UPDATE $tabla1 SET id_usuario = NULL WHERE id_usuario = :id");
+
+        //se realiza la asignacion de los datos a actualizar
+        $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
+        
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_usuario = :id");
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_usuario = :id");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
-        if($stmt -> execute())
+        if($stmt2 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";

@@ -8,14 +8,14 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para eliminar un producto del sistema
+//verificamos si se debe mandar a llamar el controller para eliminar un producto de la tienda
 if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 {
     //se crea un onjeto de mvcProducto
-    $eliminar = new mvcInventario();
+    $eliminar = new mvcProducto();
 
     //se manda a llamar el controller para eliminar un producto
-    $eliminar -> eliminarInventarioController();
+    $eliminar -> eliminarProductoController();
 }
 ?>
 
@@ -29,7 +29,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
             <!--formulario para pedir al usuario su contraseña para confirmar el borrado del producto-->
-            <form id="formDelP" role="form" method="post" autocomplete="off" action="index.php?section=inventario&action=eliminar">
+            <form id="formDelP" role="form" method="post" autocomplete="off" action="index.php?section=producto&action=eliminar&shop=<?php echo $_GET["shop"]?>">
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->

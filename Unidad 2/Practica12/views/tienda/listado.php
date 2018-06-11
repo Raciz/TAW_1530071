@@ -136,7 +136,7 @@ if(!isset($_SESSION["nombre"]))
     <?php
     //incluimos los archivos con los modales para agregar, editar y eliminar una tienda
     include_once "views/tienda/agregar.php";
-    #include_once "views/usuario/eliminar.php";
+    include_once "views/tienda/eliminar.php";
     #include_once "views/usuario/editar.php";
     ?>
 </section>

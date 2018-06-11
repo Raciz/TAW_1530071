@@ -85,7 +85,7 @@ class mvcUsuario
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Usuario");
+            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Historial","Usuario");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -95,7 +95,7 @@ class mvcUsuario
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
                       </script>";
             }
         }

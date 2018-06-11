@@ -118,7 +118,7 @@ class CRUDInventario
         //preparamos la consulta y la ejecutamos
         $stmt = Conexion::conectar() -> prepare("SELECT p.id_producto, p.nombre_producto , p.img, p.codigo_producto,c.nombre_categoria as categoria FROM $tabla1 as p JOIN $tabla2 as c on p.id_categoria = c.id_categoria");
         $stmt -> execute();
-        
+
         //retornamos la informacion de la tabla
         return $stmt -> fetchAll();
 
@@ -164,42 +164,31 @@ class CRUDInventario
         $stmt -> close();
     }
 
-    //modelo para borrar el historial de un producto de la base de datos
-    public static function eliminarHistorialInventarioModel($data,$tabla)
-    {
-        //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
 
-        //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
-
-        //se ejecuta la sentencia
-        if($stmt -> execute())
-        {
-            //si se ejecuto correctamente nos retorna success
-            return "success";
-        }
-        else
-        {
-            //en caso de no ser asi nos retorna fail
-            return "fail";
-        }
-
-        //cerramos la conexion
-        $stmt -> close();
-    }
 
     //modelo para borrar un producto de la base de datos
-    public static function eliminarInventarioModel($data,$tabla)
+    public static function eliminarInventarioModel($data,$tabla1,$tabla2,$tabla3)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
+        $stmt1 = Conexion::conectar() -> prepare("DELETE FROM $tabla1 WHERE id_producto = :id");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
+
+        //preparamos la sentencia para realizar el delete
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_producto = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
+
+        //preparamos la sentencia para realizar el delete
+        $stmt3 = Conexion::conectar() -> prepare("DELETE FROM $tabla3 WHERE id_producto = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt3 -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
-        if($stmt -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute() && $stmt3 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
