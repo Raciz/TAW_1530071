@@ -4,6 +4,31 @@ ini_set("display_errors", 1);
 
 class mvcProducto
 {
+  
+   //Control para borrar un producto de la tienda
+    public function eliminarProductoController()
+    {
+        //se verifica si se envio el id del producto a eliminar
+        if(isset($_POST["delP"]))
+        {
+            //de ser asi se guarda el id del producto
+            $data = array("producto" => $_POST["delP"],
+                          "tienda" => $_GET["shop"]);
+            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
+            $resp = CRUDProducto::eliminarProductoModel($data,"Historial","Tienda_Producto");
+            //en caso de haberse eliminado correctamente
+            if($resp == "success")
+            {
+                //asignamos el tipo de mensaje a mostrar
+                $_SESSION["mensaje"] = "eliminarP";
+                //nos redireccionara al listado de productos
+                echo "<script>
+                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
+                      </script>";
+            }
+        }
+    }
+  
     //Control para manejar el registro de un nuevo producto en la tienda
     function agregarProductoController()
     {

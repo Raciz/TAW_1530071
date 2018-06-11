@@ -67,7 +67,7 @@ class CRUDUsuario
         $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
-        if($stmt2 -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
