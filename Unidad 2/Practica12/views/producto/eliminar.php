@@ -60,7 +60,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 
 <script>
     //variable para modificar el formulario
-    var error = document.getElementById("errorDelP");
+    var errorDelP = document.getElementById("errorDelP");
 
     //variable para modificar el alert de error
     var form = document.getElementById("formDelP");
@@ -79,7 +79,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     function ocultar()
     {
         //al alert le asignamos una nueva clase en class
-        error.setAttribute("class","alert alert-danger alert-dismissible ocultar");
+        errorDelP.setAttribute("class","alert alert-danger alert-dismissible ocultar");
     }
 
 
@@ -97,7 +97,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 //si son diferentes se detiene el evento submit
                 e.preventDefault();
                 //se muestra el alert de error asignadole la siguente clase en class
-                error.setAttribute("class","alert alert-danger alert-dismissible");
+                errorDelP.setAttribute("class","alert alert-danger alert-dismissible");
             }   
         }
 

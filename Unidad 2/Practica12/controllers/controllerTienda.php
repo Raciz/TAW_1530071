@@ -64,6 +64,11 @@ class mvcTienda
                         <button class='btn btn-app' data-toggle='modal' data-target='#eliminar-tienda' onclick='idDel(".$row["id_tienda"].")'>
                             <i class='fa fa-trash'></i> Eliminar
                         </button>
+
+                        <button class='btn btn-app' data-toggle='modal' data-target='#edit-tienda' onclick='idEdit(".$row["id_tienda"].")'>
+                            <i class='fa fa-edit'></i> Editar
+                        </button>
+
                         <a class='btn btn-app' href='index.php?section=dashboard&shop=".$row["id_tienda"]."'>
                             <i class='fa fa-home'></i> Entrar A Tienda
                         </a>
@@ -99,18 +104,18 @@ class mvcTienda
         }
     }
 
-    /*/Control para poder mostrar la informacion de un usuario a editar
-    public function editarUsuarioController()
+    //Control para poder mostrar la informacion de una tienda a editar
+    public function editarTiendaController()
     {
-        //se obtiene el id del usuario a mostrar su informacion
-        $data = $_GET["edit"];
+        //se obtiene el id de la tienda a mostrar su informacion
+        $data = $_POST["edit"];
 
-        //se manda el id del usuario y el nombre de la tabla donde esta almacenada
-        $resp = CRUDUsuario::editarUsuarioModel($data,"Usuario");
+        //se manda el id de la tienda y el nombre de la tabla donde esta almacenada
+        $resp = CRUDTienda::editarTiendaModel($data,"Tienda");
 
-        //se imprime la informacion del usuario en inputs de un formulario
+        //se imprime la informacion en inputs de un formulario
         echo "
-                    <input type=hidden value=".$resp["id_usuario"]." name='id'>
+                    <input type=hidden value=".$resp["id_tienda"]." name='id'>
 
                     <div class='form-group'>
                         <label>Nombres</label>
@@ -119,29 +124,40 @@ class mvcTienda
 
                     <div class='form-group'>
                         <label>Apellidos</label>
-                        <input type='text' value='".$resp["apellido"]."' class='form-control' name='apellido' placeholder='Ingrese Apellido' required>
+                        <input type='text' value='".$resp["direccion"]."' class='form-control' name='direccion' placeholder='Direccion' required>
                     </div>
 
                     <div class='form-group'>
-                        <label>Usuario</label>
-                        <input type='text' value='".$resp["usuario"]."' class='form-control' name='usuario' placeholder='Ingrese Usuario' required>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Email</label>
-                        <input type='email' value='".$resp["email"]."' class='form-control' name='email' placeholder='Ingrese Email' required>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Contraseña</label>
-                        <input type='password' value='".$resp["password"]."' class='form-control' name='contraseña' placeholder='Ingrese Contraseña' required>
-                    </div>
-
-             ";
+                        <label>Estado</label>
+                        <br>
+                        <label>";
+        
+                        if($resp["estado"])
+                        {
+                            echo "<input value='1' type='radio' name='estado' class='minimal' required checked> Activa";
+                        }
+                        else
+                        {
+                            echo "<input value='1' type='radio' name='estado' class='minimal' required> Activa";
+                        }
+                  echo "</label>
+                        <br>
+                        <label>";
+                        if($resp["estado"])
+                        {
+                            echo "<input value='0' type='radio' name='estado' class='minimal' required> Desactivada";
+                        }
+                        else
+                        {
+                            echo "<input value='0' type='radio' name='estado' class='minimal' required checked> Desactivada";
+                        }
+            
+            echo "</label>
+            </div>";
     }
 
     //Control para modificar la informacion de un usuario
-    public function modificarUsuarioController()
+    public function modificarTiendaController()
     {
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["nombre"]))
@@ -149,13 +165,11 @@ class mvcTienda
             //se guardan la informacion de usuario
             $data = array("id" => $_POST["id"],
                           "nombre" => $_POST["nombre"],
-                          "apellido" => $_POST["apellido"],
-                          "usuario" => $_POST["usuario"],
-                          "password" => $_POST["contraseña"],
-                          "email" => $_POST["email"]);
+                          "direccion" => $_POST["direccion"],
+                          "estado" => $_POST["estado"]);
 
             //se manda la informacion del usuario y la tabla en la que esta almacenada
-            $resp = CRUDUsuario::modificarUsuarioModel($data,"Usuario");
+            $resp = CRUDTienda::modificarTiendaModel($data,"Tienda");
 
             //en caso de que se haya editado correctamente 
             if($resp == "success")
@@ -165,11 +179,11 @@ class mvcTienda
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
-                      </script>";
+            window.location.replace('index.php?section=tienda&action=listado');
+        </script>";
             }
         }
-    }*/
+    }
 }
 ?>
 

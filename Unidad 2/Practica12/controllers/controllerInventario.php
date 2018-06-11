@@ -126,11 +126,10 @@ class mvcInventario
                 <td>
                     <center>
                        <div class='btn-group'>
-                            <a href='index.php?section=inventario&action=listado&edit=".$row["id_producto"]."'>
-                                <button type='button' title='Editar Producto' class='btn btn-default'>
-                                    <i class='fa fa-edit'></i>
-                                </button>
-                            </a>
+                       
+                            <button type='button' title='Editar Producto' class='btn btn-default' data-toggle='modal' data-target='#edit-producto' onclick='idEdit(".$row["id_producto"].")'>                       
+                                <i class='fa fa-edit'></i>
+                            </button>
                             
                             <button type='button' title='Eliminar Producto' class='btn btn-default' data-toggle='modal' data-target='#eliminar-producto' onclick='idDelP(".$row["id_producto"].")'>
                                 <i class='fa fa-trash-o'></i>
@@ -142,112 +141,6 @@ class mvcInventario
         }
     }
 
-
-    //Control para mostrar el historial de un producto
-    function listadoHistorialInventarioController()
-    {
-        //obtenemos el id del producto
-        $id = $_GET["product"];
-
-        //se le manda al modelo el nombre de la tabla y el id del producto para extraer su historial
-        $data = CRUDInventario::listadoHistorialInventarioModel("Historial",$id);
-
-        //se imprime del historial del producto
-        foreach($data as $rows => $row)
-        {
-            echo "<tr>
-                    <td>".$row["fecha"]."</td>
-                    <td>".$row["hora"]."</td>
-                    <td>".$row["nota"]."</td>
-                    <td>".$row["referencia"]."</td>
-                    <td>".$row["cantidad"]."</td>
-                 </tr>";
-        }
-    }
-
-    //Control para mostrar la informacion de un producto
-    function infoInventarioController()
-    {
-        //obtenemos el id del producto
-        $id = $_GET["product"];
-
-        //se le manda al modelo el nombre de la tabla y el id del producto para extraer su informacion
-        $data = CRUDInventario::infoInventarioModel("Producto",$id);
-        
-        //imprimimos la informacion del producto con los botones de modificar stock, editar y eliminar informacion
-        echo"
-        <div class='row'>
-        <div class='col-xs-6'>
-
-            <div class='box box-success'>
-                <div class='box-header'>
-                    <div class='row'>
-                        <div class='col-xs-6'>
-                            <h3 class='box-title'>Imagen del Producto</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- /.box-header -->
-                <div class='box-body'>
-                    <center>
-                        <img class='image' src=".$data["img"].">
-                    </center>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-
-        <div class='col-xs-6'>
-
-            <div class='box box-success'>
-                <div class='box-header'>
-                    <div class='row'>
-                        <div class='col-xs-6'>
-                            <h3 class='box-title'>Informacion del Producto</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- /.box-header -->
-                <div class='box-body'>
-                    <p class='info_product'>
-                        <b>Nombre:</b> ".$data["nombre_producto"]."
-                        <br>
-                        <br>
-                        <b>Codigo:</b> ".$data["codigo_producto"]." 
-                        <br>
-                        <br>
-                        <b>Stock Disponible:</b> ".$data["stock"]."
-                        <br>
-                        <br>
-                        <b>Precio Venta:</b> $".$data["precio"]."
-                        <br>
-                        <br>
-                    </p>
-                    <center>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info'>
-                            <i class='fa fa-edit'></i> Editar
-                        </a>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$data["id_producto"].")'>
-                            <i class='fa fa-trash-o'></i> Eliminar
-                        </a>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-stock' onclick='typeOfUpdate(1)'>
-                            <i class='fa fa-plus-square-o'></i> Agregar Stock
-                        </a>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-stock' onclick='typeOfUpdate(-1)'>
-                            <i class='fa fa-minus-square-o'></i> Eliminar Stock
-                        </a>
-                    <center>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-        </div>
-        ";
-    }
 
     //Control para borrar un producto del sistema
     public function eliminarInventarioController()
@@ -278,6 +171,8 @@ class mvcInventario
     //Control para poder mostrar la informacion de un producto a editar
     public function editarInventarioController()
     {
+        $data = $_POST["edit"];
+        
         //se manda el id del producto y el nombre de la tabla donde esta almacenada
         $resp = CRUDInventario::editarInventarioModel($data,"Producto");
 
@@ -348,7 +243,7 @@ class mvcInventario
 
                 //nos redireccionara a la descripcion del producto
                 echo "<script>
-                        window.location.replace('index.php?section=producto&product=".$data["id"]."');
+                        window.location.replace('index.php?section=inventario&action=listado');
                       </script>";
             }
         }

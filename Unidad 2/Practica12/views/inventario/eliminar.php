@@ -33,7 +33,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->
-                    <div class="alert alert-danger alert-dismissible ocultar" id="errorDelP">
+                    <div class="alert alert-danger alert-dismissible ocultar" id="eliminar">
                         <button type="button" class="close" onclick="ocultar()">×</button>
                         <h4><i class="icon fa fa-ban"></i>Error</h4>
                         La Contraseña es Incorrecta
@@ -60,7 +60,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 
 <script>
     //variable para modificar el formulario
-    var error = document.getElementById("errorDelP");
+    var error = document.getElementById("eliminar");
 
     //variable para modificar el alert de error
     var form = document.getElementById("formDelP");
@@ -86,7 +86,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     (function()
      {
         //funcion para validar que la contraseña ingresada coincida con la contraseña del usuario logeado
-        function validar(e)
+        function validarDel(e)
         {
             //obtenemos la contraseña ingresada en el input
             var pass = document.getElementById("passDelP").value;
@@ -102,7 +102,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
         }
 
         //asignamos un addeventlistener al form para ejecutar la funcion validar cuando se inicie el evento submit
-        form.addEventListener("submit",validar);
+        form.addEventListener("submit",validarDel);
     })();
 
 </script>

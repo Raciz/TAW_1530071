@@ -8,19 +8,20 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para modificar un usuario
+//verificamos si se debe mandar a llamar el controller para modificar una tienda
 if(isset($_GET["action"]) && $_GET["action"]=="editar")
 {
-    //creamos un objeto de mvcUsuario
-    $modificar = new mvcUsuario();
+    //creamos un objeto de mvcInventario
+    $modificar = new mvcTienda();
 
-    //se manda a llamar el controller para modificar la informacion de un usuario
-    $modificar -> modificarUsuarioController();
+    //se manda a llamar el controller para modificar la informacion de una tienda
+    $modificar -> modificarTiendaController();
 }
 ?>
 
-<!--Modal para la confirmacion del editado de un usuario-->
-<div class="modal modal-info fade" id="modal-info-confirm-edit" style="display: none;">
+
+<!--Modal para la confirmacion del editado de una tienda-->
+<div class="modal modal-info fade" id="edit-tienda" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,12 +29,12 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Editado</h4>
             </div>
-            <!--formulario para pedir al usuario su contraseña para confirmar el borrado de un usuario-->
-            <form id="formEdit" role="form" method="post" autocomplete="off" action="index.php?section=dashboard&shop=<?php echo $_GET["shop"]; ?>">
+            <!--formulario para pedir al usuario su contraseña para confirmar el editado de una tienda-->
+            <form id="formEdit" role="form" method="post" autocomplete="off" action="index.php?section=tienda&action=listado">
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->
-                    <div class="alert alert-danger alert-dismissible ocultar" id="errorEdit">
+                    <div class="alert alert-danger alert-dismissible ocultar" id="editar">
                         <button type="button" class="close" onclick="ocultar()">×</button>
                         <h4><i class="icon fa fa-ban"></i>Error</h4>
                         La Contraseña es Incorrecta
@@ -47,7 +48,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para continuar o cancelar con la eliminacion del usuario-->
+                    <!--Botones para continuar o cancelar con la edicion de la tienda-->
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline">Confirmar</button>
                 </div>
@@ -60,18 +61,18 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
 
 <script>
     //variable para modificar el formulario
-    var errorEdit = document.getElementById("errorEdit");
+    var errorEdit = document.getElementById("editar");
 
     //variable para modificar el alert de error
     var form = document.getElementById("formEdit");
 
-    //funcion para obtener el id del usuario a eliminar
+    //funcion para obtener el id de la tienda a editar
     function idEdit(edit)
     {
         //obtenemos el objeto del input hidden
         var input = document.getElementById("edit");
 
-        //le asignamos a value del que es el id del usuario a eliminar 
+        //le asignamos a value del que es el id de la tienda a editar 
         input.setAttribute("value",edit);
     }
 
@@ -86,7 +87,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
     (function()
      {
         //funcion para validar que la contraseña ingresada coincida con la contraseña del usuario logeado
-        function validar(e)
+        function validarEdit(e)
         {
             //obtenemos la contraseña ingresada en el input
             var pass = document.getElementById("passEdit").value;
@@ -102,7 +103,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
         }
 
         //asignamos un addeventlistener al form para ejecutar la funcion validar cuando se inicie el evento submit
-        form.addEventListener("submit",validar);
+        form.addEventListener("submit",validarEdit);
     })();
 
 </script>
@@ -110,49 +111,33 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
-//verificamos si se requiere desplegar el modal para modificar la informacion del usuario
+//verificamos si se requiere desplegar el modal para modificar la informacion de la producto
 if (isset($_POST["edit"]))
 {
 ?>
-<!--modal para editar la informacion del usuario-->
+<!--modal para editar la informacion del producto-->
 <div class="modal modal-info fade in" id="modal-info" style="display: block; padding-right: 15px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Editar Usuario</h4>
+                <h4 class="modal-title">Editar Producto</h4>
             </div>
-            <!--formulario para editar la informacion de un usuario-->
-            <form role="form" method="post" autocomplete="off" action="index.php?section=usuario&action=editar&shop=<?php echo $_GET["shop"]; ?>">
+            <!--Formulario para editar la informacion del producto-->
+            <form role="form" method="post" autocomplete="off" action="index.php?section=tienda&action=editar">
                 <div class="modal-body">
                     <?php
-                    //creamos un objeto de mvcUsuario
-                    $editar = new mvcUsuario();
+                    //creamos un objeto de mvcInventario
+                    $editar = new mvcTienda();
                     
-                    //mandamos a llamar a el controller para obtener la informacion del usuario
-                    $editar -> editarUsuarioController();
+                    //mandamos a llamar a el controller para obtener la informacion del producto
+                    $editar -> editarTiendaController();
                     ?>               
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para guardar o cancelar con la modificacion de la informacion del usuario-->
-                    <a href="index.php?section=dashboard&shop=<?php echo $_GET["shop"]; ?>"><button type="button" class="btn btn-primary">Cancelar</button></a>
-                    <button type="submit" class="btn btn-outline">Guardar</button>
+                    <!--Botones para guardar o cancelar con la modificacion de la informacion del producto-->
+                    <a href="index.php?section=tienda&action=listado"><button type="button" class="btn btn-outline pull-left">Cancelar</button></a>
+                    <button type="submit" class="btn btn-outline pull-right">Guardar</button>
                 </div>
             </form>
 
@@ -163,4 +148,4 @@ if (isset($_POST["edit"]))
 </div>
 <?php
 }
-?>     
+?>

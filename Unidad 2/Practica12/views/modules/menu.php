@@ -21,7 +21,7 @@
             {
             ?>
             <li>
-                <a href="index.php?section=dashboard">
+                <a href="index.php?section=dashboard&shop=<?php echo $_SESSION["shop"]?>">
                     <i class="fa fa-dashboard"></i> 
                     <span>Dashboard</span>
                 </a>
@@ -43,12 +43,6 @@
                 </a>
             </li>
 
-            <li>
-                <a href="index.php?section=usuario&action=listado">
-                    <i class="fa fa-users"></i> 
-                    <span>Usuarios</span>
-                </a>
-            </li>
 
         </ul>
     </section>

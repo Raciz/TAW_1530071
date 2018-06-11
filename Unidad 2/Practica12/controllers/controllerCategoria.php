@@ -53,13 +53,11 @@ class mvcCategoria
                 <td>
                     <center>
                         <div class='btn-group'>
-                            <a href='index.php?section=categoria&action=listado&edit=".$row["id_categoria"]."'>
-                                <button type='button' title='Editar Usuario' class='btn btn-default'>
-                                    <i class='fa fa-edit'></i>
-                                </button>
-                            </a>
+                            <button type='button' title='Editar Categoria' class='btn btn-default' data-toggle='modal' data-target='#edit-categoria' onclick='idEdit(".$row["id_categoria"].")'>
+                                <i class='fa fa-edit'></i>
+                            </button>
                             
-                            <button type='button' title='Eliminar Usuario' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_categoria"].")'>
+                            <button type='button' title='Eliminar Categoria' class='btn btn-default' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$row["id_categoria"].")'>
                                 <i class='fa fa-trash-o'></i>
                             </button>
                         </div>
@@ -79,7 +77,7 @@ class mvcCategoria
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDCategoria::eliminarCategoriaModel($data,"Categoria");
+            $resp = CRUDCategoria::eliminarCategoriaModel($data,"Producto","Categoria");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -99,7 +97,7 @@ class mvcCategoria
     public function editarCategoriaController()
     {
         //se obtiene el id de la categoria a mostrar su informacion
-        $data = $_GET["edit"];
+        $data = $_POST["edit"];
 
         //se manda el id de la categoria y el nombre de la tabla donde esta almacenada
         $resp = CRUDCategoria::editarCategoriaModel($data,"Categoria");

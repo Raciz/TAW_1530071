@@ -33,7 +33,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 <div class="modal-body">
 
                     <!--Alert para notificar al usuario que no ha introducido bien su contraseña-->
-                    <div class="alert alert-danger alert-dismissible ocultar" id="error">
+                    <div class="alert alert-danger alert-dismissible ocultar" id="errorDel">
                         <button type="button" class="close" onclick="ocultar()">×</button>
                         <h4><i class="icon fa fa-ban"></i>Error</h4>
                         La Contraseña es Incorrecta
@@ -60,7 +60,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 
 <script>
     //variable para modificar el formulario
-    var error = document.getElementById("error");
+    var errorDel = document.getElementById("errorDel");
 
     //variable para modificar el alert de error
     var form = document.getElementById("form");
@@ -79,7 +79,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     function ocultar()
     {
         //al alert le asignamos una nueva clase en class
-        error.setAttribute("class","alert alert-danger alert-dismissible ocultar");
+        errorDel.setAttribute("class","alert alert-danger alert-dismissible ocultar");
     }
 
 
@@ -97,7 +97,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                 //si son diferentes se detiene el evento submit
                 e.preventDefault();
                 //se muestra el alert de error asignadole la siguente clase en class
-                error.setAttribute("class","alert alert-danger alert-dismissible");
+                errorDel.setAttribute("class","alert alert-danger alert-dismissible");
             }   
         }
 

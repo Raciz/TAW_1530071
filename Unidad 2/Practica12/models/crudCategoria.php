@@ -43,18 +43,24 @@ class CRUDCategoria
         //cerramos la conexion
         $stmt -> close();
     }
-    
+
     //modelo para borrar una categoria de la base de datos
-    public static function eliminarCategoriaModel($data,$tabla)
+    public static function eliminarCategoriaModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_categoria = :id");
+        $stmt1 = Conexion::conectar() -> prepare("UPDATE $tabla1 SET id_categoria = NULL WHERE id_categoria = :id");
+
+        //se realiza la asignacion de los datos 
+        $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
+
+        //preparamos la sentencia para realizar el delete
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_categoria = :id");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
-        if($stmt -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
@@ -68,26 +74,26 @@ class CRUDCategoria
         //cerramos la conexion
         $stmt -> close();
     }
-    
+
     //modelo para obtener la informacion de una categoria
     public static function editarCategoriaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_categoria = :id");
-        
+
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
-        
+
         //se ejecuta la sentencia
         $stmt->execute();
-        
+
         //retornamos la fila obtenida con el select
         return $stmt->fetch();
 
         //cerramos la conexion
         $stmt->close();
     }
-    
+
     //modelo para modificar la informacion de una categoria registrada en la base de datos
     public static function modificarCategoriaModel($data,$tabla)
     {

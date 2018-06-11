@@ -66,6 +66,7 @@ class mvcController
                 $_SESSION["password"] = $resp["password"];
                 $_SESSION["id"] = $resp["id_usuario"];
                 $_SESSION["root"] = $resp["root"];
+                $_SESSION["shop"] = $resp["tienda"];
                 //y nos redirecciona a dashboard (cambIAR)
                 header("location:index.php?section=dashboard");
             }

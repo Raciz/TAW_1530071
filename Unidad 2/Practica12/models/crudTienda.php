@@ -85,11 +85,11 @@ class CRUDTienda
         $stmt -> close();
     }
     
-    /*/modelo para obtener la informacion de un usuario
-    public static function editarUsuarioModel($data,$tabla)
+    //modelo para obtener la informacion de un tienda
+    public static function editarTiendaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_tienda = :id");
         
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -105,18 +105,16 @@ class CRUDTienda
     }
     
     //modelo para modificar la informacion de un usuario registrada en la base de datos
-    public static function modificarUsuarioModel($data,$tabla)
+    public static function modificarTiendaModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, usuario = :usuario, password = :password, email = :email WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, direccion = :direccion, estado = :estado WHERE id_tienda = :id");
 
         //se realiza la asignacion de los datos para el update
         $stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
         $stmt -> bindParam(":nombre", $data["nombre"], PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido", $data["apellido"], PDO::PARAM_STR);
-        $stmt -> bindParam(":usuario", $data["usuario"], PDO::PARAM_STR);
-        $stmt -> bindParam(":password", $data["password"], PDO::PARAM_STR);
-        $stmt -> bindParam(":email", $data["email"], PDO::PARAM_STR);
+        $stmt -> bindParam(":direccion", $data["direccion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":estado", $data["estado"], PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -132,6 +130,6 @@ class CRUDTienda
 
         //cerramos la conexion
         $stmt->close();
-    }*/
+    }
 }
 ?>

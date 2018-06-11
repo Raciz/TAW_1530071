@@ -53,7 +53,7 @@ if(!isset($_SESSION["nombre"]))
                         <h4>
                             <i class='icon fa fa-warning'></i> Advertencia
                         </h4>
-                        Se ha eliminado una categoria del sistema del sistema.
+                        Se ha eliminado una categoria del sistema.
                     </div>
                     ";
 
