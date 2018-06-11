@@ -7,7 +7,7 @@ class conexion
     public static function conectar()
     {
         //creamos la conexion
-        $conn = new PDO("mysql:host=localhost;dbname=Inventario","root","mlpegrr5");
+        $conn = new PDO("mysql:host=localhost;dbname=Inventario","root","");
         
         //y la retornamos
         return $conn;

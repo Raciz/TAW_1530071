@@ -168,7 +168,7 @@ if(!isset($_SESSION["nombre"]))
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
                     <li><a href="#producto" data-toggle="tab">Inventario</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">Ventas</a></li>                    
+                    <li><a href="#venta" data-toggle="tab">Ventas</a></li>                    
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="personal">
@@ -183,14 +183,10 @@ if(!isset($_SESSION["nombre"]))
                         ?>
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                        like Aldus PageMaker including versions of Lorem Ipsum.
+                    <div class="tab-pane" id="venta">
+                        <?php
+                        include_once "views/venta/listado.php";
+                        ?>
                     </div>
                     <!-- /.tab-pane -->
                 </div>

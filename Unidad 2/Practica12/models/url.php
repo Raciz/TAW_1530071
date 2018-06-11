@@ -6,7 +6,7 @@ class url
     public static function urlModel($section,$action)
     {
         //en caso de que se mande un link valido se redirecciona a su pagina correspondiene
-        if(($section=="tienda" || $section=="inventario" || $section=="categoria" || $section=="usuario" || $section == "producto") && ($action=="listado" || $action=="agregar" || $action=="eliminar" || $action=="editar"))
+        if(($section=="tienda" || $section=="inventario" || $section=="categoria" || $section=="usuario" || $section == "producto" || $section == "venta") && ($action=="listado" || $action=="agregar" || $action=="eliminar" || $action=="editar"))
         {
             $url = "views/".$section."/".$action.".php";
         }
