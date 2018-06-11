@@ -9,6 +9,7 @@ if(!isset($_SESSION["nombre"]))
 }
 ?>
 
+
 <!--section para mostrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>

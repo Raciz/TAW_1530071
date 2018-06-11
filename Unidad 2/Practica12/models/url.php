@@ -10,14 +10,14 @@ class url
         {
             $url = "views/".$section."/".$action.".php";
         }
-        /*elseif( && ($action=="eliminar" || $action=="editar" || $action=="actualizarStock"))
+        elseif($section == "producto" && $action=="actualizarStock")
         {
-            $url = "views/inventario/".$action.".php";
+            $url = "views/producto/".$action.".php";
         }
         elseif($section == "producto")
         {
-            $url = "views/inventario/".$section.".php";
-        }*/
+            $url = "views/producto/".$section.".php";
+        }
         elseif($section=="dashboard")
         {
             $url = "views/modules/dashboard.php";

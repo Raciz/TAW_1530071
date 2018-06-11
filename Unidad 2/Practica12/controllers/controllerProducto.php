@@ -77,7 +77,7 @@ class mvcProducto
                        <button class='btn btn-app' data-toggle='modal' data-target='#eliminar-producto' onclick='idDelP(".$row["id_producto"].")'>
                             <i class='fa fa-trash'></i> Eliminar
                        </button>
-                       <a class='btn btn-app'>
+                       <a class='btn btn-app' href='index.php?section=producto&shop=".$_GET["shop"]."&product=".$row["id_producto"]."'>
                             <i class='fa fa-edit'></i> Modificar Stock
                        </a>
                     </center>
@@ -87,14 +87,15 @@ class mvcProducto
     }
 
 
-    /*/Control para mostrar el historial de un producto
-    function listadoHistorialInventarioController()
+    //Control para mostrar el historial de un producto
+    function listadoHistorialController()
     {
         //obtenemos el id del producto
-        $id = $_GET["product"];
+        $ids = array("producto" => $_GET["product"],
+                     "tienda" => $_GET["shop"]);
 
         //se le manda al modelo el nombre de la tabla y el id del producto para extraer su historial
-        $data = CRUDInventario::listadoHistorialInventarioModel("Historial",$id);
+        $data = CRUDProducto::listadoHistorialModel("Historial",$ids);
 
         //se imprime del historial del producto
         foreach($data as $rows => $row)
@@ -110,13 +111,14 @@ class mvcProducto
     }
 
     //Control para mostrar la informacion de un producto
-    function infoInventarioController()
+    function infoProductoController()
     {
         //obtenemos el id del producto
-        $id = $_GET["product"];
+        $ids = array("producto" => $_GET["product"],
+                     "tienda" => $_GET["shop"]);
 
         //se le manda al modelo el nombre de la tabla y el id del producto para extraer su informacion
-        $data = CRUDInventario::infoInventarioModel("Producto",$id);
+        $data = CRUDProducto::infoProductoModel("Producto","Tienda_Producto",$ids);
 
         //imprimimos la informacion del producto con los botones de modificar stock, editar y eliminar informacion
         echo"
@@ -171,12 +173,6 @@ class mvcProducto
                         <br>
                     </p>
                     <center>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info'>
-                            <i class='fa fa-edit'></i> Editar
-                        </a>
-                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$data["id_producto"].")'>
-                            <i class='fa fa-trash-o'></i> Eliminar
-                        </a>
                         <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-stock' onclick='typeOfUpdate(1)'>
                             <i class='fa fa-plus-square-o'></i> Agregar Stock
                         </a>
@@ -191,128 +187,27 @@ class mvcProducto
         </div>
         </div>
         ";
-    }*/
-
-    //Control para borrar un producto de la tienda
-    public function eliminarProductoController()
-    {
-        //se verifica si se envio el id del producto a eliminar
-        if(isset($_POST["delP"]))
-        {
-            //de ser asi se guarda el id del producto
-            $data = array("producto" => $_POST["delP"],
-                          "tienda" => $_GET["shop"]);
-
-            //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDProducto::eliminarProductoModel($data,"Historial","Tienda_Producto");
-
-            //en caso de haberse eliminado correctamente
-            if($resp == "success")
-            {
-                //asignamos el tipo de mensaje a mostrar
-                $_SESSION["mensaje"] = "eliminarP";
-
-                //nos redireccionara al listado de productos
-                echo "<script>
-                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
-                      </script>";
-            }
-        }
     }
 
-    /*/Control para poder mostrar la informacion de un producto a editar
-    public function editarInventarioController()
-    {
-        //se manda el id del producto y el nombre de la tabla donde esta almacenada
-        $resp = CRUDInventario::editarInventarioModel($data,"Producto");
-
-        //se imprime la informacion del producto en inputs de un formulario
-        echo "
-                    <input type=hidden value=".$resp["id_producto"]." name='id'>
-
-                    <div class='form-group'>
-                        <label>Nombre</label>
-                        <input type='text' value='".$resp["nombre_producto"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Categoria</label>
-                        <select name='categoria' id='categoria' class='form-control select2' style='width: 100%;' required>
-                            <option value=''>Seleccione Una Categoria</option>";
-
-        //creamos un objeto de mvcCategoria
-        $option = new mvcCategoria();
-
-        //mandamos a llamar el controller para traer todad las categorias en options de un select
-        $option -> optionCategoriaController();
-
-        echo "   </select>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Precio</label>
-                        <input type='number' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
-                    </div>
-
-             ";
-
-        //script para seleccionar en el select el option de la categoria al que pertenece el producto
-        echo "<script>
-                var categoria = document.getElementById('categoria');
-
-                for(var i = 1; i < categoria.options.length; i++)
-                {
-                    if(categoria.options[i].value ==".$resp["id_categoria"].")
-                    {
-                        categoria.selectedIndex = i;
-                    }
-                }
-                </script>";
-    }
-
-    //Control para modificar la informacion de un producto
-    public function modificarInventarioController()
-    {
-        //se verifica si mediante el formulario se envio informacion
-        if(isset($_POST["nombre"]))
-        {
-            //se guardan la informacion de producto
-            $data = array("id" => $_POST["id"],
-                          "nombre" => $_POST["nombre"],
-                          "categoria" => $_POST["categoria"],
-                          "precio" => $_POST["precio"]);
-
-            //se manda la informacion del producto y la tabla en la que esta almacenada
-            $resp = CRUDInventario::modificarInventarioModel($data,"Producto");
-
-            //en caso de que se haya editado correctamente 
-            if($resp == "success")
-            {
-                //asignamos el tipo de mensaje a mostrar
-                $_SESSION["mensaje"] = "editar";
-
-                //nos redireccionara a la descripcion del producto
-                echo "<script>
-                        window.location.replace('index.php?section=producto&product=".$data["id"]."');
-                      </script>";
-            }
-        }
-    }
 
     //control para modificar el inventario de los productos
-    public function stockInventarioController()
+    public function stockProductoController()
     {
         //se verifica si mediante el formulario se envio la informacion
         if(isset($_POST["cantidad"]))
         {
             //se guarda la informacion de la modificacion del inventario
             $data = array("stock" => $_POST["type"] * $_POST["cantidad"],
-                          "codigo" => $_POST["referencia"]);
+                          "referencia" => $_POST["referencia"],
+                          "tienda" => $_GET["shop"],
+                          "usuario" => $_SESSION["id"],
+                          "nombre" => $_SESSION["nombre"],
+                          "producto" => $_GET["product"]);
 
             //se le manda la informacion a los modelos para modificar la informacion del stock del producto
-            $resp1 = CRUDInventario::updateStockInventarioModel("Producto",$data,$_GET["product"]);
+            $resp1 = CRUDProducto::stockProductoModel("Tienda_Producto",$data);
 
-            $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$_GET["product"]);
+            $resp2 = CRUDProducto::agregarHistorialModel($data,"Historial");
 
             //en caso de haberse actualizado correctamente
             if($resp1 == "success" && $resp2 == "success")
@@ -322,11 +217,11 @@ class mvcProducto
 
                 //nos redireccionara a la descripcion del producto
                 echo "<script>
-                        window.location.replace('index.php?section=producto&product=".$_GET["product"]."');
+                        window.location.replace('index.php?section=producto&shop=".$_GET["shop"]."&product=".$_GET["product"]."');
                       </script>";
             }
         }
-    }*/
+    }
 }
 ?>
 

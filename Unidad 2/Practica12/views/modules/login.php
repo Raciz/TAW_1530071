@@ -2,10 +2,23 @@
 //verificamos si el usuario ya ha iniciado session
 if(isset($_SESSION["nombre"]))
 {
-    //en caso de ser asi, lo redireccionara al dashboard
-    echo "<script>
-            window.location.replace('index.php?section=dashboard');
+    //en caso de ser asi, lo redireccionaremos
+
+    //y nos redireccionamos
+    if($_SESSION["root"])
+    {
+        echo "<script>
+            window.location.replace('index.php?section=tienda&action=listado');
           </script>";
+    }
+    else
+    {
+        echo "<script>
+            window.location.replace('index.php?section=dashboard&shop=".$_SESSION["shop"]."');
+          </script>";
+    }
+
+
 }
 
 //creamos un objeto de mvcController

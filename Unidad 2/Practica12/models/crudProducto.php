@@ -50,7 +50,7 @@ class CRUDProducto
             //si es entrada simplemente creamos el mensaje de entrada
             $nota = $data["nombre"] . " agregó " . $data["stock"] . " producto(s) al inventario";
         }
-        
+
         //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
         $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
@@ -92,23 +92,25 @@ class CRUDProducto
         $stmt -> close();
     }
 
-    
-    /*/modelo para actualizar el stock de un producto
-    public static function updateStockInventarioModel ($tabla,$data,$product)
+
+    //modelo para actualizar el stock de un producto
+    public static function stockProductoModel ($tabla,$data)
     {
         //obtenemos el stock actual del producto
-        $stmt = Conexion::conectar() -> prepare("SELECT stock FROM $tabla WHERE id_producto = :id");
-        $stmt -> bindParam(":id",$product,PDO::PARAM_INT);
+        $stmt = Conexion::conectar() -> prepare("SELECT stock FROM $tabla WHERE id_producto = :producto AND id_tienda = :tienda");
+        $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
         $stmt -> execute();
         $stock = $stmt -> fetch();
         $stock = $stock["stock"];
 
         //preparamos el update para actualizar el inventario
-        $stmt = Conexion::conectar() -> prepare("UPDATE $tabla SET stock = :stock WHERE id_producto = :id");
+        $stmt = Conexion::conectar() -> prepare("UPDATE $tabla SET stock = :stock WHERE id_producto = :producto AND id_tienda = :tienda");
 
         //se realiza la asignacion de los datos a insertar
         $stock = $stock + $data["stock"];
-        $stmt -> bindParam(":id",$product,PDO::PARAM_INT);
+        $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
         $stmt -> bindParam(":stock",$stock,PDO::PARAM_INT);
 
         //se ejecuta la sentencia
@@ -126,17 +128,17 @@ class CRUDProducto
 
         //cerramos la conexion
         $stmt -> close();
-    }*/
+    }
 
     //modelo para obtener la informacion de los producto registrados en la tienda 
     public static function listadoProductoTiendaModel($tabla1,$tabla2,$tienda)
     {
         //preparamos la consulta
         $stmt = Conexion::conectar() -> prepare("SELECT p.nombre_producto, pt.stock, p.id_producto FROM $tabla1 as p JOIN $tabla2 as pt on p.id_producto = pt.id_producto WHERE pt.id_tienda = :tienda");
-        
+
         //asignamos las variables para filtrar los resultados
         $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
-        
+
         //ejecutamos la consulta
         $stmt -> execute();
 
@@ -147,14 +149,15 @@ class CRUDProducto
         $stmt -> close();
     }
 
-    /*/modelo para obtener el historial de un producto 
-    public static function listadoHistorialModel($tabla,$id)
+    //modelo para obtener el historial de un producto 
+    public static function listadoHistorialModel($tabla,$data)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :producto AND id_tienda = :tienda");
 
         //se asigna el id del producto a mostrar su hstorial
-        $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
 
         //se ejecuta la consulta
         $stmt -> execute();
@@ -167,13 +170,14 @@ class CRUDProducto
     }
 
     //modelo para obtener la informacion de un producto 
-    public static function infoInventarioModel($tabla,$id)
+    public static function infoProductoModel($tabla1,$tabla2,$data)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
+        $stmt = Conexion::conectar() -> prepare("SELECT p.img, p.codigo_producto, p.nombre_producto, p.precio, pt.stock FROM $tabla1 as p JOIN $tabla2 as pt on pt.id_producto = p.id_producto WHERE pt.id_producto = :producto AND pt.id_tienda = :tienda");
 
-        //se asigna el id del producto a mostrar su hstorial
-        $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
+        //se asigna el id del producto a mostrar su info
+        $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
 
         //se ejecuta la consulta
         $stmt -> execute();
@@ -183,7 +187,7 @@ class CRUDProducto
 
         //cerramos la conexion
         $stmt -> close();
-    }*/
+    }
 
     //modelo para borrar el historial de un producto de la base de datos
     public static function eliminarProductoModel($data,$tabla1,$tabla2)
@@ -201,7 +205,7 @@ class CRUDProducto
         //se realiza la asignacion de los datos a eliminar
         $stmt2 -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
         $stmt2 -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
-        
+
         //se ejecuta la sentencia
         if($stmt1 -> execute() && $stmt2 -> execute())
         {

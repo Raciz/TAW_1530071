@@ -12,10 +12,10 @@ if(!isset($_SESSION["nombre"]))
 if(isset($_GET["action"]) && $_GET["action"]=="actualizarStock")
 {
     //se crea un objeto de mvcInventario
-    $agregar = new mvcInventario();
+    $agregar = new mvcProducto();
 
     //se manda a llamar el controller para modificar el stock del producto 
-    $agregar -> stockInventarioController();
+    $agregar -> stockProductoController();
 }
 ?>
 
@@ -30,7 +30,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="actualizarStock")
             </div>
 
             <!--Formulario para modificar el stock-->
-            <form role="form" method="post" autocomplete="off" action="index.php?section=producto&product=<?php echo $_GET["product"]; ?>&action=actualizarStock">
+            <form role="form" method="post" autocomplete="off" action="index.php?section=producto&product=<?php echo $_GET["product"]; ?>&action=actualizarStock&shop=<?php echo $_GET["shop"]; ?>">
                 <div class="modal-body">
 
                     <input type="hidden" id="type" name="type">

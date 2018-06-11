@@ -13,7 +13,7 @@ if(!isset($_GET["product"]))
 {
     //si no se envio lo enviamos al listado de producto de inventarios
     echo "<script>
-            window.location.replace('index.php?section=inventario&action=listado');
+            window.location.replace(-1);
           </script>";
 }
 
@@ -26,7 +26,8 @@ if(!isset($_GET["product"]))
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i>Inicio</a></li>
-        <li class="active">Inventario</li>
+        <li class="active">Tienda</li>
+        <li class="active">Producto</li>
     </ol>
 </section>
 
@@ -39,22 +40,8 @@ if(!isset($_GET["product"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es agregar
-                if($_SESSION["mensaje"]=="editar")
-                {
-                    //se muestra el alert de agregar
-                    echo"
-                    <div class='alert alert-success alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-check'></i> Editado Exitoso
-                        </h4>
-                         La Información del producto ha sido actualizada.
-                    </div>
-                    ";
-                }
                 //si session en mensaje es Stock
-                elseif($_SESSION["mensaje"]=="stock")
+                if($_SESSION["mensaje"]=="stock")
                 {
                     //se muestra el alert de stock
                     echo"
@@ -71,58 +58,6 @@ if(!isset($_GET["product"]))
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
-
-            //verificamos si se va a mostrar un mensaje de aviso al suceder un error
-            if(!empty($_SESSION["error"]))
-            {
-                //si session en error es type
-                if($_SESSION["error"]=="type")
-                {
-                    //se muestra el alert de type
-                    echo"
-                    <div class='alert alert-danger alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-ban'></i> Error: Formato de imagen invalido
-                        </h4>
-                        Solo se permite subir imagenes en formato JPG o PNG.
-                    </div>
-                    ";
-                }
-                //si session en error es size
-                elseif ($_SESSION["error"]=="size")
-                {
-                    //se muestra el alert de size
-                    echo"
-                    <div class='alert alert-danger alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-ban'></i> Error: Tamaño superior al permitido
-                        </h4>
-                        No se permite subir imagenes de tamaño superior a 300 KB.
-                    </div>
-                    ";
-
-                }
-                //si session en error es copy
-                elseif ($_SESSION["error"]=="copy")
-                {
-                    //se muestra el alert de copy
-                    echo"
-                    <div class='alert alert-danger alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-ban'></i> Error
-                        </h4>
-                        No se puede subir la imagen al sistema.
-                    </div>
-                    ";
-
-                }
-
-                //se elimina el contenido de session en mensaje
-                $_SESSION["error"]="";
-            }
             ?>
             <!-- /.col -->
         </div>
@@ -130,10 +65,10 @@ if(!isset($_GET["product"]))
 
     <?php
     //creamos un objeto de mvcInventario
-    $info = new mvcInventario();
+    $info = new mvcProducto();
     
     //se manda a llamar a el control para mostrar la informacion del producto
-    $info -> infoInventarioController();
+    $info -> infoProductoController();
     ?>
     
     
@@ -164,11 +99,11 @@ if(!isset($_GET["product"]))
                         </thead>
                         <tbody>
                             <?php
-                            //se crea un objeto de mvcInventario
-                            $listado = new mvcInventario();
+                            //se crea un objeto de mvcProducto
+                            $listado = new mvcProducto();
                             
                             //se manda a llamar el control para traer el historial del estock del producto
-                            $listado -> listadoHistorialInventarioController();
+                            $listado -> listadoHistorialController();
                             ?>
                         </tbody>
                         <tfoot>
@@ -189,9 +124,7 @@ if(!isset($_GET["product"]))
     </div>
     <?php
     //incluimos los archivos con los modales para actualizar el stock y editar y eliminar el producto
-    include_once "views/inventario/editar.php";
-    include_once "views/inventario/eliminar.php";
-    include_once "views/inventario/actualizarStock.php";
+    include_once "views/producto/actualizarStock.php";
     ?>
 </section>
 <!-- /.content -->
