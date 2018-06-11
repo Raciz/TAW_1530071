@@ -88,7 +88,8 @@ class CRUDInventario
     public static function updateStockInventarioModel ($tabla,$data,$product)
     {
         //obtenemos el stock actual del producto
-        $stmt = Conexion::conectar() -> prepare("SELECT stock FROM $tabla");
+        $stmt = Conexion::conectar() -> prepare("SELECT stock FROM $tabla WHERE id_producto = :id");
+        $stmt -> bindParam(":id",$product,PDO::PARAM_INT);
         $stmt -> execute();
         $stock = $stmt -> fetch();
         $stock = $stock["stock"];
