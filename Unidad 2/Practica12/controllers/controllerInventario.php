@@ -81,7 +81,7 @@ class mvcInventario
                     exit;
                 }
             }
-            
+
             $idProduct = "";
             $resp1 = CRUDInventario::agregarInventarioModel($data,"Producto",$idProduct);
             $resp2 = CRUDInventario::historialInventarioModel("Historial",$data,$_SESSION["id"],$_SESSION["nombre"],$idProduct);
@@ -104,7 +104,7 @@ class mvcInventario
             }
         }
     }
-    
+
     //Control para mostrar un listado de los producto registrados en el sistema
     function listadoInventarioController()
     {
@@ -127,10 +127,9 @@ class mvcInventario
                 <td>
                     <center>
                         <div class='btn-group'>
-                            <a href='index.php?section=producto&product=".$row["id_producto"]."'>
-                                <button type='button' title='Editar Stock' class='btn btn-default'>
-                                    <i class='fa fa-edit'></i>
-                                </button>
+                            <br>
+                            <a href='index.php?section=producto&product=".$row["id_producto"]."' class='btn btn-app' title='Editar Stock'>
+                                <i class='fa fa-edit'></i> Editar Stock
                             </a>
                         </div>
                     </center>
@@ -138,90 +137,205 @@ class mvcInventario
             </tr>";
         }
     }
-
-    /*/Control para borrar un usuario del sistema
-    public function eliminarUsuarioController()
+    
+        
+    //Control para mostrar el historial de un producto
+    function listadoHistorialInventarioController()
     {
-        //se verifica si se envio el id del usuario a eliminar
+        //obtenemos el id del producto
+        $id = $_GET["product"];
+
+        //se le manda al modelo el nombre de la tabla y el id del producto para extraer su historial
+        $data = CRUDInventario::listadoHistorialInventarioModel("Historial",$id);
+
+        //se imprime del historial del producto
+        foreach($data as $rows => $row)
+        {
+            echo "<tr>
+                    <td>".$row["fecha"]."</td>
+                    <td>".$row["hora"]."</td>
+                    <td>".$row["nota"]."</td>
+                    <td>".$row["referencia"]."</td>
+                    <td>".$row["cantidad"]."</td>
+                 </tr>";
+        }
+    }
+
+    //Control para mostrar la informacion de un producto
+    function infoInventarioController()
+    {
+        //obtenemos el id del producto
+        $id = $_GET["product"];
+
+        //se le manda al modelo el nombre de la tabla y el id del producto para extraer su informacion
+        $data = CRUDInventario::infoInventarioModel("Producto",$id);
+        echo"
+        <div class='row'>
+        <div class='col-xs-6'>
+
+            <div class='box box-success'>
+                <div class='box-header'>
+                    <div class='row'>
+                        <div class='col-xs-6'>
+                            <h3 class='box-title'>Imagen del Producto</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class='box-body'>
+                    <center>
+                        <img class='image' src=".$data["img"].">
+                    </center>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <div class='col-xs-6'>
+
+            <div class='box box-success'>
+                <div class='box-header'>
+                    <div class='row'>
+                        <div class='col-xs-6'>
+                            <h3 class='box-title'>Informacion del Producto</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class='box-body'>
+                    <p class='info_product'>
+                        <b>Nombre:</b> ".$data["nombre_producto"]."
+                        <br>
+                        <br>
+                        <b>Codigo:</b> ".$data["codigo_producto"]." 
+                        <br>
+                        <br>
+                        <b>Stock Disponible:</b> ".$data["stock"]."
+                        <br>
+                        <br>
+                        <b>Precio Venta:</b> $".$data["precio"]."
+                        <br>
+                        <br>
+                    </p>
+                    <center>
+                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info'>
+                            <i class='fa fa-edit'></i> Editar
+                        </a>
+                        <a class='btn btn-app' data-toggle='modal' data-target='#modal-info-eliminar' onclick='idDel(".$data["id_producto"].")'>
+                            <i class='fa fa-trash-o'></i> Eliminar
+                        </a>
+                        <a class='btn btn-app'>
+                            <i class='fa fa-plus-square-o'></i> Agregar Stock
+                        </a>
+                        <a class='btn btn-app'>
+                            <i class='fa fa-minus-square-o'></i> Eliminar Stock
+                        </a>
+                    <center>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        </div>
+        ";
+    }
+
+    //Control para borrar un producto del sistema
+    public function eliminarInventarioController()
+    {
+        //se verifica si se envio el id del producto a eliminar
         if(isset($_POST["del"]))
         {
-            //de ser asi se guarda el id del usuario
+            //de ser asi se guarda el id del producto
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Usuario");
+            $resp1 = CRUDInventario::eliminarHistorialInventarioModel($data,"Historial");
+            $resp2 = CRUDInventario::eliminarInventarioModel($data,"Producto");
 
             //en caso de haberse eliminado correctamente
-            if($resp == "success")
+            if($resp1 == "success" && $resp2 == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de productos
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=inventario&action=listado');
                       </script>";
             }
         }
     }
 
-    //Control para poder mostrar la informacion de un usuario a editar
-    public function editarUsuarioController()
+    //Control para poder mostrar la informacion de un producto a editar
+    public function editarInventarioController()
     {
-        //se obtiene el id del usuario a mostrar su informacion
-        $data = $_GET["edit"];
+        //se obtiene el id del producto a mostrar su informacion
+        $data = $_GET["product"];
 
-        //se manda el id del usuario y el nombre de la tabla donde esta almacenada
-        $resp = CRUDUsuario::editarUsuarioModel($data,"Usuario");
-
-        //se imprime la informacion del usuario en inputs de un formulario
+        //se manda el id del producto y el nombre de la tabla donde esta almacenada
+        $resp = CRUDInventario::editarInventarioModel($data,"Producto");
+        
+        //se imprime la informacion del producto en inputs de un formulario
         echo "
-                    <input type=hidden value=".$resp["id_usuario"]." name='id'>
+                    <input type=hidden value=".$resp["id_producto"]." name='id'>
 
                     <div class='form-group'>
-                        <label>Nombres</label>
-                        <input type='text' value='".$resp["nombre"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required>
+                        <label>Nombre</label>
+                        <input type='text' value='".$resp["nombre_producto"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required>
                     </div>
 
                     <div class='form-group'>
-                        <label>Apellidos</label>
-                        <input type='text' value='".$resp["apellido"]."' class='form-control' name='apellido' placeholder='Ingrese Apellido' required>
+                        <label>Categoria</label>
+                        <select name='categoria' id='categoria' class='form-control select2' style='width: 100%;' required>
+                            <option value=''>Seleccione Una Categoria</option>";
+
+        //creamos un objeto de mvcCategoria
+        $option = new mvcCategoria();
+
+        //mandamos a llamar el controller para traer todad las categorias en options de un select
+        $option -> optionCategoriaController();
+
+        echo "   </select>
                     </div>
 
                     <div class='form-group'>
-                        <label>Usuario</label>
-                        <input type='text' value='".$resp["usuario"]."' class='form-control' name='usuario' placeholder='Ingrese Usuario' required>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Email</label>
-                        <input type='email' value='".$resp["email"]."' class='form-control' name='email' placeholder='Ingrese Email' required>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>Contraseña</label>
-                        <input type='password' value='".$resp["password"]."' class='form-control' name='contraseña' placeholder='Ingrese Contraseña' required>
+                        <label>Precio</label>
+                        <input type='text' value='".$resp["precio"]."' class='form-control' name='precio' placeholder='Ingrese Usuario' required>
                     </div>
 
              ";
+
+        echo "<script>
+                var categoria = document.getElementById('categoria');
+
+                for(var i = 1; i < categoria.options.length; i++)
+                {
+                    if(categoria.options[i].value ==".$resp["id_categoria"].")
+                    {
+                        categoria.selectedIndex = i;
+                    }
+                }
+                </script>";
     }
 
-    //Control para modificar la informacion de un usuario
-    public function modificarUsuarioController()
+    //Control para modificar la informacion de un producto
+    public function modificarInventarioController()
     {
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["nombre"]))
         {
-            //se guardan la informacion de usuario
+            //se guardan la informacion de producto
             $data = array("id" => $_POST["id"],
                           "nombre" => $_POST["nombre"],
-                          "apellido" => $_POST["apellido"],
-                          "usuario" => $_POST["usuario"],
-                          "password" => $_POST["contraseña"],
-                          "email" => $_POST["email"]);
+                          "categoria" => $_POST["categoria"],
+                          "precio" => $_POST["precio"]);
 
-            //se manda la informacion del usuario y la tabla en la que esta almacenada
-            $resp = CRUDUsuario::modificarUsuarioModel($data,"Usuario");
+            //se manda la informacion del producto y la tabla en la que esta almacenada
+            $resp = CRUDInventario::modificarInventarioModel($data,"Producto");
 
             //en caso de que se haya editado correctamente 
             if($resp == "success")
@@ -231,11 +345,11 @@ class mvcInventario
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-                        window.location.replace('index.php?section=usuario&action=listado');
+                        window.location.replace('index.php?section=producto&product=".$data["id"]."');
                       </script>";
             }
         }
-    }*/
+    }
 }
 ?>
 

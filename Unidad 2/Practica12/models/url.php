@@ -10,6 +10,10 @@ class url
         {
             $url = "views/".$section."/".$action.".php";
         }
+        elseif($section == "producto" && ($action=="eliminar" || $action=="editar"))
+        {
+            $url = "views/inventario/".$action.".php";
+        }
         elseif($section == "producto")
         {
             $url = "views/inventario/".$section.".php";

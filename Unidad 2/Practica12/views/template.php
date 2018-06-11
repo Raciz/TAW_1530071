@@ -63,6 +63,17 @@ session_start();
             {
                 display: none;
             }
+            
+            .info_product
+            {
+                font-size: 20px;
+            }
+            
+            .image
+            {
+                width: 300px;
+                height: 300px;
+            }
         </style>
 
     </head>

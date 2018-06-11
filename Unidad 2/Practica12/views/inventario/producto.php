@@ -7,6 +7,16 @@ if(!isset($_SESSION["nombre"]))
             window.location.replace('index.php');
           </script>";
 }
+
+//verificamos si se envio por get el id del producto a mostrar su informacion
+if(!isset($_GET["product"]))
+{
+    //si no se envio lo enviamos al listado de producto de inventarios
+    echo "<script>
+            window.location.replace('index.php?section=inventario&action=listado');
+          </script>";
+}
+
 ?>
 <section class="content-header">
     <h1>
@@ -101,51 +111,62 @@ if(!isset($_SESSION["nombre"]))
             <!-- /.col -->
         </div>
     </div>
+
+    <?php
+    $info = new mvcInventario();
+    $info -> infoInventarioController();
+    ?>
     
+    
+    <!--Seccion para mostrar la informacion del historial del producto-->
     <div class="row">
-        <div class="col-xs-6">
-
+        <div class="col-xs-12">
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h3 class="box-title">Imagen del Producto</h3>
+                            <h3 class="box-title">Historial de Inventario</h3>
                         </div>
                     </div>
                 </div>
 
                 <!-- /.box-header -->
                 <div class="box-body">
-
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-
-        <div class="col-xs-6">
-
-            <div class="box box-success">
-                <div class="box-header">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h3 class="box-title">Informacion del Producto</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- /.box-header -->
-                <div class="box-body">
-
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Descripcion</th>
+                                <th>Referencia</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $listado = new mvcInventario();
+                            $listado -> listadoHistorialInventarioController();
+                            ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Descripcion</th>
+                                <th>Referencia</th>
+                                <th>Total</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
         </div>
     </div>
-
     <?php
-    #include_once "views/inventario/agregar.php";
+    include_once "views/inventario/editar.php";
+    include_once "views/inventario/eliminar.php";
     ?>
 </section>
 <!-- /.content -->

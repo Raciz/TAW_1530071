@@ -23,9 +23,9 @@ class CRUDInventario
         if($stmt -> execute())
         {
             //obtenemos el id del producto insertado
-            $idProduct = Conexion::conectar() -> prepare("SELECT MAX(id_producto) as id FROM $tabla");
-            $idProduct = $idProduct -> execute();
-            $idProduct = $idProduct -> fetch();
+            $id = Conexion::conectar() -> prepare("SELECT MAX(id_producto) as id FROM $tabla");
+            $id -> execute();
+            $idProduct = $id -> fetch();
             $idProduct = $idProduct["id"];
             
             //si se ejecuto correctamente nos retorna success
@@ -87,11 +87,74 @@ class CRUDInventario
         $stmt -> close();
     }
     
-    /*/modelo para borrar un usuario de la base de datos
-    public static function eliminarUsuarioModel($data,$tabla)
+    //modelo para obtener el historial de un producto 
+    public static function listadoHistorialInventarioModel($tabla,$id)
+    {
+        //preparamos la consulta
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
+        
+        //se asigna el id del producto a mostrar su hstorial
+        $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
+        
+        //se ejecuta la consulta
+        $stmt -> execute();
+
+        //retornamos la informacion del historial
+        return $stmt -> fetchAll();
+
+        //cerramos la conexion
+        $stmt -> close();
+    }
+    
+    //modelo para obtener la informacion de un producto 
+    public static function infoInventarioModel($tabla,$id)
+    {
+        //preparamos la consulta
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
+        
+        //se asigna el id del producto a mostrar su hstorial
+        $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
+        
+        //se ejecuta la consulta
+        $stmt -> execute();
+
+        //retornamos la informacion del historial
+        return $stmt -> fetch();
+
+        //cerramos la conexion
+        $stmt -> close();
+    }
+    
+    //modelo para borrar el historial de un producto de la base de datos
+    public static function eliminarHistorialInventarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el delete
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_usuario = :id");
+        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+
+        //se ejecuta la sentencia
+        if($stmt -> execute())
+        {
+            //si se ejecuto correctamente nos retorna success
+            return "success";
+        }
+        else
+        {
+            //en caso de no ser asi nos retorna fail
+            return "fail";
+        }
+        print_r($stmt -> errorInfo());
+        //cerramos la conexion
+        $stmt -> close();
+    }
+    
+    //modelo para borrar un producto de la base de datos
+    public static function eliminarInventarioModel($data,$tabla)
+    {
+        //preparamos la sentencia para realizar el delete
+        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE id_producto = :id");
 
         //se realiza la asignacion de los datos a eliminar
         $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
@@ -112,11 +175,11 @@ class CRUDInventario
         $stmt -> close();
     }
     
-    //modelo para obtener la informacion de un usuario
-    public static function editarUsuarioModel($data,$tabla)
+    //modelo para obtener la informacion de un producto
+    public static function editarInventarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_producto = :id");
         
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -131,19 +194,17 @@ class CRUDInventario
         $stmt->close();
     }
     
-    //modelo para modificar la informacion de un usuario registrada en la base de datos
-    public static function modificarUsuarioModel($data,$tabla)
+    //modelo para modificar la informacion de un producto registrada en la base de datos
+    public static function modificarInventarioModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, usuario = :usuario, password = :password, email = :email WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre_producto = :nombre, id_categoria = :categoria, precio = :precio WHERE id_producto = :id");
 
         //se realiza la asignacion de los datos para el update
         $stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
         $stmt -> bindParam(":nombre", $data["nombre"], PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido", $data["apellido"], PDO::PARAM_STR);
-        $stmt -> bindParam(":usuario", $data["usuario"], PDO::PARAM_STR);
-        $stmt -> bindParam(":password", $data["password"], PDO::PARAM_STR);
-        $stmt -> bindParam(":email", $data["email"], PDO::PARAM_STR);
+        $stmt -> bindParam(":categoria", $data["categoria"], PDO::PARAM_STR);
+        $stmt -> bindParam(":precio", $data["precio"], PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -159,6 +220,6 @@ class CRUDInventario
 
         //cerramos la conexion
         $stmt->close();
-    }*/
+    }
 }
 ?>
