@@ -40,6 +40,7 @@ if(!isset($_SESSION["nombre"]))
                                 <th>Id</th>
                                 <th>Productos</th>
                                 <th>Total</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +57,7 @@ if(!isset($_SESSION["nombre"]))
                                 <th>Id</th>
                                 <th>Productos</th>
                                 <th>Total</th>
+                                <th>Acciones</th>
                             </tr>
                         </tfoot>
                     </table>

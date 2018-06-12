@@ -22,55 +22,21 @@ if(!isset($_SESSION["nombre"]))
 
 <!-- Main content -->
 <section class="content">
-
     <!--Widgets para mostrar la informacion del sistema-->
-
     <div class="row">
-        <!--widget para mostrar la informacion de las categorias-->    
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box bg-green">
-                <span class="info-box-icon"><i class="fa fa-tags"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Categorias</span>
-                    <span class="info-box-number">0</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <!--widget para mostrar la informacion de los productos-->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box bg-yellow">
-                <span class="info-box-icon"><i class="fa fa-truck"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Productos</span>
-                    <span class="info-box-number">0</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <!--widget para mostrar la informacion de los usuarios-->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box bg-red">
-                <span class="info-box-icon"><i class="fa fa-user-o"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Usuarios</span>
-                    <span class="info-box-number">0</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        <?php
+        //creamos un objeto de mvcTienda
+        $informacion = new mvcTienda();
+        //llamamos al controler para obtener informacion de la tienda
+        $estado = $informacion -> infoTiendaController();
+        ?>
     </div>
     <!-- /.row -->
 
+    <?php
+    if($estado)
+    {
+    ?>
     <div class="row">
         <div class="col-md-12">
 
@@ -159,7 +125,7 @@ if(!isset($_SESSION["nombre"]))
             ?>
         </div>
     </div>
-    
+
     <div class="row">
 
         <div class="col-md-12">
@@ -195,5 +161,23 @@ if(!isset($_SESSION["nombre"]))
             <!-- nav-tabs-custom -->
         </div>
     </div>
+    <?php
+    }
+    else
+    {
+    ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class='alert alert-warning alert-dismissible'>
+                <h4>
+                    <i class='icon fa fa-warning'></i> Tienda Desactivada
+                </h4>
+                Consulte con administrador del sistema para mas informacion.
+            </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
 </section>
 <!-- /.content -->

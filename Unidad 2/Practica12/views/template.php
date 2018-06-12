@@ -106,6 +106,20 @@ session_start();
 
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+                            <!-- Notifications: style can be found in dropdown.less -->
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-bell-o"></i>
+                                            <?php
+                                            $stock = new mvcTienda();
+                                            $stock -> stockBajoController();
+                                            ?>
+                                        
+                                    </li>
+                                    <li class="footer"><a href="#">View all</a></li>
+                                </ul>
+                            </li>
+
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -279,7 +293,7 @@ session_start();
                             'autoWidth'   : false
                         }
                     )
-                    
+
                     $('#example2').DataTable
                     (
                         {
@@ -303,7 +317,7 @@ session_start();
                             'autoWidth'   : false
                         }
                     )
-                    
+
                     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck
                     (
                         {

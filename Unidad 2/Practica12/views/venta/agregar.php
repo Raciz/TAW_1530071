@@ -8,25 +8,93 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-
-//verificamos si se debe llamar al controller para agregar un nuevo producto al inventario
-if(isset($_GET["action"]) && $_GET["action"]=="agregar" && isset($_POST["C1"]))
+if(!isset($_SESSION["compra"]))
 {
-    //se crea un objeto de mvcVenta
-    $agregar = new mvcVenta();
-
-    //se manda a llamar el controller para agregar un nuevo producto al inventario 
-    $agregar -> agregarVentaController();
+    $_SESSION["compra"] = [];
 }
-
-//creamos un objeto de mvcVenta
-$productos = new mvcVenta();
-
 
 ?>
 
+<!--section para mosrar al Usuario el lugar donde se encuentra-->
+<section class="content-header">
+    <h1>
+        Nueva Venta 
+
+        <a href="index.php?section=dashboard&shop=<?php echo $_GET["shop"]; ?>">
+            <button type='button' class='btn btn-success pull-right'><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Regresar</button>
+        </a>
+    </h1>
+</section>
+
 <!-- Main content -->
 <section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <?php
+            //verificamos si se va a mostrar un mensaje realcionados con la ventas
+            if(!empty($_SESSION["mensaje"]))
+            {
+                //si el producto no esta registrado para esta tienda
+                if($_SESSION["mensaje"]=="existe")
+                {
+                    echo"
+                    <div class='alert alert-danger alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-ban'></i> Error
+                        </h4>
+                        El producto no existe en la tienda.
+                    </div>
+                    ";
+                }
+                //si el producto no tiene stock
+                elseif($_SESSION["mensaje"]=="agotado")
+                {
+                    echo"
+                    <div class='alert alert-warning alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-warning'></i> Sin Stock
+                        </h4>
+                        No hay Stock disponible para este producto.
+                    </div>
+                ";
+                }
+
+                //si el producto fue eliminado de la venta
+                elseif($_SESSION["mensaje"]=="borrar")
+                {
+                    echo"
+                    <div class='alert alert-warning alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-warning'></i> Borrado Exitoso
+                        </h4>
+                        El producto se ha eliminado de la venta.
+                    </div>
+                ";
+                }
+
+                //si se cancela la venta
+                elseif($_SESSION["mensaje"]=="cancelar")
+                {
+                    echo"
+                    <div class='alert alert-warning alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-warning'></i> Venta Cancelada
+                        </h4>
+                        La venta ha sido cancelada.
+                    </div>
+                ";
+                }
+
+                $_SESSION["mensaje"]="";
+            }
+            ?>
+        </div>
+    </div>
+
     <!--Seccion para mostrar los producto a comprar-->
     <div class="row">
         <div class="col-xs-12">
@@ -34,23 +102,28 @@ $productos = new mvcVenta();
                 <div class="box-header">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h3 class="box-title">Productos Disponibles</h3>
+                            <h3 class="box-title">Agregar Producto</h3> 
                         </div>
                     </div>
                 </div>
 
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <?php
-                    //traemos la informacion de los productos de la tienda
-                    $productos -> infoProductosController();
-                    ?>
+                    <form action="index.php?section=venta&action=modificarVenta&status=1&shop=<? echo $_GET["shop"]; ?>" method="post">
+
+                        <div class='form-group'>
+                            <label>Codigo del Producto</label>
+                            <input type='text' class='form-control' name='codigo' id='codigo' placeholder='Codigo'>
+                        </div>
+                        <button type='submit' class='btn btn-primary'>Aceptar</button>
+                    </form>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
+            <!-- /.box-body -->
         </div>
+        <!-- /.box -->
     </div>
+
 
 
     <!--Seccion para mostrar los producto a comprar-->
@@ -68,7 +141,7 @@ $productos = new mvcVenta();
                 <!-- /.box-header -->
                 <div class="box-body">
                     <!--Tabla para mostrar los productos de la venta-->
-                    <form id="compra" name="compra" action="index.php?section=venta&action=agregar&shop=<? echo $_GET["shop"]; ?>" method="post">
+                    <form id="compra" name="compra" action="index.php?section=venta&action=modificarVenta&status=4&shop=<? echo $_GET["shop"]; ?>" method="post">
                         <table id="example1 lista" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -77,10 +150,31 @@ $productos = new mvcVenta();
                                     <th>Precio</th>
                                     <th>Cantidad</th>
                                     <th>Total</th>
+                                    <th>Quitar</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <?php
+                                $total = 0;
+                                foreach($_SESSION["compra"] as $rows => $row)
+                                {
+                                    $total += $row -> total;
+                                    echo"<tr>
+                                        <td>".$row -> codigo_producto."</td>
+                                        <td>".$row -> nombre_producto."</td>
+                                        <td>".$row -> precio."</td>
+                                        <td>".$row -> cantidad."</td>
+                                        <td>".$row -> total."</td>
+                                        <td>
+                                            <center>
+                                                <a class='btn btn-danger' href='index.php?section=venta&action=modificarVenta&status=2&del=".$rows."&shop=".$_GET["shop"]."'>
+                                                    <i class='fa fa-trash'></i>
+                                                </a>
+                                            <center>
+                                        </td>
+                                        </tr>";
+                                }
+                                ?>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -89,20 +183,26 @@ $productos = new mvcVenta();
                                     <th>Precio</th>
                                     <th>Cantidad</th>
                                     <th>Total</th>
+                                    <th>Quitar</th>
                                 </tr>
                             </tfoot>
                         </table>
 
-                        <div class='form-group'>
-                            <label>Total</label>
-                            <input type='number' class='form-control' name='total' id='total' value=0 readonly>
+                        <div class="row">
+                            <div class="col-xs-4">
+
+                                <div class='form-group'>
+                                    <label>Total</label>
+                                    <input type='number' class='form-control' name='total' value=<? echo $total; ?> readonly>
+                                </div>
+                            </div>
                         </div>
-                        <input type="hidden" name="cantidadProductos" id="cantidadProductos">
-                        <a href="index.php?section=dashboard&shop=<? echo $_GET["shop"] ?>">
+                        <a href="index.php?section=venta&action=modificarVenta&status=3&shop=<? echo $_GET["shop"]; ?>">
                             <button type='button' class='btn btn-warning'>Cancelar</button>
                         </a>
                         <button type='submit' class='btn btn-primary'>Aceptar</button>
                     </form>
+
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -110,100 +210,3 @@ $productos = new mvcVenta();
         </div>
     </div>
 </section>
-
-<script type="text/javascript">
-    var select = document.getElementById("producto");
-    var table = document.getElementById("example1 lista");
-    var form = document.getElementById("compra");
-    var numProducts = 0;
-
-    function precio()
-    {
-        var precioU = document.getElementById("precioUnitario");
-        precioU.value = price[select.selectedIndex];
-    }
-
-    function newProduct()
-    {
-        var producto = document.getElementById("producto").value;
-        var cantidad = document.getElementById("cantidad").value;
-
-        if(producto != "" && cantidad > 0)
-        {
-            numProducts++;
-
-            var codigoPoduct = document.createElement("input");
-            var nameProduct = document.createElement("input");
-            var priceProduct = document.createElement("input");
-            var cantidadProduct = document.createElement("input");
-            var total = document.createElement("input");
-
-            codigoPoduct.setAttribute("value",select.options[select.selectedIndex].value);
-            nameProduct.setAttribute("value",select.options[select.selectedIndex].text);
-            priceProduct.setAttribute("value",price[select.selectedIndex]);
-            cantidadProduct.setAttribute("value",cantidad);
-            total.setAttribute("value",cantidad * price[select.selectedIndex]);
-
-            codigoPoduct.setAttribute("name","C".concat(numProducts));
-            nameProduct.setAttribute("name","N".concat(numProducts));
-            priceProduct.setAttribute("name","P".concat(numProducts));
-            cantidadProduct.setAttribute("name","CA".concat(numProducts));
-            total.setAttribute("name","T".concat(numProducts));
-
-            codigoPoduct.readOnly = true;
-            nameProduct.readOnly = true;
-            priceProduct.readOnly = true;
-            cantidadProduct.readOnly = true;
-            total.readOnly = true;
-            //-------------------------------------------------
-
-            var table = document.getElementById("example1 lista");
-            var row = document.createElement("tr");
-
-            var col1 = document.createElement("td");
-            col1.appendChild(codigoPoduct);
-            var col2 = document.createElement("td");
-            col2.appendChild(nameProduct);
-            var col3 = document.createElement("td");
-            col3.appendChild(priceProduct);
-            var col4 = document.createElement("td");
-            col4.appendChild(cantidadProduct);
-            var col5 = document.createElement("td");
-            col5.appendChild(total);
-
-            row.appendChild(col1);
-            row.appendChild(col2);
-            row.appendChild(col3);
-            row.appendChild(col4);
-            row.appendChild(col5);
-            table.appendChild(row);
-
-            //-------------------------------------------
-
-            var Total = parseFloat(document.getElementById("total").value);
-
-            Total += cantidad * price[select.selectedIndex];
-
-            document.getElementById("total").value = Total;
-        }
-        else
-        {
-            if(cantidad <= 0)
-            {
-                alert("La Cantidad No Puede Ser Cero o Negativa");
-            }
-            else
-            {
-                alert("Seleccione Un Producto");
-            }
-        }
-    }
-
-    function prepararOrden(e)
-    {
-        document.getElementById("cantidadProductos").value = numProducts;
-    }
-
-    form.addEventListener("submit",prepararOrden);
-    select.addEventListener("change",precio);
-</script>

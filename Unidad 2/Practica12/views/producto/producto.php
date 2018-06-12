@@ -23,12 +23,10 @@ if(!isset($_GET["product"]))
 <section class="content-header">
     <h1>
         Inventario
+        <a href="index.php?section=dashboard&shop=<?php echo $_GET["shop"]; ?>">
+            <button type='button' class='btn btn-success pull-right'><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Regresar</button>
+        </a>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Inicio</a></li>
-        <li class="active">Tienda</li>
-        <li class="active">Producto</li>
-    </ol>
 </section>
 
 <!-- Main content -->

@@ -131,28 +131,28 @@ class mvcTienda
                         <label>Estado</label>
                         <br>
                         <label>";
-        
-                        if($resp["estado"])
-                        {
-                            echo "<input value='1' type='radio' name='estado' class='minimal' required checked> Activa";
-                        }
-                        else
-                        {
-                            echo "<input value='1' type='radio' name='estado' class='minimal' required> Activa";
-                        }
-                  echo "</label>
+
+        if($resp["estado"])
+        {
+            echo "<input value='1' type='radio' name='estado' class='minimal' required checked> Activa";
+        }
+        else
+        {
+            echo "<input value='1' type='radio' name='estado' class='minimal' required> Activa";
+        }
+        echo "</label>
                         <br>
                         <label>";
-                        if($resp["estado"])
-                        {
-                            echo "<input value='0' type='radio' name='estado' class='minimal' required> Desactivada";
-                        }
-                        else
-                        {
-                            echo "<input value='0' type='radio' name='estado' class='minimal' required checked> Desactivada";
-                        }
-            
-            echo "</label>
+        if($resp["estado"])
+        {
+            echo "<input value='0' type='radio' name='estado' class='minimal' required> Desactivada";
+        }
+        else
+        {
+            echo "<input value='0' type='radio' name='estado' class='minimal' required checked> Desactivada";
+        }
+
+        echo "</label>
             </div>";
     }
 
@@ -179,12 +179,127 @@ class mvcTienda
 
                 //nos redireccionara al listado de usuarios
                 echo "<script>
-            window.location.replace('index.php?section=tienda&action=listado');
-        </script>";
+                        window.location.replace('index.php?section=tienda&action=listado');
+                      </script>";
             }
         }
     }
+
+    //control para obtener la informacion de la tienda
+    public function infoTiendaController()
+    {
+        $data = $_GET["shop"];
+
+        //llamamos al modelo para obtener la informacion de la tienda
+        $info = CRUDTienda::infoTiendaModel($data,"Venta","Usuario","Tienda_Producto","Tienda");
+
+        if($info["estado"])
+        {
+            echo"
+            <!--widget para mostrar la informacion de los usuarios-->
+            <div class='col-md-4 col-sm-6 col-xs-12'>
+                <div class='info-box bg-red'>
+                    <span class='info-box-icon'><i class='fa fa-user-o'></i></span>
+
+                    <div class='info-box-content'>
+                        <span class='info-box-text'>Usuarios</span>
+                        <span class='info-box-number'>".$info["user"]."</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!--widget para mostrar la informacion de los productos-->
+            <div class='col-md-4 col-sm-6 col-xs-12'>
+                <div class='info-box bg-yellow'>
+                    <span class='info-box-icon'><i class='fa fa-truck'></i></span>
+
+                    <div class='info-box-content'>
+                        <span class='info-box-text'>Productos</span>
+                        <span class='info-box-number'>".$info["producto"]."</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!--widget para mostrar la informacion de las ventas-->    
+            <div class='col-md-4 col-sm-6 col-xs-12'>
+                <div class='info-box bg-green'>
+                    <span class='info-box-icon'><i class='fa fa-money'></i></span>
+
+                    <div class='info-box-content'>
+                        <span class='info-box-text'>Ventas</span>
+                        <span class='info-box-number'>".$info["venta"]."</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->";
+        }
+        
+        return $info["estado"];
+    }
+
+    function stockBajoController()
+    {
+
+        if($_SESSION["root"])
+        {
+            $resp = CRUDTienda::stockBajoRootModel("Producto","Tienda_Producto","Tienda");
+
+            echo "
+                <span class='label label-warning'>".count($resp)."</span>
+                </a>
+                <ul class='dropdown-menu'>
+                <li class='header'>Hay ".count($resp)." Productos Con Stock Bajo</li>
+                <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class='menu'>
+                ";
+
+            foreach($resp as $rows => $row)
+            {
+                echo"
+                        <li>
+                            <a href='index.php?section=producto&shop=".$row["id_tienda"]."&product=".$row["id_producto"]."'>
+                                Bajo Stock De ".$row["nombre_producto"]." En ".$row["nombre_tienda"].".
+                            </a>
+                        </li> 
+                        ";
+            }
+        }
+        else
+        {
+            $resp = CRUDTienda::stockBajoModel($_SESSION["shop"],"Producto","Tienda_Producto");
+
+            echo "
+                <span class='label label-warning'>".count($resp)."</span>
+                </a>
+                <ul class='dropdown-menu'>
+                <li class='header'>Hay ".count($resp)." Productos Con Stock Bajo</li>
+                <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class='menu'>
+                ";
+
+            foreach($resp as $rows => $row)
+            {
+                echo"
+                        <li>
+                            <a href='index.php?section=producto&shop=".$row["id_tienda"]."&product=".$row["id_producto"]."'>
+                                Bajo Stock De ".$row["nombre_producto"].".
+                            </a>
+                        </li> 
+                        ";
+            }
+        }
+
+        echo "</ul>";
+
+    }
+
 }
 ?>
-
-

@@ -4,27 +4,30 @@ require_once "conexion.php";
 //clase para realizar operaciones a la base de datos para la seccion de ventas
 class CRUDVenta
 {
-    //modelo para traer la informacion de los productos de la tienda
-    public static function infoProductoModel($data,$tabla1,$tabla2)
+    public static function agregarProductoController($data,$tabla1,$tabla2)
     {
         //preparamos la consulta y la ejecutamos
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla1 as p JOIN $tabla2 as pt on pt.id_producto = p.id_producto WHERE pt.id_tienda = :tienda");
-        $stmt -> bindParam(":tienda",$data,PDO::PARAM_INT);
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla1 as p JOIN $tabla2 as pt on p.id_producto = pt.id_producto  WHERE pt.id_tienda = :tienda AND p.codigo_producto = :codigo");
+
+        //se realiza la asignacion de los datos
+        $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
+        $stmt -> bindParam(":codigo",$data["codigo"],PDO::PARAM_INT);
+
+        //ejecutar la sentencia
         $stmt -> execute();
 
         //retornamos la informacion de la tabla
-        return $stmt -> fetchAll();
+        return $stmt -> fetch(PDO::FETCH_OBJ);
 
         //cerramos la conexion
         $stmt -> close();
-
     }
 
-    public static function agregarVentaModel($data,$tabla1,$tabla2,$tienda)
+    public static function agregarVentaModel($data,$total,$tabla1,$tabla2,$tabla3,$tienda)
     {
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla1 (total,id_tienda) VALUES (:total,:tienda)");
         $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
-        $stmt -> bindParam(":total",$data["total"],PDO::PARAM_INT);
+        $stmt -> bindParam(":total",$total,PDO::PARAM_INT);
         $stmt -> execute();
 
         //---------------------------------------------
@@ -36,23 +39,29 @@ class CRUDVenta
 
         //--------------------------------------------
 
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla2 (id_venta,id_tienda,id_producto,cantidad,total) VALUES (:venta,:tienda,:producto,:cantidad,:total)");
+        $insert = Conexion::conectar() -> prepare("INSERT INTO $tabla2 (id_venta,id_tienda,id_producto,cantidad,total) VALUES (:venta,:tienda,:producto,:cantidad,:total)");
 
-
-        for($i = 1; $i <= $data["cantidadProductos"]; $i++)
+        $update = Conexion::conectar() -> prepare("UPDATE $tabla3 SET stock = stock - :cantidad WHERE id_producto = :producto AND id_tienda = :tienda"); 
+        
+        foreach($_SESSION["compra"] as $producto)
         {
-            $stmt -> bindParam(":venta",$id,PDO::PARAM_INT);
-            $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
-            $stmt -> bindParam(":producto",$data["C".$i],PDO::PARAM_INT);
-            $stmt -> bindParam(":cantidad",$data["CA".$i],PDO::PARAM_INT);
-            $stmt -> bindParam(":total",$data["T".$i],PDO::PARAM_INT);
+            $insert -> bindParam(":venta",$id,PDO::PARAM_INT);
+            $insert -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
+            $insert -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
+            $insert -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
+            $insert -> bindParam(":total",$producto -> total,PDO::PARAM_INT);
 
-            $stmt -> execute();
+            $update -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
+            $update -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
+            $update -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
+            
+            $insert -> execute();
+            $update -> execute();
         }
 
         return "success";
     }
-    
+
     //modelo para obtener la informacion de las ventas registradas
     public static function listadoVentaModel($tabla,$tienda)
     {
@@ -67,7 +76,7 @@ class CRUDVenta
         //cerramos la conexion
         $stmt -> close();
     }
-    
+
     //modelo para obtener la informacion de los productos en las ventas registradas
     public static function listadoProductoVentaModel($tabla1,$tabla2,$venta)
     {
@@ -82,7 +91,7 @@ class CRUDVenta
         //cerramos la conexion
         $stmt -> close();
     }
-    
+
     //modelo para borrar la venta de una tiens
     public static function eliminarVentaModel($data,$tabla1,$tabla2)
     {

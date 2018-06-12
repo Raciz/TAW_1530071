@@ -4,60 +4,91 @@ ini_set("display_errors", 1);
 
 class mvcVenta
 {
-    function infoProductosController()
+    function agregarProductoController()
     {
-        //obtenemos el id de la tienda a enlistar los productos
-        $data = $_GET["shop"];
-
-        //llamamos al modelo para obtener su informacion
-        $info = CRUDVenta::infoProductoModel($data,"Producto","Tienda_Producto");
-
-
-        echo "  <script>
-                    var price = [];
-                </script>
-
-                <div class='form-group'>
-                    <label>Producto</label>
-                    <select name='producto' id='producto' class='form-control select2' style='width: 100%;'>";
-
-        //mostramos el nombre de cada una de las categorias
-        foreach($info as $rows => $row)
+        if(isset($_POST["codigo"]))
         {
-            //se muestra cada uno de los producto en un option del select
-            echo "<option value=".$row["id_producto"].">".$row["nombre_producto"]."</option>";
-            echo "<script> price.push(".$row['precio']."); </script>";
-        }
+            $data = array("codigo" => $_POST["codigo"], 
+                          "tienda" => $_GET["shop"]);
 
-        echo"
-                    </select>
-                </div>
+            $product = CRUDVenta::agregarProductoController($data,"Producto","Tienda_Producto");
 
-                <div class='form-group'>
-                    <label>Cantidad</label>
-                    <input type='number' class='form-control' name='cantidad' id='cantidad' placeholder='Cantidad'>
-                </div>
+            if($product)
+            {
+                if($product -> stock >= 1)
+                {
+                    $pos = -1;
 
-                <button type='button' id='save' onclick='newProduct()' class='btn btn-primary'>Agregar</button>
-                ";
+                    for($i = 0; $i < count($_SESSION["compra"]); $i++)
+                    {
+                        if($_SESSION["compra"][$i] -> codigo_producto == $data["codigo"])
+                        {
+                            $pos = $i;
+                            break;
+                        }
+                    }
+
+                    if($pos == -1)
+                    {
+                        $product->cantidad = 1;
+                        $product->total = $product->precio;
+                        array_push($_SESSION["compra"], $product);
+                    }
+                    else
+                    {
+                        $_SESSION["compra"][$pos] -> cantidad++;
+                        $_SESSION["compra"][$pos] -> total = $_SESSION["compra"][$pos] -> cantidad * $_SESSION["compra"][$pos] -> precio;
+                    }
+                }
+                else
+                {
+                    $_SESSION["mensaje"] = "agotado";
+                }
+            }
+            else
+            {
+                $_SESSION["mensaje"] = "existe";
+            }
+        }         
     }
 
+    function quitarProductoController()
+    {
+        if(isset($_GET["del"]))
+        {
+            $data = $_GET["del"];
+
+            array_splice($_SESSION["compra"], $data, 1);
+        } 
+
+        $_SESSION["mensaje"] = "borrar";
+    }
+
+    function cancelarVentaController()
+    {
+
+        $_SESSION["compra"] = [];
+
+        $_SESSION["mensaje"] = "cancelar";
+    }
 
     function agregarVentaController()
     {
         //se verifica si mediante el formulario de registro se envio informacion
-        if(isset($_POST["C1"]))
+        if(isset($_POST["total"]))
         {
 
             //se manda la informacion al modelo con su respectiva tabla en la que se registrara
-            $resp = CRUDVenta::agregarVentaModel($_POST,"Venta","Venta_Producto",$_GET["shop"]);
+            $resp = CRUDVenta::agregarVentaModel($_SESSION["compra"],$_POST["total"],"Venta","Venta_Producto","Tienda_Producto",$_GET["shop"]);
 
             //en caso de que se haya registrado correctamente
             if($resp == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "agregarV";
-
+                
+                $_SESSION["compra"] = [];
+                
                 //nos redireccionara al listado de categorias
                 echo "<script>
                         window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
@@ -94,17 +125,17 @@ class mvcVenta
                             </tr>
                         </thead>
                         <tbody>";
-                            
-                        $data2 = CRUDVenta::listadoProductoVentaModel("Venta_Producto","Producto",$row["id_venta"]);
-                        foreach($data2 as $rows2 => $row2)
-                        {
-                            echo "<tr>
+
+            $data2 = CRUDVenta::listadoProductoVentaModel("Venta_Producto","Producto",$row["id_venta"]);
+            foreach($data2 as $rows2 => $row2)
+            {
+                echo "<tr>
                                     <td>".$row2["nombre_producto"]."</td>
                                     <td>".$row2["cantidad"]."</td>
                                     <td>".$row2["total"]."</td>
                                   </tr>";
-                        }
-                            
+            }
+
             echo"       </tbody>
                         <tfoot>
                             <tr>
@@ -129,7 +160,7 @@ class mvcVenta
             </tr>";
         }
     }
-    
+
     //Control para borrar una venta de la tienda
     public function eliminarVentaController()
     {
@@ -138,10 +169,10 @@ class mvcVenta
         {
             //de ser asi se guarda el id de la venta
             $data = $_POST["del"];
-            
+
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUDVenta::eliminarVentaModel($data,"Venta_Producto","Venta");
-            
+
             //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
