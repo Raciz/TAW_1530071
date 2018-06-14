@@ -14,13 +14,16 @@ class mvcProducto
             //de ser asi se guarda el id del producto
             $data = array("producto" => $_POST["delP"],
                           "tienda" => $_GET["shop"]);
+            
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
             $resp = CRUDProducto::eliminarProductoModel($data,"Historial","Tienda_Producto");
+            
             //en caso de haberse eliminado correctamente
             if($resp == "success")
             {
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminarP";
+            
                 //nos redireccionara al listado de productos
                 echo "<script>
                         window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
@@ -29,7 +32,7 @@ class mvcProducto
         }
     }
   
-    //Control para manejar el registro de un nuevo producto en la tienda
+    //Control para manejar el registro de un nuevo producto en una tienda
     function agregarProductoController()
     {
         //se verifica si mediante el formulario de registro se envio informacion

@@ -65,13 +65,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     //variable para modificar el alert de error
     var form = document.getElementById("formDelP");
 
-    //funcion para obtener el id del usuario a eliminar
+    //funcion para obtener el id del producto a eliminar
     function idDelP(del)
     {
         //obtenemos el objeto del input hidden
         var input = document.getElementById("delP");
 
-        //le asignamos a value del que es el id del usuario a eliminar 
+        //le asignamos a value del que es el id del producto a eliminar 
         input.setAttribute("value",del);
     }
 

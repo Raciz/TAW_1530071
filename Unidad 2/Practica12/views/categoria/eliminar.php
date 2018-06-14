@@ -47,7 +47,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para continuar o cancelar con la eliminacion del usuario-->
+                    <!--Botones para continuar o cancelar con la eliminacion de la categoria-->
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline">Confirmar</button>
                 </div>
@@ -65,7 +65,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     //variable para modificar el alert de error
     var form = document.getElementById("form");
 
-    //funcion para obtener el id del usuario a eliminar
+    //funcion para obtener el id de la categoria a eliminar
     function idDel(del)
     {
         //obtenemos el objeto del input hidden

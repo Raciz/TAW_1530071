@@ -44,6 +44,7 @@ session_start();
 
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        
         <!--codigo css para añadir estilo a ciertas partes del template-->
         <style>
             .example-modal .modal 
@@ -111,7 +112,11 @@ session_start();
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-bell-o"></i>
                                             <?php
+                                            
+                                            //creamos un objeto de mvcTienda
                                             $stock = new mvcTienda();
+                                            
+                                            //llamamos al controller para mostrar la informacion de los productos con stock bajo
                                             $stock -> stockBajoController();
                                             ?>
                                         
@@ -125,7 +130,9 @@ session_start();
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="hidden-xs">
                                         <?php
-        echo $_SESSION["nombre"];
+        
+                                        //imprimimos el nombre del usuario
+                                        echo $_SESSION["nombre"];
                                         ?>
                                     </span>
                                 </a>
@@ -134,7 +141,9 @@ session_start();
                                     <li class="user-header">
                                         <p>
                                             <?php
-        echo $_SESSION["nombre"];
+
+                                            //imprimimos el nombre del usuario
+                                            echo $_SESSION["nombre"];
                                             ?>
                                         </p>
                                         <br>
@@ -215,6 +224,8 @@ session_start();
         <?php
             }
         ?>
+
+        <!--importacion de scripts para el funcionamiento de los compenentes del template-->
         <!-- jQuery 3 -->
         <script src="views/media/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->

@@ -9,7 +9,7 @@ if(!isset($_SESSION["nombre"]))
 }
 ?>
 
-<!--section para mosrar al Usuario el lugar donde se encuentra-->
+<!--section para mostrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Categorias
@@ -29,10 +29,10 @@ if(!isset($_SESSION["nombre"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es agregar
+                //si session en mensaje es agregar una categoria
                 if($_SESSION["mensaje"]=="agregar")
                 {
-                    //se muestra el alert de agregar
+                    //se muestra el alert de agregar una categoria
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -43,10 +43,10 @@ if(!isset($_SESSION["nombre"]))
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
+                //si session en mensaje es eliminar una categoria
                 elseif ($_SESSION["mensaje"]=="eliminar")
                 {
-                    //se muestra el alert de eliminar
+                    //se muestra el alert de eliminar una categoria
                     echo"
                     <div class='alert alert-warning alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -58,10 +58,10 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                //si session en mensaje es editar
+                //si session en mensaje es editar una categoria
                 elseif ($_SESSION["mensaje"]=="editar")
                 {
-                    //se muestra el alert de editar
+                    //se muestra el alert de editar una categoria
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -79,6 +79,7 @@ if(!isset($_SESSION["nombre"]))
             }
             ?>
 
+            <!-- caja para mostrar la el listado de categorias -->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -92,8 +93,6 @@ if(!isset($_SESSION["nombre"]))
                         </div>
                     </div>
                 </div>
-
-                <!-- caja para mostrar la el listado de categorias -->
                 <div class="box-body">
 
                     <!-- tabla para mostrar la el listado de categoriaa -->
@@ -108,8 +107,10 @@ if(!isset($_SESSION["nombre"]))
                         </thead>
                         <tbody>
                             <?php
+                            
                             //creamos un objeto de mvcCategoria
                             $listado = new mvcCategoria();
+                            
                             //se manda a llamar el controller para mostrar el listado de categorias
                             $listado -> listadoCategoriaController();
                             ?>

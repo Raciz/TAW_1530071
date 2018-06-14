@@ -4,21 +4,22 @@ if(isset($_SESSION["nombre"]))
 {
     //en caso de ser asi, lo redireccionaremos
 
-    //y nos redireccionamos
+    //si es super usuario
     if($_SESSION["root"])
     {
+        //lo redireccionaremos al listado de tiendas
         echo "<script>
             window.location.replace('index.php?section=tienda&action=listado');
           </script>";
     }
+    //si no es super usuario
     else
     {
+        //lo redireccionaremos al dashboard de la tienda en la cual pertenece
         echo "<script>
             window.location.replace('index.php?section=dashboard&shop=".$_SESSION["shop"]."');
           </script>";
     }
-
-
 }
 
 //creamos un objeto de mvcController
@@ -29,7 +30,7 @@ $login -> loginController();
 ?>
 
 <body class="hold-transition login-page">
-    <!--caja para mostrar el formlario de inicio de sesion-->
+    <!--caja para mostrar el formulario de inicio de sesion-->
     <div class="login-box">
         <div class="login-logo">
             <h1>Inventario TAW</h1>

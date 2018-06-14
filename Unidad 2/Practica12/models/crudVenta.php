@@ -4,6 +4,7 @@ require_once "conexion.php";
 //clase para realizar operaciones a la base de datos para la seccion de ventas
 class CRUDVenta
 {
+    //modelo para agregar una nuevo producto a la venta
     public static function agregarProductoController($data,$tabla1,$tabla2)
     {
         //preparamos la consulta y la ejecutamos
@@ -16,49 +17,67 @@ class CRUDVenta
         //ejecutar la sentencia
         $stmt -> execute();
 
-        //retornamos la informacion de la tabla
+        //retornamos la informacion de la consulta
         return $stmt -> fetch(PDO::FETCH_OBJ);
 
         //cerramos la conexion
         $stmt -> close();
     }
 
+    //modelo para agregar una nueva venta a la base de datos
     public static function agregarVentaModel($data,$total,$tabla1,$tabla2,$tabla3,$tabla4,$tienda,$usuario,$nombre)
     {
+        //preparamos la sentencia para ingresar una nueva venta
         $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla1 (total,id_tienda) VALUES (:total,:tienda)");
+        
+        //asignamos los datos nesesarios para el insert
         $stmt -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
         $stmt -> bindParam(":total",$total,PDO::PARAM_INT);
+        
+        //ejecutamos la sentencia
         $stmt -> execute();
 
         //---------------------------------------------
 
+        //obtenemos el id de la venta recien registrada
         $stmt = Conexion::conectar() -> prepare("SELECT MAX(id_venta) as id FROM $tabla1");
+        
+        //ejecutamos la sentencia
         $stmt -> execute();
+        
+        //obtenemos el id de la ultima venta
         $id = $stmt -> fetch();
+        
+        //y la guardamos
         $id = $id["id"];
 
         //--------------------------------------------
 
+        //preparamos las sentencias nesesarias para el registro de los productos de la venta
         $insert = Conexion::conectar() -> prepare("INSERT INTO $tabla2 (id_venta,id_tienda,id_producto,cantidad,total) VALUES (:venta,:tienda,:producto,:cantidad,:total)");
 
         $update = Conexion::conectar() -> prepare("UPDATE $tabla3 SET stock = stock - :cantidad WHERE id_producto = :producto AND id_tienda = :tienda"); 
         
         $historial = Conexion::conectar() -> prepare("INSERT INTO $tabla4 (id_tienda,id_producto,id_usuario,fecha,hora,nota,referencia,cantidad) VALUES (:tienda,:producto,:usuario,NOW(),NOW(),:nota,:referencia,:cantidad)");
         
+        //las anteriores sentencias se ejecutaran tantas veces segun el numero de productos diferentes en la venta
         foreach($_SESSION["compra"] as $producto)
         {
+            //asignamos las variables nesesarias para registra un producto a la venta
             $insert -> bindParam(":venta",$id,PDO::PARAM_INT);
             $insert -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
             $insert -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
             $insert -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
             $insert -> bindParam(":total",$producto -> total,PDO::PARAM_INT);
 
+            //asignamos las variables nesesarias para actualizar el stock del producto
             $update -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
             $update -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
             $update -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
             
-            $nota = $nombre . " vendio " . $producto -> cantidad . " producto(s) del inventario";
             
+            //asignamos las variables nesesarias para registra un registro en el historial del producto
+            $nota = $nombre . " vendio " . $producto -> cantidad . " producto(s) del inventario";
             $historial -> bindParam(":tienda",$tienda,PDO::PARAM_INT);
             $historial -> bindParam(":producto",$producto -> id_producto,PDO::PARAM_INT);
             $historial -> bindParam(":usuario",$usuario,PDO::PARAM_INT);
@@ -66,6 +85,7 @@ class CRUDVenta
             $historial -> bindParam(":referencia",$id,PDO::PARAM_STR);
             $historial -> bindParam(":cantidad",$producto -> cantidad,PDO::PARAM_INT);
             
+            //ejecutamos las sentencias
             $insert -> execute();
             $update -> execute();
             $historial -> execute();
@@ -105,7 +125,7 @@ class CRUDVenta
         $stmt -> close();
     }
 
-    //modelo para borrar la venta de una tiens
+    //modelo para borrar la venta de una tienda
     public static function eliminarVentaModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el delete de la tabla1

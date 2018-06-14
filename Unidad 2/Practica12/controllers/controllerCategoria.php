@@ -7,7 +7,7 @@ class mvcCategoria
     //Control para manejar el registro de una nueva categoria en el sistema
     function agregarCategoriaController()
     {
-        //se verifica si mediante el formulario de registro se envio informacion
+        //se verifica si mediante el formulario de registro se envio la informacion de la categoria
         if(isset($_POST["nombre"]))
         {
             //se guardan la informacion de la categoria
@@ -45,7 +45,7 @@ class mvcCategoria
         //se imprime la informacion de cada uno de las categorias registrados
         foreach($data as $rows => $row)
         {
-            //e imprimimos la informacion de cada uno de las categorias con su respectivo boton de editar y eliminar
+            //e imprimimos la informacion de cada uno de las categorias
             echo "<tr>
                 <td>".$row["nombre_categoria"]."</td>
                 <td>".$row["descripcion_categoria"]."</td>
@@ -67,7 +67,7 @@ class mvcCategoria
         }
     }
 
-    //Control para borrar un Categoria del sistema
+    //Control para borrar una categoria del sistema
     public function eliminarCategoriaController()
     {
         //se verifica si se envio el id de la categoria a eliminar
@@ -120,7 +120,7 @@ class mvcCategoria
     //Control para modificar la informacion de una categoria
     public function modificarCategoriaController()
     {
-        //se verifica si mediante el formulario se envio informacion
+        //se verifica si mediante el formulario se envio la informacion de la categoria
         if(isset($_POST["nombre"]))
         {
             //se guardan la informacion de la categoria

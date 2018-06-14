@@ -14,7 +14,7 @@ if(!isset($_SESSION["nombre"]))
     <div class="row">
         <div class="col-xs-12">
 
-            <!-- caja para mostrar la el listado de productos de la tienda-->
+            <!-- caja para mostrar el listado de productos de la tienda-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -65,7 +65,7 @@ if(!isset($_SESSION["nombre"]))
         <!-- /.col -->
     </div>
     <?php
-    //incluimos el archivo con el modal para agregar productos
+    //incluimos el archivo con el modal para agregar y eliminar productos
     include_once "views/producto/agregar.php";
     include_once "views/producto/eliminar.php";
     ?>

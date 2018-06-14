@@ -1,6 +1,6 @@
 <?php
 
-//clase para realizar la conecion a la base de datos
+//clase para realizar la conexion a la base de datos
 class conexion
 {
     //funcion para retornar una conexion a la base de datos

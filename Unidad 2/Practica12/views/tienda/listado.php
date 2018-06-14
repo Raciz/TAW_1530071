@@ -29,10 +29,10 @@ if(!isset($_SESSION["nombre"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es agregar
+                //si session en mensaje es agregar una tienda
                 if($_SESSION["mensaje"]=="agregar")
                 {
-                    //se muestra el alert de agregar
+                    //se muestra el alert de agregar una tienda
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -43,10 +43,10 @@ if(!isset($_SESSION["nombre"]))
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
+                //si session en mensaje es eliminar una tienda
                 elseif ($_SESSION["mensaje"]=="eliminar")
                 {
-                    //se muestra el alert de eliminar
+                    //se muestra el alert de eliminar una tienda
                     echo"
                     <div class='alert alert-warning alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -58,10 +58,10 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                //si session en mensaje es editar
+                //si session en mensaje es editar una tienda
                 elseif ($_SESSION["mensaje"]=="editar")
                 {
-                    //se muestra el alert de editar
+                    //se muestra el alert de editar una tienda
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>

@@ -6,8 +6,10 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU PRINCIPAL</li>
             <?php
+            //verificamos si el usuario es un super usuario
             if($_SESSION["root"])
             {
+            //si, si es super usuario le mostramos la seccion de tiendas 
             ?>
             <li>
                 <a href="index.php?section=tienda&action=listado">
@@ -19,6 +21,7 @@
             }
             else
             {
+                //si no es super usuario le mostramos la seccion de dashboard
             ?>
             <li>
                 <a href="index.php?section=dashboard&shop=<?php echo $_SESSION["shop"]?>">

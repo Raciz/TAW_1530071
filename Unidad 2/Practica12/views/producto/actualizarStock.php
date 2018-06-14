@@ -19,7 +19,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="actualizarStock")
 }
 ?>
 
-<!--modal para agregar un nuevo producto al inventario-->
+<!--modal para agregar un nuevo movimiento en el inventario de un producto-->
 <div class="modal modal-info fade" id="modal-info-stock">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -58,13 +58,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="actualizarStock")
 </div>
 
 <script>
-    //funcion para obtener el tipo de actualizacion de stock a eliminar
+    //funcion para obtener el tipo de actualizacion del stock
     function typeOfUpdate(type)
     {
         //obtenemos el objeto del input hidden
         var input = document.getElementById("type");
 
-        //le asignamos a value del que es el id del usuario a eliminar 
+        //le asignamos a en value el el tipo de modificacion 
         input.setAttribute("value",type);
     }
 </script>

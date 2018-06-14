@@ -14,7 +14,7 @@ if(!isset($_SESSION["nombre"]))
     <div class="row">
         <div class="col-xs-12">
 
-            <!--caja para mostrar el listado de las venas de la tienda-->
+            <!--caja para mostrar el listado de las ventas de la tienda-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -71,7 +71,7 @@ if(!isset($_SESSION["nombre"]))
     <!-- /.row -->
 
     <?php
-    //incluimos los archivos con los modales para agregar y eliminar una venta
+    //incluimos los archivos con los modales para eliminar una venta
     include_once "views/venta/eliminar.php";
     ?>
 </section>
