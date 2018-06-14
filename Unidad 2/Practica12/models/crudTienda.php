@@ -1,10 +1,9 @@
 <?php
 require_once "conexion.php";
 
-//clase para realizar operaciones a la base de datos para la seccion de usuarios
 class CRUDTienda
 {
-    //modelo para registrar un usuario en la base de datos
+    //modelo para registrar una tienda en la base de datos
     public static function agregarTiendaModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
@@ -188,9 +187,10 @@ class CRUDTienda
         $stmt -> close();
     }
 
+    //modelo para obtener los productos con bajo stock para el super admin
     public static function stockBajoRootModel($tabla1,$tabla2,$tabla3)
     {
-        //preparamos la consulta para obtener a los usuarios registrados en la tienda
+        //preparamos la consulta para obtener los productos con bajo stock
         $stmt = Conexion::conectar() -> prepare("SELECT t.id_tienda, p.id_producto, t.nombre as nombre_tienda, p.nombre_producto FROM $tabla1 as p 
                                                  JOIN $tabla2 as pt on pt.id_producto = p.id_producto
                                                  JOIN $tabla3 as t on t.id_tienda = pt.id_tienda
@@ -208,7 +208,7 @@ class CRUDTienda
 
     public static function stockBajoModel($tienda,$tabla1,$tabla2)
     {
-        //preparamos la consulta para obtener a los usuarios registrados en la tienda
+        //preparamos la consulta para obtener los productos con bajo stock
         $stmt = Conexion::conectar() -> prepare("SELECT pt.id_tienda, p.id_producto, p.nombre_producto FROM $tabla1 as p 
                                                  JOIN $tabla2 as pt on pt.id_producto = p.id_producto
                                                  WHERE pt.stock <= 10 AND pt.id_tienda = :tienda");

@@ -8,18 +8,18 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para eliminar un usuario
+//verificamos si se debe mandar a llamar el controller para eliminar una tienda
 if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
 {
-    //se crea un onjeto de mvcUsuario
+    //se crea un onjeto de mvcTienda
     $eliminar = new mvcTienda();
 
-    //se manda a llamar el controller para eliminar un usuario
+    //se manda a llamar el controller para eliminar una tienda
     $eliminar -> eliminarTiendaController();
 }
 ?>
 
-<!--Modal para la confirmacion del borrado de un usuario-->
+<!--Modal para la confirmacion del borrado de una tienda-->
 <div class="modal modal-info fade" id="eliminar-tienda" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -28,7 +28,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Borrado</h4>
             </div>
-            <!--formulario para pedir al usuario su contraseña para confirmar el borrado de un usuario-->
+            <!--formulario para pedir al usuario su contraseña para confirmar el borrado de una tienda-->
             <form id="form" role="form" method="post" autocomplete="off" action="index.php?section=tienda&action=eliminar">
                 <div class="modal-body">
 
@@ -47,7 +47,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para continuar o cancelar con la eliminacion del usuario-->
+                    <!--Botones para continuar o cancelar con la eliminacion de la tienda-->
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline">Confirmar</button>
                 </div>
@@ -65,7 +65,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     //variable para modificar el alert de error
     var form = document.getElementById("form");
 
-    //funcion para obtener el id del usuario a eliminar
+    //funcion para obtener el id de la tienda a eliminar
     function idDel(del)
     {
         //obtenemos el objeto del input hidden
@@ -106,5 +106,3 @@ if(isset($_GET["action"]) && $_GET["action"]=="eliminar")
     })();
 
 </script>
-
-

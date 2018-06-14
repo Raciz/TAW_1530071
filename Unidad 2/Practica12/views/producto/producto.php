@@ -19,7 +19,7 @@ if(!isset($_GET["product"]))
 
 ?>
 
-<!--section para mosrar al Usuario el lugar donde se encuentra-->
+<!--section para mostrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Inventario
@@ -38,7 +38,7 @@ if(!isset($_GET["product"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es Stock
+                //si session en mensaje es modificacion de stock
                 if($_SESSION["mensaje"]=="stock")
                 {
                     //se muestra el alert de stock
@@ -121,7 +121,7 @@ if(!isset($_GET["product"]))
         </div>
     </div>
     <?php
-    //incluimos los archivos con los modales para actualizar el stock y editar y eliminar el producto
+    //incluimos los archivos con los modales para actualizar el stock del producto
     include_once "views/producto/actualizarStock.php";
     ?>
 </section>

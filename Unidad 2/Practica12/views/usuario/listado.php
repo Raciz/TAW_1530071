@@ -14,7 +14,7 @@ if(!isset($_SESSION["nombre"]))
     <div class="row">
         <div class="col-xs-12">
 
-            <!--caja para mostrar el listado de usuarios registrados en el sistema-->
+            <!--caja para mostrar el listado de usuarios registrados en la tienda-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -31,7 +31,7 @@ if(!isset($_SESSION["nombre"]))
 
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <!--tabla para mostrar el listado de usuarios en el sistema-->
+                    <!--tabla para mostrar el listado de usuarios en la tienda-->
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -48,7 +48,7 @@ if(!isset($_SESSION["nombre"]))
                             //creamos un objeto de mvcUsuario
                             $listado = new mvcUsuario();
                             
-                            //se manda a llamar el control para enlistar a los usuarios registrados en el sistema
+                            //se manda a llamar el control para enlistar a los usuarios registrados en la tienda
                             $listado -> listadoUsuarioController();
                             ?>
                         </tbody>

@@ -8,9 +8,13 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
+//se verifica si se deve llamar al controller para agregar una nueva tienda
 if(isset($_GET["action"]) && $_GET["action"]=="agregar")
 {
+    //se crea un objeto de mvcTienda
     $agregar = new mvcTienda();
+    
+    //se manda a llamar el controller para agregar una tienda
     $agregar -> agregarTiendaController();
 }
 ?>

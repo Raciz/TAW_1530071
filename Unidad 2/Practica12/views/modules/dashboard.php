@@ -22,11 +22,13 @@ if(!isset($_SESSION["nombre"]))
 
 <!-- Main content -->
 <section class="content">
-    <!--Widgets para mostrar la informacion del sistema-->
+    <!--Widgets para mostrar la informacion de la tienda-->
     <div class="row">
         <?php
+        
         //creamos un objeto de mvcTienda
         $informacion = new mvcTienda();
+        
         //llamamos al controler para obtener informacion de la tienda
         $estado = $informacion -> infoTiendaController();
         ?>
@@ -34,8 +36,10 @@ if(!isset($_SESSION["nombre"]))
     <!-- /.row -->
 
     <?php
+    //funcion para mostrar el panel de administacion de la tienda dependiendo si esta activa o no
     if($estado)
     {
+    //si esta activa se mostrara el panel de administracion
     ?>
     <div class="row">
         <div class="col-md-12">
@@ -44,10 +48,10 @@ if(!isset($_SESSION["nombre"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es agregar
+                //si session en mensaje es agregar producto
                 if($_SESSION["mensaje"]=="agregarP")
                 {
-                    //se muestra el alert de agregar
+                    //se muestra el alert de agregar producto
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -58,10 +62,10 @@ if(!isset($_SESSION["nombre"]))
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
+                //si session en mensaje es eliminar producto
                 elseif ($_SESSION["mensaje"]=="eliminarP")
                 {
-                    //se muestra el alert de eliminar
+                    //se muestra el alert de eliminar producto
                     echo"
                     <div class='alert alert-warning alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -74,10 +78,10 @@ if(!isset($_SESSION["nombre"]))
 
                 }
 
-                //si session en mensaje es agregar
+                //si session en mensaje es agregar usuario
                 if($_SESSION["mensaje"]=="agregar")
                 {
-                    //se muestra el alert de agregar
+                    //se muestra el alert de agregar usuario
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -88,10 +92,10 @@ if(!isset($_SESSION["nombre"]))
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
+                //si session en mensaje es eliminar usuario
                 elseif ($_SESSION["mensaje"]=="eliminar")
                 {
-                    //se muestra el alert de eliminar
+                    //se muestra el alert de eliminar usuario
                     echo"
                     <div class='alert alert-warning alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -103,10 +107,10 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
-                //si session en mensaje es editar
+                //si session en mensaje es editar usuario
                 elseif ($_SESSION["mensaje"]=="editar")
                 {
-                    //se muestra el alert de editar
+                    //se muestra el alert de editar usuario
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -119,6 +123,20 @@ if(!isset($_SESSION["nombre"]))
 
                 }
 
+                //si session en mensaje es agregar una venta
+                if($_SESSION["mensaje"]=="agregarV")
+                {
+                    //se muestra el alert de agregar una venta
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Registro Exitoso
+                        </h4>
+                        Se ha registrado una nueva venta en la tienda.
+                    </div>
+                    ";
+                }
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
@@ -129,26 +147,28 @@ if(!isset($_SESSION["nombre"]))
     <div class="row">
 
         <div class="col-md-12">
-            <!-- Custom Tabs -->
+            <!--Tabs para mostrar diferentes acciones e informacion de la tienda-->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
+                    <!--Titulos de las tabs-->
                     <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
                     <li><a href="#producto" data-toggle="tab">Inventario</a></li>
                     <li><a href="#venta" data-toggle="tab">Ventas</a></li>                    
                 </ul>
                 <div class="tab-content">
+                    <!--en esta tab se muestra la informacion de los usuarios registrados en la tienda-->
                     <div class="tab-pane active" id="personal">
                         <?php
                         include_once "views/usuario/listado.php";
                         ?>
                     </div>
-                    <!-- /.tab-pane -->
+                    <!--en esta tab se muestra la informacion de los productos registrados en la tienda-->
                     <div class="tab-pane" id="producto">
                         <?php
                         include_once "views/producto/listado.php";
                         ?>
                     </div>
-                    <!-- /.tab-pane -->
+                    <!--en esta tab se muestra la informacion de las ventas realizadas en la tienda-->
                     <div class="tab-pane" id="venta">
                         <?php
                         include_once "views/venta/listado.php";
@@ -165,6 +185,7 @@ if(!isset($_SESSION["nombre"]))
     }
     else
     {
+        //sino esta activa se muestra un alert
     ?>
     <div class="row">
         <div class="col-md-12">
@@ -172,7 +193,7 @@ if(!isset($_SESSION["nombre"]))
                 <h4>
                     <i class='icon fa fa-warning'></i> Tienda Desactivada
                 </h4>
-                Consulte con administrador del sistema para mas informacion.
+                Consulte con el administrador del sistema para mas informacion.
             </div>
         </div>
     </div>

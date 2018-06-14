@@ -155,7 +155,7 @@ class CRUDProducto
         //preparamos la consulta
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :producto AND id_tienda = :tienda");
 
-        //se asigna el id del producto a mostrar su hstorial
+        //se asigna el id del producto a mostrar su historial
         $stmt -> bindParam(":producto",$data["producto"],PDO::PARAM_INT);
         $stmt -> bindParam(":tienda",$data["tienda"],PDO::PARAM_INT);
 

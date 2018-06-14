@@ -15,7 +15,6 @@ if(!isset($_SESSION["compra"]))
 
 ?>
 
-<!--section para mosrar al Usuario el lugar donde se encuentra-->
 <section class="content-header">
     <h1>
         Nueva Venta 
@@ -31,7 +30,7 @@ if(!isset($_SESSION["compra"]))
     <div class="row">
         <div class="col-xs-12">
             <?php
-            //verificamos si se va a mostrar un mensaje realcionados con la ventas
+            //verificamos si se va a mostrar un mensaje relacionados con la ventas
             if(!empty($_SESSION["mensaje"]))
             {
                 //si el producto no esta registrado para esta tienda
@@ -95,7 +94,7 @@ if(!isset($_SESSION["compra"]))
         </div>
     </div>
 
-    <!--Seccion para mostrar los producto a comprar-->
+    <!--Seccion para agrgar los producto a comprar-->
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">
@@ -109,6 +108,7 @@ if(!isset($_SESSION["compra"]))
 
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <!--formulario para agregar un nuevo producto a la venta-->
                     <form action="index.php?section=venta&action=modificarVenta&status=1&shop=<? echo $_GET["shop"]; ?>" method="post">
 
                         <div class='form-group'>
@@ -155,7 +155,10 @@ if(!isset($_SESSION["compra"]))
                             </thead>
                             <tbody>
                                 <?php
+                                //variable para guardar el total de la venta
                                 $total = 0;
+                                
+                                //se imprime la inforacion de los articulos en la venta
                                 foreach($_SESSION["compra"] as $rows => $row)
                                 {
                                     $total += $row -> total;

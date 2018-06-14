@@ -35,7 +35,7 @@ class CRUDUsuario
         $stmt -> close();
     }
     
-    //modelo para obtener la informacion de los usuarios registradas
+    //modelo para obtener la informacion de los usuarios registrados
     public static function listadoUsuarioModel($tabla)
     {
         //preparamos la consulta y la ejecutamos

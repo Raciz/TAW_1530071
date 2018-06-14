@@ -241,7 +241,7 @@ class mvcInventario
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
 
-                //nos redireccionara a la descripcion del producto
+                //nos redireccionara al listado de producto
                 echo "<script>
                         window.location.replace('index.php?section=inventario&action=listado');
                       </script>";

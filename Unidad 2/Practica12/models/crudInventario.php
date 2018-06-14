@@ -132,7 +132,7 @@ class CRUDInventario
         //preparamos la consulta
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
 
-        //se asigna el id del producto a mostrar su hstorial
+        //se asigna el id del producto a mostrar su historial
         $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
 
         //se ejecuta la consulta
@@ -151,7 +151,7 @@ class CRUDInventario
         //preparamos la consulta
         $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE id_producto = :id");
 
-        //se asigna el id del producto a mostrar su hstorial
+        //se asigna el id del producto a mostrar su historial
         $stmt -> bindParam(":id",$id,PDO::PARAM_INT);
 
         //se ejecuta la consulta

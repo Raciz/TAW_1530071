@@ -29,7 +29,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Confirmacion de Editado</h4>
             </div>
-            <!--formulario para pedir al usuario su contraseña para confirmar el borrado de un producto-->
+            <!--formulario para pedir al usuario su contraseña para confirmar el editado de un producto-->
             <form id="formEdit" role="form" method="post" autocomplete="off" action="index.php?section=inventario&action=listado">
                 <div class="modal-body">
 
@@ -48,7 +48,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--Botones para continuar o cancelar con la eliminacion del usuario-->
+                    <!--Botones para continuar o cancelar la edicion del producto-->
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline">Confirmar</button>
                 </div>
@@ -72,7 +72,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="editar")
         //obtenemos el objeto del input hidden
         var input = document.getElementById("edit");
 
-        //le asignamos a value del que es el id del usuario a eliminar 
+        //le asignamos a value del que es el id del producto a editar 
         input.setAttribute("value",edit);
     }
 

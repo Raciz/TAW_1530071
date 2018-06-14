@@ -29,10 +29,10 @@ if(!isset($_SESSION["nombre"]))
             //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
             if(!empty($_SESSION["mensaje"]))
             {
-                //si session en mensaje es agregar
+                //si session en mensaje es agregar un producto
                 if($_SESSION["mensaje"]=="agregar")
                 {
-                    //se muestra el alert de agregar
+                    //se muestra el alert de agregar un producto
                     echo"
                     <div class='alert alert-success alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -43,10 +43,10 @@ if(!isset($_SESSION["nombre"]))
                     </div>
                     ";
                 }
-                //si session en mensaje es eliminar
+                //si session en mensaje es eliminar un producto
                 elseif ($_SESSION["mensaje"]=="eliminar")
                 {
-                    //se muestra el alert de eliminar
+                    //se muestra el alert de eliminar un producto
                     echo"
                     <div class='alert alert-warning alert-dismissible'>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
@@ -58,7 +58,21 @@ if(!isset($_SESSION["nombre"]))
                     ";
 
                 }
+                //si session en mensaje es editar un producto
+                elseif ($_SESSION["mensaje"]=="editar")
+                {
+                    //se muestra el alert de editar un producto
+                    echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Editado Exitoso
+                        </h4>
+                        Se ha editado la informacion de un producto del sistema.
+                    </div>
+                    ";
 
+                }
                 //se elimina el contenido de session en mensaje
                 $_SESSION["mensaje"]="";
             }
@@ -116,7 +130,7 @@ if(!isset($_SESSION["nombre"]))
             }
             ?>
 
-            <!-- caja para mostrar la el listado de productos-->
+            <!-- caja para mostrar el listado de productos-->
             <div class="box box-success">
                 <div class="box-header">
                     <div class="row">
@@ -148,8 +162,8 @@ if(!isset($_SESSION["nombre"]))
                             <?php
                             //creamos un objeto de mvcInventario
                             $listado = new mvcInventario();
-                            
-                            //se manda a llamar el control para enlistar los procuctos
+
+                            //se manda a llamar el control para enlistar los productos
                             $listado -> listadoInventarioController();
                             ?>
                         </tbody>
@@ -171,7 +185,7 @@ if(!isset($_SESSION["nombre"]))
         <!-- /.col -->
     </div>
     <?php
-    //incluimos el archivo con el modal para agregar productos
+    //incluimos el archivo con el modal para agregar, editar y eliminar productos
     include_once "views/inventario/agregar.php";
     include_once "views/inventario/editar.php";
     include_once "views/inventario/eliminar.php";

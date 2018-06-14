@@ -10,7 +10,7 @@ class mvcTienda
         //se verifica si mediante el formulario de registro se envio informacion
         if(isset($_POST["nombre"]))
         {
-            //se guardan la informacion de usuario
+            //se guardan la informacion de la tienda
             $data = array("nombre" => $_POST["nombre"],
                           "direccion" => $_POST["direccion"],
                           "estado" => $_POST["estado"]);
@@ -40,7 +40,7 @@ class mvcTienda
     //Control para mostrar un listado de las usuarios registrados en el sistema
     function listadoTiendaController()
     {
-        //se le manda al modelo el nombre de la tabla a mostrar la informacion de los usuarios 
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion de las tiendas 
         $data = CRUDTienda::listadoTiendaModel("Tienda");
 
         //se imprime la informacion de cada una de las tiendas registradas
@@ -78,13 +78,13 @@ class mvcTienda
         }
     }
 
-    //Control para borrar un usuario del sistema
+    //Control para borrar una tienda del sistema
     public function eliminarTiendaController()
     {
-        //se verifica si se envio el id del usuario a eliminar
+        //se verifica si se envio el id de la tienda a eliminar
         if(isset($_POST["del"]))
         {
-            //de ser asi se guarda el id del usuario
+            //de ser asi se guarda el id de la tienda
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
@@ -96,7 +96,7 @@ class mvcTienda
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de tiendas
                 echo "<script>
                         window.location.replace('index.php?section=tienda&action=listado');
                       </script>";
@@ -156,7 +156,7 @@ class mvcTienda
             </div>";
     }
 
-    //Control para modificar la informacion de un usuario
+    //Control para modificar la informacion de una tienda
     public function modificarTiendaController()
     {
         //se verifica si mediante el formulario se envio informacion
@@ -168,7 +168,7 @@ class mvcTienda
                           "direccion" => $_POST["direccion"],
                           "estado" => $_POST["estado"]);
 
-            //se manda la informacion del usuario y la tabla en la que esta almacenada
+            //se manda la informacion de la tienda y la tabla en la que esta almacenada
             $resp = CRUDTienda::modificarTiendaModel($data,"Tienda");
 
             //en caso de que se haya editado correctamente 
@@ -177,7 +177,7 @@ class mvcTienda
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de tiendas
                 echo "<script>
                         window.location.replace('index.php?section=tienda&action=listado');
                       </script>";
@@ -243,11 +243,13 @@ class mvcTienda
         return $info["estado"];
     }
 
+    //control para obtener la informacion de los productos con bajo 
     function stockBajoController()
     {
-
+        //se verifica si el usuario es un super usuario
         if($_SESSION["root"])
         {
+            //si es super usuario mandamos al llamar el modelo para obtener los productos con bajo stock para toodas las tiendas
             $resp = CRUDTienda::stockBajoRootModel("Producto","Tienda_Producto","Tienda");
 
             echo "
@@ -260,6 +262,7 @@ class mvcTienda
                 <ul class='menu'>
                 ";
 
+            //se imprime la informacion de los prodctos con bajo stock
             foreach($resp as $rows => $row)
             {
                 echo"
@@ -273,6 +276,7 @@ class mvcTienda
         }
         else
         {
+            //si no es super usuario mandamos al llamar el modelo para obtener los productos con bajo stock para la tienda a la cual pertenece el usuario
             $resp = CRUDTienda::stockBajoModel($_SESSION["shop"],"Producto","Tienda_Producto");
 
             echo "
@@ -285,6 +289,7 @@ class mvcTienda
                 <ul class='menu'>
                 ";
 
+            //se imprime la informacion de los prodctos con bajo stock
             foreach($resp as $rows => $row)
             {
                 echo"
