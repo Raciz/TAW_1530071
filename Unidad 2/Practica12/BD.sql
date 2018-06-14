@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-06-2018 a las 19:18:43
+-- Tiempo de generación: 14-06-2018 a las 20:45:57
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -76,7 +76,20 @@ INSERT INTO `Historial` (`id_historial`, `id_tienda`, `id_producto`, `id_usuario
 (10, 2, 4, 1, '2018-06-11', '01:25:18', 'Francisco Isaac Perales Morales agregÃ³ 1 producto(s) al inventario', 'asfwqfvcw', 1),
 (11, 2, 4, 1, '2018-06-11', '01:27:36', 'Francisco Isaac Perales Morales agregÃ³ 1 producto(s) al inventario', 'cewf2323', 1),
 (12, 2, 4, 1, '2018-06-11', '01:28:24', 'Francisco Isaac Perales Morales eliminÃ³ 2 producto(s) del inventario', 'gfasgfaf', 2),
-(13, 2, 4, 6, '2018-06-11', '01:39:39', 'Juan Perez eliminÃ³ 12 producto(s) del inventario', 'asdfaf', 12);
+(13, 2, 4, 6, '2018-06-11', '01:39:39', 'Juan Perez eliminÃ³ 12 producto(s) del inventario', 'asdfaf', 12),
+(14, 3, 5, 1, '2018-06-11', '21:38:58', 'Francisco Isaac Perales Morales agregÃ³ 132 producto(s) al inventario', '124839', 132),
+(15, 3, 5, 1, '2018-06-11', '21:39:16', 'Francisco Isaac Perales Morales agregÃ³ 100 producto(s) al inventario', 'vsaff', 100),
+(16, 3, 5, 1, '2018-06-11', '21:39:51', 'Francisco Isaac Perales Morales eliminÃ³ 22 producto(s) del inventario', 'fd', 22),
+(17, 3, 5, 1, '2018-06-11', '21:40:35', 'Francisco Isaac Perales Morales eliminÃ³ 56 producto(s) del inventario', 'fffffffffff', 56),
+(18, 3, 5, 1, '2018-06-11', '21:40:55', 'Francisco Isaac Perales Morales agregÃ³ 16 producto(s) al inventario', 'hola mundo', 16),
+(21, 3, 5, 1, '2018-06-12', '00:36:22', 'Francisco Isaac Perales Morales eliminÃ³ 160 producto(s) del inventario', 'cvakhc', 160),
+(22, 2, 4, 1, '2018-06-12', '00:37:09', 'Francisco Isaac Perales Morales eliminÃ³ 480 producto(s) del inventario', 'kcvaslcvik', 480),
+(23, 2, 3, 1, '2018-06-12', '00:37:43', 'Francisco Isaac Perales Morales eliminÃ³ 214200 producto(s) del inventario', 'dsvbiavg', 214200),
+(25, 2, 5, 1, '2018-06-12', '01:34:41', 'Francisco Isaac Perales Morales agregÃ³ 100 producto(s) al inventario', 'dlvndknv', 100),
+(31, 2, 5, 1, '2016-02-11', '11:18:45', 'Francisco Isaac Perales Morales vendio 1 producto(s) del inventario', '19', 1),
+(32, 2, 3, 1, '2018-06-14', '12:41:47', 'Francisco Isaac Perales Morales vendio 1 producto(s) del inventario', '20', 1),
+(33, 2, 5, 1, '2018-06-14', '12:42:25', 'Francisco Isaac Perales Morales vendio 1 producto(s) del inventario', '21', 1),
+(34, 2, 4, 1, '2018-06-14', '13:41:09', 'Francisco Isaac Perales Morales agregÃ³ 5 producto(s) al inventario', 'fasfasf', 5);
 
 -- --------------------------------------------------------
 
@@ -100,7 +113,10 @@ CREATE TABLE `Producto` (
 
 INSERT INTO `Producto` (`id_producto`, `codigo_producto`, `nombre_producto`, `fecha_de_registro`, `precio`, `img`, `id_categoria`) VALUES
 (3, '23423', 'Sailor Saturn', '2018-06-10', 1000, 'views/media/img/sailor-saturn.jpg', 1),
-(4, '124214', 'Falulu', '2018-06-11', 20, 'views/media/img/_20180316_143448.JPG', 1);
+(4, '124214', 'Falulu', '2018-06-11', 20, 'views/media/img/_20180316_143448.JPG', 1),
+(5, '10101', 'Donas (6 pza.)', '2018-06-11', 25, 'views/media/img/noimg.png', 4),
+(6, '1234', 'Tenis Adidas', '2018-06-11', 200, 'views/media/img/noimg.png', 3),
+(7, 'test', 'test', '2018-06-12', 12.7, 'views/media/img/noimg.png', 1);
 
 -- --------------------------------------------------------
 
@@ -120,7 +136,7 @@ CREATE TABLE `Tienda` (
 --
 
 INSERT INTO `Tienda` (`id_tienda`, `nombre`, `direccion`, `estado`) VALUES
-(2, 'Soriana 2.0', '12 y 13 Berriozabal 2.0', 0),
+(2, 'Soriana 2.0', '12 y 13 Berriozabal 2.0', 1),
 (3, 'Wal-Mart', '6 Ocampo', 1);
 
 -- --------------------------------------------------------
@@ -140,8 +156,10 @@ CREATE TABLE `Tienda_Producto` (
 --
 
 INSERT INTO `Tienda_Producto` (`id_tienda`, `id_producto`, `stock`) VALUES
-(2, 3, 214212),
-(2, 4, 488);
+(2, 3, 4),
+(2, 4, 6),
+(2, 5, 103),
+(3, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -167,7 +185,8 @@ CREATE TABLE `Usuario` (
 
 INSERT INTO `Usuario` (`id_usuario`, `nombre`, `apellido`, `usuario`, `password`, `email`, `fecha_de_registro`, `root`, `id_tienda`) VALUES
 (1, 'Francisco Isaac', 'Perales Morales', 'admin', 'admin', '1530071@upv.edu.mx', '2018-06-08', 1, NULL),
-(6, 'Juan', 'Perez', 'juan', 'qweqewqqwr', '1430034@upv.edu.mx', '2018-06-10', 0, 2);
+(6, 'Juan', 'Perez', 'juan', 'qweqewqqwr', '1430034@upv.edu.mx', '2018-06-10', 0, 2),
+(7, 'Aaron', 'Sanchez', 'aaron', 'aaron', 'aaron@gmail.com', '2018-06-12', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -186,7 +205,16 @@ CREATE TABLE `Venta` (
 --
 
 INSERT INTO `Venta` (`id_venta`, `total`, `id_tienda`) VALUES
-(7, 1000, 2);
+(12, 1020, 2),
+(13, 25, 2),
+(14, 25, 2),
+(15, 50, 2),
+(16, 25, 2),
+(17, 25, 2),
+(18, 25, 2),
+(19, 25, 2),
+(20, 1000, 2),
+(21, 25, 2);
 
 -- --------------------------------------------------------
 
@@ -207,7 +235,17 @@ CREATE TABLE `Venta_Producto` (
 --
 
 INSERT INTO `Venta_Producto` (`id_venta`, `id_tienda`, `id_producto`, `cantidad`, `total`) VALUES
-(7, 2, 3, 1, 1000);
+(12, 2, 3, 1, 1000),
+(12, 2, 4, 1, 20),
+(13, 2, 5, 1, 25),
+(14, 2, 5, 1, 25),
+(15, 2, 5, 2, 50),
+(16, 2, 5, 1, 25),
+(17, 2, 5, 1, 25),
+(18, 2, 5, 1, 25),
+(19, 2, 5, 1, 25),
+(20, 2, 3, 1, 1000),
+(21, 2, 5, 1, 25);
 
 --
 -- Índices para tablas volcadas
@@ -281,13 +319,13 @@ ALTER TABLE `Categoria`
 -- AUTO_INCREMENT de la tabla `Historial`
 --
 ALTER TABLE `Historial`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `Producto`
 --
 ALTER TABLE `Producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `Tienda`
@@ -299,13 +337,13 @@ ALTER TABLE `Tienda`
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `Venta`
 --
 ALTER TABLE `Venta`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
