@@ -82,7 +82,7 @@ class CRUDPago
     public static function editarPagoModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_pago = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT p.id_pago, p.folio, p.fecha_pago, p.mama, a.nombre, a.apellido FROM $tabla1 as p JOIN $tabla2 as a on a.id_alumna = p.alumna WHERE p.id_pago = :id");
 
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -97,21 +97,20 @@ class CRUDPago
         $stmt->close();
     }
 
-    /*/modelo para modificar la informacion de un alumno registrada en la base de datos
-    public static function modificarAlumnoModel($data,$tabla)
+    //modelo para modificar la informacion de un pago registrado en la base de datos
+    public static function modificarPagoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, fechaNac = :fecha, grupo = :grupo WHERE id_alumna = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET mama = :mama, fecha_pago = :fecha, folio = :folio WHERE id_pago = :id");
 
         //cambiamos el formato de la fecha a yyyy/mm/dd
-        $fecha = date("Y/m/d", strtotime($data["fecha"]));
+        $fecha = date("Y/m/d", strtotime($data["pago"]));
 
         //se realiza la asignacion de los datos para el update
         $stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
-        $stmt -> bindParam(":nombre", $data["nombre"], PDO::PARAM_STR);
-        $stmt -> bindParam(":apellido", $data["apellido"], PDO::PARAM_STR);
+        $stmt -> bindParam(":mama", $data["mama"], PDO::PARAM_STR);
         $stmt -> bindParam(":fecha", $fecha, PDO::PARAM_STR);
-        $stmt -> bindParam(":grupo", $data["grupo"], PDO::PARAM_STR);
+        $stmt -> bindParam(":folio", $data["folio"], PDO::PARAM_INT);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -121,13 +120,12 @@ class CRUDPago
         }
         else
         {
-            print_r($stmt -> errorInfo());
             //en caso de no ser asi nos retorna fail
             return "fail";
         }
 
         //cerramos la conexion
         $stmt->close();
-    }*/
+    }
 }
 ?>

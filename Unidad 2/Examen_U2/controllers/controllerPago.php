@@ -196,7 +196,7 @@ class mvcPago
         $data = $_POST["edit"];
 
         //se manda el id del pago y el nombre de la tabla donde esta almacenada
-        $resp = CRUDPago::editarPagoModel($data,"Pago");
+        $resp = CRUDPago::editarPagoModel($data,"Pago","Alumna");
 
         //se imprime la informacion del pago en inputs de un formulario
         echo "
@@ -204,7 +204,7 @@ class mvcPago
 
                 <div class='form-group'>
                         <label>Nombre</label>
-                        <input type='text' value='".$resp["nombre"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required readOnly>
+                        <input type='text' value='".$resp["nombre"]." ".$resp["apellido"]."' class='form-control' placeholder='Ingrese Nombre' required readOnly>
                     </div>
 
                     <div class='form-group'>
@@ -220,7 +220,7 @@ class mvcPago
                             <div class='input-group-addon'>
                                 <i class='fa fa-calendar'></i>
                             </div>
-                            <input name='fecha' type='text' class='form-control pull-right' id='datepicker2' value='".$resp["fecha_pago"]."'>
+                            <input name='pago' type='text' class='form-control pull-right' id='datepicker2' value='".$resp["fecha_pago"]."'>
                         </div>
                     </div>
                     
@@ -231,21 +231,20 @@ class mvcPago
                 ";
     }
 
-    /*/Control para modificar la informacion de un alumno
-    public function modificarAlumnoController()
+    //Control para modificar la informacion de un pago
+    public function modificarPagoController()
     {
         //se verifica si mediante el formulario se envio informacion
-        if(isset($_POST["nombre"]))
+        if(isset($_POST["id"]))
         {
-            //se guardan la informacion del alumno
+            //se guardan la informacion del pago
             $data = array("id" => $_POST["id"],
-                          "nombre" => $_POST["nombre"],
-                          "apellido" => $_POST["apellido"],
-                          "fecha" => $_POST["fecha"],
-                          "grupo" => $_POST["grupo"]);
+                          "mama" => $_POST["mama"],
+                          "pago" => $_POST["pago"],
+                          "folio" => $_POST["folio"]);
 
-            //se manda la informacion del alumno y la tabla en la que esta almacenada
-            $resp = CRUDAlumno::modificarAlumnoModel($data,"Alumna");
+            //se manda la informacion del pa y la tabla en la que esta almacenada
+            $resp = CRUDPago::modificarPagoModel($data,"Pago");
 
             //en caso de que se haya editado correctamente 
             if($resp == "success")
@@ -253,12 +252,12 @@ class mvcPago
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "editar";
 
-                //nos redireccionara al listado de alumnos
+                //nos redireccionara al listado de pagos
                 echo "<script>
-                        window.location.replace('index.php?section=alumno&action=listado');
+                        window.location.replace('index.php?section=pago&action=listado');
                     </script>";
             }
         }
-    }    */
+    }  
 }
 ?>
