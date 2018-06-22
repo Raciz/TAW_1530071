@@ -10,7 +10,7 @@
             <li><a href="index.php?section=dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
             <li><a href="index.php?section=alumno&action=listado">Alumnos</a></li>
             <li><a href="index.php?section=grupo&action=listado">Grupos</a></li>
-            <li><a href="index.php?section=pago">Pagos</a></li>
+            <li><a href="index.php?section=pago&action=listado">Pagos</a></li>
         <?php
         }
         else

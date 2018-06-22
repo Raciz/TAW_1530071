@@ -68,17 +68,17 @@ class mvcAlumno
         }
     }
 
-    /*/Control para borrar un usuario del sistema
-    public function eliminarUsuarioController()
+    //Control para borrar un alumno del sistema
+    public function eliminarAlumnoController()
     {
-        //se verifica si se envio el id del usuario a eliminar
+        //se verifica si se envio el id del alumno a eliminar
         if(isset($_POST["del"]))
         {
-            //de ser asi se guarda el id del usuario
+            //de ser asi se guarda el id del alumno
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Historial","Usuario");
+            $resp = CRUDAlumno::eliminarAlumnoModel($data,"Pago","Alumna");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -86,13 +86,13 @@ class mvcAlumno
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de alumno
                 echo "<script>
-                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
+                        window.location.replace('index.php?section=alumno&action=listado');
                       </script>";
             }
         }
-    }*/
+    }
 
     //Control para poder mostrar la informacion de un alumno a editar
     public function editarAlumnoController()
@@ -187,19 +187,19 @@ class mvcAlumno
         }
     }
 
-    /*/Control para mostrar los grupos en un select
-    public function optionAlumnoController()
+    //Control para obtener las informacion de los alumnos
+    public function infoAlumnoController()
     {
         //se le manda al modelo el nombre de la tabla a mostrar su informacion
-        $data = CRUDGrupo::listadoGrupoModel("Grupo");
+        $data = CRUDAlumno::listadoAlumnoModel("Alumna","Grupo");
 
         //mostramos el nombre de cada una de los grupos
         foreach($data as $rows => $row)
         {
-            //se muestra cada una de los grupos en un option del select
-            echo "<option value=".$row["id_grupo"].">".$row["nombre"]."</option>";
+            echo "alumnos.push('".$row["id_alumna"].",".$row["nombre"]." ".$row["apellido"].",".$row["grupo"]."');";
         }
-    }*/
+    }
+    
 }
 ?>
 

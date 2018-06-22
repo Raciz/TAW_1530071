@@ -139,7 +139,7 @@ if(!isset($_SESSION["nombre"]))
         //incluimos el archivo con el modal para agregar, editar y eliminar alumno
         include_once "views/alumno/agregar.php";
         include_once "views/alumno/editar.php";
-        #include_once "views/grupo/eliminar.php";
+        include_once "views/alumno/eliminar.php";
         ?>
     </section>
     <!-- /.content -->

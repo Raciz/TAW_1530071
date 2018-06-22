@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Festival 2018
+            Pagos
         </h1>
     </section>
 
@@ -11,9 +11,9 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
+                <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Listado</h3>
+                        <h3 class="box-title">Listado de Pagos</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -24,7 +24,12 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Alumno</th>
+                                    <th>Mama</th>
+                                    <th>Fecha de Pago</th>
                                     <th>Fecha de Envio</th>
+                                    <th>Imagen</th>
+                                    <th>Folio</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,14 +38,19 @@
                                 $listado = new mvcPago();
 
                                 //se manda a llamar el control para enlistar los pagos
-                                $listado -> listadoPagoPublicoController();
+                                $listado -> listadoPagoAdminController();
                                 ?>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
                                     <th>Alumno</th>
+                                    <th>Mama</th>
+                                    <th>Fecha de Pago</th>
                                     <th>Fecha de Envio</th>
+                                    <th>Imagen</th>
+                                    <th>Folio</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -52,6 +62,11 @@
             </div>
             <!-- /.col (left) -->
         </div>
+        <?php
+        //incluimos el archivo con el modal para editar y eliminar alumno
+        #include_once "views/pago/editar.php";
+        include_once "views/pago/eliminar.php";
+        ?>
     </section>
     <!-- /.content -->
 </div>

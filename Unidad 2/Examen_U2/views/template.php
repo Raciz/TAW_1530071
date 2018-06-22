@@ -116,17 +116,17 @@ session_start();
                                 <li class="dropdown user user-menu">
                                     <!-- Menu Toggle Button -->
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <!-- The user image in the navbar-->
-                                        <img src="views/media/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                        <span class="hidden-xs">Alexander Pierce</span>
+                                        <span class="hidden-xs"><?php echo $_SESSION["nombre"]; ?></span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- The user image in the menu -->
                                         <li class="user-header">
                                             <!--<img src="views/media/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
-                                            <p>Alexander Pierce - Web Developer</p>
+                                            <p>
+                                                <?php echo $_SESSION["nombre"]; ?>
+                                            </p>
                                             <br>
                                             <br>
                                             <br>
