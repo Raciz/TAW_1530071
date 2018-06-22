@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-02-2016 a las 18:23:13
+-- Tiempo de generación: 22-06-2018 a las 17:40:35
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -39,6 +39,14 @@ CREATE TABLE `Alumna` (
   `grupo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `Alumna`
+--
+
+INSERT INTO `Alumna` (`id_alumna`, `nombre`, `apellido`, `fechaNac`, `grupo`) VALUES
+(8, 'Yesica', 'Sanches', '2008-01-14', 5),
+(9, 'Vanessa', 'Balderrama', '2018-06-07', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +57,17 @@ CREATE TABLE `Grupo` (
   `id_grupo` int(11) NOT NULL,
   `nombre` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `Grupo`
+--
+
+INSERT INTO `Grupo` (`id_grupo`, `nombre`) VALUES
+(1, '1-A'),
+(2, '1-B'),
+(3, '2-A'),
+(4, '2-B'),
+(5, '3-B');
 
 -- --------------------------------------------------------
 
@@ -65,6 +84,13 @@ CREATE TABLE `Pago` (
   `img_comprobante` varchar(255) DEFAULT NULL,
   `folio` int(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `Pago`
+--
+
+INSERT INTO `Pago` (`id_pago`, `alumna`, `mama`, `fecha_pago`, `fecha_envio`, `img_comprobante`, `folio`) VALUES
+(3, 8, 'Juana Fernandez 3.0', '2020-08-02', '2018-06-22 15:16:28', 'views/media/img/2018061615373300-D0D1FD5D1C6CEA47DE7261E211A53786.jpg', 2020);
 
 -- --------------------------------------------------------
 
@@ -124,19 +150,19 @@ ALTER TABLE `Usuario`
 -- AUTO_INCREMENT de la tabla `Alumna`
 --
 ALTER TABLE `Alumna`
-  MODIFY `id_alumna` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_alumna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `Grupo`
 --
 ALTER TABLE `Grupo`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `Pago`
 --
 ALTER TABLE `Pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
