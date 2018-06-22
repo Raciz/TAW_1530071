@@ -155,7 +155,6 @@
 
                             <div class="box-footer">
                                 <center>
-                                    <button type="reset" class="btn btn-danger btn-lg btn-flat">Limpiar</button>
                                     <button type="submit" class="btn btn-primary btn-lg btn-flat">Enviar</button>
                                 </center>
                             </div>

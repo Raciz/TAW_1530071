@@ -108,7 +108,10 @@ session_start();
         include "modules/menu.php";
                         ?>
 
-                        <!-- /.navbar-collapse -->
+                        <?php
+                        if(isset($_SESSION["nombre"]))
+                        {
+                        ?>
                         <!-- Navbar Right Menu -->
                         <div class="navbar-custom-menu">
                             <ul class="nav navbar-nav">                                
@@ -145,6 +148,10 @@ session_start();
                             </ul>
                         </div>
                         <!-- /.navbar-custom-menu -->
+                        <?php 
+                        } 
+                        ?>
+                        
                     </div>
                     <!-- /.container-fluid -->
                 </nav>

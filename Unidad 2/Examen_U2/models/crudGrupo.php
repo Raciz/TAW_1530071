@@ -45,17 +45,17 @@ class CRUDGrupo
         $stmt -> close();
     }
     
-    /*/modelo para borrar un usuario de la base de datos
-    public static function eliminarUsuarioModel($data,$tabla1,$tabla2)
+    //modelo para borrar un grupo de la base de datos
+    public static function eliminarGrupoModel($data,$tabla1,$tabla2)
     {
-        //preparamos la sentencia para realizar el update
-        $stmt1 = Conexion::conectar() -> prepare("UPDATE $tabla1 SET id_usuario = NULL WHERE id_usuario = :id");
+        //preparamos la sentencia para quitar del grupo a las alumnas que esten en el
+        $stmt1 = Conexion::conectar() -> prepare("UPDATE $tabla1 SET grupo = NULL WHERE grupo = :id");
 
         //se realiza la asignacion de los datos a actualizar
         $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
         
         //preparamos la sentencia para realizar el delete
-        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_usuario = :id");
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE id_grupo = :id");
 
         //se realiza la asignacion de los datos a eliminar
         $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
@@ -74,7 +74,7 @@ class CRUDGrupo
 
         //cerramos la conexion
         $stmt -> close();
-    }*/
+    }
     
     //modelo para obtener la informacion de un grupo
     public static function editarGrupoModel($data,$tabla)

@@ -69,6 +69,15 @@ class mvcController
                       </script>";
             }
         }
-    }	
+    }
+    
+    //contron para obtener la informacion del sistema
+    public function infoSistemaController()
+    {
+        //llamamos al modelo para obtener la informacion de la tienda
+        $data = CRUD::infoSistemaModel("Grupo","Alumna","Pago");
+        
+        return $data;
+    }
 }
 ?>

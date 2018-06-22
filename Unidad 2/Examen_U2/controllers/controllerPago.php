@@ -189,70 +189,49 @@ class mvcPago
         }
     }
 
-    /*/Control para poder mostrar la informacion de un alumno a editar
-    public function editarAlumnoController()
+    //Control para poder mostrar la informacion de un pago a editar
+    public function editarPagoController()
     {
-        //se obtiene el id del alumno a mostrar su informacion
+        //se obtiene el id del pago a mostrar su informacion
         $data = $_POST["edit"];
 
-        //se manda el id del alumno y el nombre de la tabla donde esta almacenada
-        $resp = CRUDAlumno::editarAlumnoModel($data,"Alumna");
+        //se manda el id del pago y el nombre de la tabla donde esta almacenada
+        $resp = CRUDPago::editarPagoModel($data,"Pago");
 
-        //se imprime la informacion del grupo en inputs de un formulario
+        //se imprime la informacion del pago en inputs de un formulario
         echo "
-                <input type=hidden value=".$resp["id_alumna"]." name='id'>
+                <input type=hidden value=".$resp["id_pago"]." name='id'>
 
                 <div class='form-group'>
                         <label>Nombre</label>
-                        <input type='text' value='".$resp["nombre"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required>
+                        <input type='text' value='".$resp["nombre"]."' class='form-control' name='nombre' placeholder='Ingrese Nombre' required readOnly>
                     </div>
 
                     <div class='form-group'>
-                        <label>Apellido</label>
-                        <input type='text' value='".$resp["apellido"]."' class='form-control' name='apellido' placeholder='Ingrese Apellido' required>
+                        <label>Madre</label>
+                        <input type='text' value='".$resp["mama"]."' class='form-control' name='mama' placeholder='Nombre Madre' required>
                     </div>
 
 
                     <div class='form-group'>
-                        <label>Fecha de Nacimiento</label>
+                        <label>Fecha de Pago</label>
 
                         <div class='input-group date'>
                             <div class='input-group-addon'>
                                 <i class='fa fa-calendar'></i>
                             </div>
-                            <input name='fecha' type='text' class='form-control pull-right' id='datepicker2' value='".$resp["fechaNac"]."'>
+                            <input name='fecha' type='text' class='form-control pull-right' id='datepicker2' value='".$resp["fecha_pago"]."'>
                         </div>
                     </div>
-
+                    
                     <div class='form-group'>
-                        <label>Grupo</label>
-                        <select name='grupo' id='grupo' class='form-control select2' style='width: 100%;' required>";
-
-        //creamos un objeto de mvcGrupo
-        $option = new mvcGrupo();
-
-        //se manda a llamar al control para traer a los grupos en options
-        $option -> optionGrupoController();
-
-        echo"           </select>
-                    </div>";
-
-        //script para seleccionar en el select el option de la categoria al que pertenece el producto
-        echo "<script>
-                var grupo = document.getElementById('grupo');
-
-                for(var i = 1; i < grupo.options.length; i++)
-                {
-                    if(grupo.options[i].value ==".$resp["grupo"].")
-                    {
-                        grupo.selectedIndex = i;
-                    }
-                }
-                </script>";
-
+                        <label>Folio</label>
+                        <input type='text' value='".$resp["folio"]."' class='form-control' name='folio' placeholder='Ingrese Folio' required>
+                    </div>
+                ";
     }
 
-    //Control para modificar la informacion de un alumno
+    /*/Control para modificar la informacion de un alumno
     public function modificarAlumnoController()
     {
         //se verifica si mediante el formulario se envio informacion

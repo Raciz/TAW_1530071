@@ -78,11 +78,11 @@ class CRUDPago
         $stmt -> close();
     }
 
-    /*/modelo para obtener la informacion de un alumno
-    public static function editarAlumnoModel($data,$tabla)
+    //modelo para obtener la informacion de un pago
+    public static function editarPagoModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_alumna = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_pago = :id");
 
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -97,7 +97,7 @@ class CRUDPago
         $stmt->close();
     }
 
-    //modelo para modificar la informacion de un alumno registrada en la base de datos
+    /*/modelo para modificar la informacion de un alumno registrada en la base de datos
     public static function modificarAlumnoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update

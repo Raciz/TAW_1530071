@@ -63,17 +63,17 @@ class mvcGrupo
         }
     }
 
-    /*/Control para borrar un usuario del sistema
-    public function eliminarUsuarioController()
+    //Control para borrar un Grupo del sistema
+    public function eliminarGrupoController()
     {
-        //se verifica si se envio el id del usuario a eliminar
+        //se verifica si se envio el id del grupo a eliminar
         if(isset($_POST["del"]))
         {
-            //de ser asi se guarda el id del usuario
+            //de ser asi se guarda el id del grupo
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDUsuario::eliminarUsuarioModel($data,"Historial","Usuario");
+            $resp = CRUDGrupo::eliminarGrupoModel($data,"Alumna","Grupo");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -81,13 +81,13 @@ class mvcGrupo
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "eliminar";
 
-                //nos redireccionara al listado de usuarios
+                //nos redireccionara al listado de grupos
                 echo "<script>
-                        window.location.replace('index.php?section=dashboard&shop=".$_GET["shop"]."');
+                        window.location.replace('index.php?section=grupo&action=listado');
                       </script>";
             }
         }
-    }*/
+    }
 
     //Control para poder mostrar la informacion de un grupo a editar
     public function editarGrupoController()

@@ -63,8 +63,8 @@
             <!-- /.col (left) -->
         </div>
         <?php
-        //incluimos el archivo con el modal para editar y eliminar alumno
-        #include_once "views/pago/editar.php";
+        //incluimos el archivo con el modal para editar y eliminar un pago
+        include_once "views/pago/editar.php";
         include_once "views/pago/eliminar.php";
         ?>
     </section>

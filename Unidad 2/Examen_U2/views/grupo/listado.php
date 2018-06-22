@@ -134,7 +134,7 @@ if(!isset($_SESSION["nombre"]))
         //incluimos el archivo con el modal para agregar, editar y eliminar grupos
         include_once "views/grupo/agregar.php";
         include_once "views/grupo/editar.php";
-        #include_once "views/grupo/eliminar.php";
+        include_once "views/grupo/eliminar.php";
         ?>
     </section>
     <!-- /.content -->
