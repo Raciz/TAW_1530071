@@ -2,21 +2,23 @@
 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
     <ul class="nav navbar-nav">
         <?php
-        //verificamos si esta logeado para mostrar el menu lateral del sistema
+        //verificamos si esta logeado para mostrar las secciones a las que tiene acceso
         if(isset($_SESSION["nombre"]))
         {
         ?>
-            <li><a href="index.php?action=dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
-            <li><a href="index.php?action=alumno">Alumnos</a></li>
-            <li><a href="index.php?action=grupo">Grupos</a></li>
-            <li><a href="index.php?action=pago">Pagos</a></li>
+            <!--secciones a las que el usuario tiene acceso si esta logeado-->
+            <li><a href="index.php?section=dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
+            <li><a href="index.php?section=alumno&action=listado">Alumnos</a></li>
+            <li><a href="index.php?section=grupo&action=listado">Grupos</a></li>
+            <li><a href="index.php?section=pago">Pagos</a></li>
         <?php
         }
         else
         {
         ?>
-        <li><a href="index.php?action=registro">Registro<span class="sr-only">(current)</span></a></li>
-        <li><a href="index.php?action=listado">Listados</a></li>
+            <!--secciones a las que el usuario tiene acceso si no esta logeado-->
+            <li><a href="index.php?section=registro">Registro<span class="sr-only">(current)</span></a></li>
+            <li><a href="index.php?section=listado">Listados</a></li>
         <?php
         }
         ?>

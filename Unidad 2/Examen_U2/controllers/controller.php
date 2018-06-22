@@ -12,6 +12,18 @@ class mvcController
     //Control para manejar el redireccionamiento de las distintas secciones del sitio
     public function urlController()
     {
+        //verifica si de debe dirigir a una seccion en especifico con GET
+        if(isset($_GET["section"]))
+        {
+            //se obtiene la seccion de direccionar
+            $section = $_GET["section"];
+        }
+        else
+        {
+            //en caso de no ser asi se le direccionara al index
+            $section = "index";
+        }
+
         //se verifica si en dicha seccion se realizara una accion en especifico
         if(isset($_GET["action"]))
         {
@@ -25,9 +37,9 @@ class mvcController
         }
 
         //se llama al modelo utilizado para el direccionaiento 
-        $url = url::urlModel($action);
+        $url = url::urlModel($section,$action);
 
-        //y se incluye la pagina a la qu se va a derireccionar
+        //y se incluye la pagina a la que se va a derireccionar
         include $url;
     }
 
@@ -51,9 +63,9 @@ class mvcController
                 $_SESSION["nombre"] = $resp["nombre"];
                 $_SESSION["password"] = $resp["password"];
 
-                //si no se direccionara al dashboard de la tienda a la que pertenece
+                //si no se direccionara al dashboard
                 echo "<script>
-                        window.location.replace('index.php?action=dashboard');
+                        window.location.replace('index.php?section=dashboard');
                       </script>";
             }
         }

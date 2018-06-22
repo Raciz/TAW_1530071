@@ -22,14 +22,14 @@
 
                                 <div class="form-group">
                                     <label>Grupo</label>
-                                    <select class="form-control select2" style="width: 100%;">
+                                    <select class="form-control select2" style="width: 100%;" required>
                                         <option selected="selected">Seleccione Grupo</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Alumno</label>
-                                    <select class="form-control select2" style="width: 100%;">
+                                    <select class="form-control select2" style="width: 100%;" required>
                                         <option selected="selected">Seleccione Alumno</option>
                                     </select>
                                 </div>

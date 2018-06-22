@@ -85,6 +85,10 @@ session_start();
 
     </head>
 
+    <?php
+    if(!(isset($_GET["section"]) && $_GET["section"] == "admin"))
+    {
+    ?>
     <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
     <body class="hold-transition skin-blue layout-top-nav">
         <div class="wrapper">
@@ -101,7 +105,7 @@ session_start();
 
                         <!-- incluimos el menu -->
                         <?php
-                        include "modules/menu.php";
+        include "modules/menu.php";
                         ?>
 
                         <!-- /.navbar-collapse -->
@@ -127,7 +131,7 @@ session_start();
                                             <br>
                                             <br>
                                             <br>
-                                            <a href="index.php?action=logout" class="btn btn-default btn-flat">Cerrar Sesion</a>
+                                            <a href="index.php?section=logout" class="btn btn-default btn-flat">Cerrar Sesion</a>
                                         </li>
                                         <!-- Menu Body -->
                                         <li class="user-body">
@@ -145,17 +149,33 @@ session_start();
                     <!-- /.container-fluid -->
                 </nav>
             </header>
+            <?php
+            }
+            ?>
+            
+            <?php
+            if(!(isset($_GET["section"]) && $_GET["section"] == "admin"))
+            {
+                echo "<!-- Content Wrapper. Contains page content -->
+                      <div class='content-wrapper'>";
+            }
 
-            <!-- Content Wrapper. Contains page content -->
-            <div class='content-wrapper'>
-                <?php 
-                //creamos un objeto de mvcController
-                $mvc = new mvcController();
-                //y obtenemos el controlador para el redireccionamiento
-                $mvc -> urlController();
-                ?>
-            </div>
-            <!-- /.content-wrapper -->
+            //creamos un objeto de mvcController
+            $mvc = new mvcController();
+            //y obtenemos el controlador para el redireccionamiento
+            $mvc -> urlController();
+
+            if(!(isset($_GET["section"]) && $_GET["section"] == "admin"))
+            {
+                echo"</div>
+                     <!-- /.content-wrapper -->";
+            }
+            ?>
+
+            <?php
+            if(!(isset($_GET["section"]) && $_GET["section"] == "admin"))
+            {
+            ?>
             <footer class="main-footer">
                 <div class="container">
                     <strong>Copyright &copy; 2018 <a href="#">Francisco Isaac Perales Morales</a>.</strong> All rights
@@ -181,6 +201,9 @@ session_start();
             <!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
             <div class="control-sidebar-bg"></div>
+            <?php
+            }
+            ?>
         </div>
         <!-- ./wrapper -->
 
@@ -251,6 +274,7 @@ session_start();
 
                     //Date picker
                     $('#datepicker').datepicker({autoclose: true})
+                    $('#datepicker2').datepicker({autoclose: true})
 
                     $('#example1').DataTable
                     (
