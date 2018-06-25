@@ -11,6 +11,29 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                <?php
+                //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
+                if(!empty($_SESSION["mensaje"]))
+                {
+                    //si session en mensaje es agregar un pago
+                    if($_SESSION["mensaje"]=="agregar")
+                    {
+                        //se muestra el alert de agregar un pago
+                        echo"
+                    <div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                        <h4>
+                            <i class='icon fa fa-check'></i> Registro Exitoso
+                        </h4>
+                        Se ha registrado el pago en el sistema.
+                    </div>
+                    ";
+                    }
+
+                    //se elimina el contenido de session en mensaje
+                    $_SESSION["mensaje"]="";
+                }
+                ?>
                 <div class="box box-solid">
                     <div class="box-header with-border">
                         <h3 class="box-title">Listado</h3>

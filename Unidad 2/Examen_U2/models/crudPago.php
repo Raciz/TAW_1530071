@@ -41,7 +41,7 @@ class CRUDPago
     public static function listadoPagoModel($tabla1,$tabla2)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT p.id_pago,a.nombre,a.apellido,p.fecha_envio,p.fecha_pago,p.img_comprobante,p.folio,p.mama FROM $tabla1 as p JOIN $tabla2 as a on p.alumna = a.id_alumna");
+        $stmt = Conexion::conectar() -> prepare("SELECT p.id_pago,a.nombre,a.apellido,p.fecha_envio,p.fecha_pago,p.img_comprobante,p.folio,p.mama FROM $tabla1 as p JOIN $tabla2 as a on p.alumna = a.id_alumna ORDER BY p.fecha_envio ASC");
 
         //se ejecuta la consulta
         $stmt -> execute();
@@ -82,7 +82,7 @@ class CRUDPago
     public static function editarPagoModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT p.id_pago, p.folio, p.fecha_pago, p.mama, a.nombre, a.apellido FROM $tabla1 as p JOIN $tabla2 as a on a.id_alumna = p.alumna WHERE p.id_pago = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT p.id_pago, p.fecha_envio, p.folio, p.fecha_pago, p.mama, a.nombre, a.apellido FROM $tabla1 as p JOIN $tabla2 as a on a.id_alumna = p.alumna WHERE p.id_pago = :id");
 
         //se realiza la asignacion de los datos para la consulta
         $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
@@ -101,7 +101,7 @@ class CRUDPago
     public static function modificarPagoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET mama = :mama, fecha_pago = :fecha, folio = :folio WHERE id_pago = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET fecha_envio = :envio, mama = :mama, fecha_pago = :fecha, folio = :folio WHERE id_pago = :id");
 
         //cambiamos el formato de la fecha a yyyy/mm/dd
         $fecha = date("Y/m/d", strtotime($data["pago"]));
@@ -111,6 +111,7 @@ class CRUDPago
         $stmt -> bindParam(":mama", $data["mama"], PDO::PARAM_STR);
         $stmt -> bindParam(":fecha", $fecha, PDO::PARAM_STR);
         $stmt -> bindParam(":folio", $data["folio"], PDO::PARAM_INT);
+        $stmt -> bindParam(":envio", $data["envio"], PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())

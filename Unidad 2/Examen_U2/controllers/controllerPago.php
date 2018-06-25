@@ -31,16 +31,18 @@ class mvcPago
                 //se extrae la ubicacion temporal de la imagen
                 $tmp = $_FILES["img"]["tmp_name"];
 
+                //se obtiene la fecha y hora en la que fue sibida la imagen
+                $date = getdate();
                 //se verifica si se envio una imagen jpg o png
                 if($type == "image/jpeg" || $type == "image/png")
                 {
                     //en caso de que si sea png o jpg
-                    //se verifica que el tamaño de la imagen no supere los 300KB
-                    if($size < 300000)
+                    //se verifica que el tamaño de la imagen no supere los 5MB
+                    if($size < 5000000)
                     {
                         //en caso de que no supere el tamaño de 300KB
                         //se mueve la imagen a la carpeta de imagenes de los boletos
-                        if(!move_uploaded_file($tmp, "./views/media/img/".$name))
+                        if(!move_uploaded_file($tmp, "./views/media/img/".$date["mday"].$date["mon"].$date["year"].$date["hours"].$date["minutes"].$date["seconds"].$name))
                         {
                             //en caso de que no se pudiera mover se asigna el error copy en session error
                             $_SESSION["error"] = "copy";
@@ -55,7 +57,7 @@ class mvcPago
                         else
                         {
                             //asignamos en data el url real de la imagen
-                            $data["img"] = "views/media/img/".$name;
+                            $data["img"] = "views/media/img/".$date["mday"].$date["mon"].$date["year"].$date["hours"].$date["minutes"].$date["seconds"].$name;
                         }
                     }
                     else
@@ -99,7 +101,7 @@ class mvcPago
 
                 //nos redireccionara al listado de productos
                 echo "<script>
-                        window.location.replace('index.php');
+                        window.location.replace('index.php?section=listado');
                       </script>";
             }
             else
@@ -115,16 +117,21 @@ class mvcPago
     {
         //se le manda al modelo el nombre de la tabla a mostrar la informacion de los Pagos
         $data = CRUDPago::listadoPagoModel("Pago","Alumna");
-
+        
+        //variable para onbtener el lugar en el listado segun la fecha de envio
+        $i = 1;
+        
         //se imprime la informacion de cada uno de los Pagos
         foreach($data as $rows => $row)
         {
             //e imprimimos la informacion de cada uno de los Pagos
             echo "<tr>
-                <td>".$row["id_pago"]."</td>
+                <td>".$i."</td>
                 <td>".$row["nombre"]." ".$row["apellido"]."</td>
                 <td>".$row["fecha_envio"]."</td>
             </tr>";
+            
+            $i++;
         }
     }
 
@@ -134,12 +141,15 @@ class mvcPago
         //se le manda al modelo el nombre de la tabla a mostrar la informacion de los alumnos
         $data = CRUDPago::listadoPagoModel("Pago","Alumna");
 
+        //variable para obtener el lugar en el listado segun la fecha de envio
+        $i = 1;
+        
         //se imprime la informacion de cada uno de los alumnos registrados
         foreach($data as $rows => $row)
         {
             //e imprimimos la informacion de cada uno de los alumnos
             echo "<tr>
-                <td>".$row["id_pago"]."</td>
+                <td>".$i."</td>
                 <td>".$row["nombre"]." ".$row["apellido"]."</td>
                 <td>".$row["mama"]."</td>
                 <td>".$row["fecha_pago"]."</td>
@@ -160,6 +170,8 @@ class mvcPago
                     </center>
                 </td>
             </tr>";
+            
+            $i++;
         }
     }
 
@@ -225,6 +237,17 @@ class mvcPago
                     </div>
                     
                     <div class='form-group'>
+                        <label>Fecha de Envio</label>
+
+                        <div class='input-group date'>
+                            <div class='input-group-addon'>
+                                <i class='fa fa-calendar'></i>
+                            </div>
+                            <input name='envio' type='text' class='form-control pull-right' value='".$resp["fecha_envio"]."'>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
                         <label>Folio</label>
                         <input type='text' value='".$resp["folio"]."' class='form-control' name='folio' placeholder='Ingrese Folio' required>
                     </div>
@@ -241,7 +264,8 @@ class mvcPago
             $data = array("id" => $_POST["id"],
                           "mama" => $_POST["mama"],
                           "pago" => $_POST["pago"],
-                          "folio" => $_POST["folio"]);
+                          "folio" => $_POST["folio"],
+                          "envio" => $_POST["envio"]);
 
             //se manda la informacion del pa y la tabla en la que esta almacenada
             $resp = CRUDPago::modificarPagoModel($data,"Pago");

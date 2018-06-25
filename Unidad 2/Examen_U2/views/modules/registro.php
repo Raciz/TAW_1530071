@@ -13,28 +13,6 @@
             <div class="col-md-12">
 
                 <?php
-                //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
-                if(!empty($_SESSION["mensaje"]))
-                {
-                    //si session en mensaje es agregar un pago
-                    if($_SESSION["mensaje"]=="agregar")
-                    {
-                        //se muestra el alert de agregar un pago
-                        echo"
-                    <div class='alert alert-success alert-dismissible'>
-                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
-                        <h4>
-                            <i class='icon fa fa-check'></i> Registro Exitoso
-                        </h4>
-                        Se ha registrado el pago en el sistema.
-                    </div>
-                    ";
-                    }
-
-                    //se elimina el contenido de session en mensaje
-                    $_SESSION["mensaje"]="";
-                }
-
                 //verificamos si se va a mostrar un mensaje de aviso al suceder un error
                 if(!empty($_SESSION["error"]))
                 {
@@ -62,7 +40,7 @@
                                     <h4>
                                         <i class='icon fa fa-ban'></i> Error: Tamaño superior al permitido
                                     </h4>
-                                    No se permite subir imagenes de tamaño superior a 300 KB.
+                                    No se permite subir imagenes de tamaño superior a 5 MB.
                                 </div>
                                 ";
                     }
@@ -97,7 +75,7 @@
 
                                 <div class="form-group">
                                     <label>Grupo</label>
-                                    <select id="grupo" name="grupo" class="form-control select2" style="width: 100%;" required onchange="Alumno()">
+                                    <select id="grupo" name="grupo" class="form-control select2" style="width: 100%;" onchange="Alumno()">
                                         <option value=0 selected="selected">Seleccione Grupo</option>
                                         <?php
                                         //creamos un objeto de mvcGrupo
@@ -119,12 +97,12 @@
                                 <div class="row">
                                     <div class="form-group col-xs-6">
                                         <label>Nombre</label>
-                                        <input name="nomMadre" type="text" class="form-control" placeholder="Nombre de la Madre">
+                                        <input name="nomMadre" type="text" class="form-control" placeholder="Nombre de la Madre" required>
                                     </div>
 
                                     <div class="form-group col-xs-6">
                                         <label>Apellido</label>
-                                        <input name="apeMadre" type="text" class="form-control" placeholder="Apellido de la Madre">
+                                        <input name="apeMadre" type="text" class="form-control" placeholder="Apellido de la Madre" required>
                                     </div>
                                 </div>
 
@@ -136,19 +114,19 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input name="datePago" type="text" class="form-control pull-right" id="datepicker">
+                                        <input name="datePago" type="text" class="form-control pull-right" id="datepicker" required>
                                     </div>
                                     <!-- /.input group -->
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Imagen (tamaño maximo: 300 KB)</label>
-                                    <input type="file" name="img" accept="image/jpeg, image/png">
+                                    <label>Imagen (tamaño maximo: 5 MB)</label>
+                                    <input type="file" name="img" accept="image/jpeg, image/png" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Folio</label>
-                                    <input name="folio" type="number" class="form-control" placeholder="Folio">
+                                    <input name="folio" type="number" class="form-control" placeholder="Folio" required>
                                 </div>
                             </div>
                             <!-- /.box-body -->
