@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-06-2018 a las 17:40:35
+-- Tiempo de generación: 26-06-2018 a las 02:10:02
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -90,7 +90,8 @@ CREATE TABLE `Pago` (
 --
 
 INSERT INTO `Pago` (`id_pago`, `alumna`, `mama`, `fecha_pago`, `fecha_envio`, `img_comprobante`, `folio`) VALUES
-(3, 8, 'Juana Fernandez 3.0', '2020-08-02', '2018-06-22 15:16:28', 'views/media/img/2018061615373300-D0D1FD5D1C6CEA47DE7261E211A53786.jpg', 2020);
+(5, 9, 'Luisa lein', '2018-06-26', '2018-06-24 11:49:44', 'views/media/img/noimg.png', 1001),
+(6, 8, 'Juana La Cubana', '2018-06-29', '2019-06-20 11:51:31', 'views/media/img/noimg.png', 2019);
 
 -- --------------------------------------------------------
 
@@ -162,7 +163,7 @@ ALTER TABLE `Grupo`
 -- AUTO_INCREMENT de la tabla `Pago`
 --
 ALTER TABLE `Pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
