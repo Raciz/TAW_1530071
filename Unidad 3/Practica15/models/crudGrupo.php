@@ -32,12 +32,13 @@ class CRUDGrupo
     }
 
     //modelo para obtener la informacion de los grupos registrados
-    public static function listadoAlumnoModel($tabla1,$tabla2,$tabla3)
+    public static function listadoGrupoModel($tabla1,$tabla2,$tabla3)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT g.codigo, g.nivel, u.nombre, FROM $tabla1 as g 
-                                                                                     JOIN $tabla2 as t on t.teacher = g.teacher
-                                                                                     JOIN $tabla3 as u on u.num_empleado = t.teacher");
+        $stmt = Conexion::conectar() -> prepare("SELECT g.codigo as codigo , g.nivel as nivel , u.nombre as teacher 
+                                                 FROM $tabla1 as g 
+                                                 JOIN $tabla2 as t on t.teacher = g.teacher
+                                                 JOIN $tabla3 as u on u.num_empleado = t.teacher");
 
         //se ejecuta la consulta
         $stmt -> execute();
@@ -49,7 +50,7 @@ class CRUDGrupo
         $stmt -> close();
     }
 
-    //modelo para borrar un grupo de la base de datos
+    /*/modelo para borrar un grupo de la base de datos
     public static function eliminarGrupoModel($data,$tabla1,$tabla2)
     {
         //preparamos la sentencia para realizar un update para quitar a los alumnos del grupo a eliminar
@@ -78,16 +79,20 @@ class CRUDGrupo
 
         //cerramos la conexion
         $stmt -> close();
-    }
+    }*/
 
-    /*/modelo para obtener la informacion de un usuario
-    public static function editarUsuarioModel($data,$tabla)
+    //modelo para obtener la informacion de un grupo
+    public static function editarGrupoModel($data,$tabla1,$tabla2,$tabla3)
     {
         //preparamos la sentencia para realizar el select
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE num_empleado = :id");
+        $stmt = Conexion::conectar()->prepare("SELECT g.codigo as codigo, g.nivel as nivel, u.nombre as teacher, u.num_empleado as id
+                                               FROM $tabla1 as g 
+                                               JOIN $tabla2 as t on t.teacher = g.teacher
+                                               JOIN $tabla3 as u on u.num_empleado = t.teacher 
+                                               WHERE g.codigo = :id");
 
         //se realiza la asignacion de los datos para la consulta
-        $stmt->bindParam(":id",$data, PDO::PARAM_INT);	
+        $stmt->bindParam(":id",$data, PDO::PARAM_STR);	
 
         //se ejecuta la sentencia
         $stmt->execute();
@@ -97,16 +102,16 @@ class CRUDGrupo
 
         //cerramos la conexion
         $stmt->close();
-    }*/
+    }
 
     //modelo para modificar la informacion de un usuario registrada en la base de datos
-    public static function modificarAlumnoModel($data,$tabla)
+    public static function modificarGrupoModel($data,$tabla)
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nivel = :nivel, teacher = :teacher WHERE codigo = :id");
-
+        
         //se realiza la asignacion de los datos para el update
-        $stmt -> bindParam(":id", $data["id"], PDO::PARAM_INT);
+        $stmt -> bindParam(":id", $data["id"], PDO::PARAM_STR);
         $stmt -> bindParam(":nivel", $data["nivel"], PDO::PARAM_INT);
         $stmt -> bindParam(":teacher", $data["teacher"], PDO::PARAM_INT);
 

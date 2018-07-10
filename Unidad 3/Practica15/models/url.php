@@ -6,21 +6,17 @@ class url
     public static function urlModel($section,$action)
     {
         //en caso de que se mande un link valido se redirecciona a su pagina correspondiene
-        if(($section == "grupo" || $section == "alumno" ||  $section == "pago") && ($action == "agregar" || $action == "listado" || $action == "eliminar" || $action == "editar"))
+        if(($section == "careers" || $section == "students" || $section == "users" || $section == "groups") && ($action == "add" || $action == "list" || $action == "delete" || $action == "edit"))
         {
             $url = "views/".$section."/".$action.".php";
         }
-        elseif($section == "listado" || $section == "dashboard"  || $section == "logout")
+        elseif($section == "logout" || $section == "dashboard")
         {
             $url = "views/modules/".$section.".php";
         }
-        elseif($section == "admin")
-        {
-            $url = "views/modules/login.php";
-        }
         else
         {
-            $url = "views/modules/dashboard.php";
+            $url = "views/modules/login.php";
         }
 
         //y se retorna la pagina a redireccionar

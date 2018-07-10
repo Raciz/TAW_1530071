@@ -5,6 +5,10 @@ ini_set("display_errors", 1);
 session_start();
 ?>
 
+<?php
+if(!empty($_SESSION["nombre"]))
+{
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,6 +33,26 @@ session_start();
         <!-- Custom styles for this template -->
         <link href="views/media/css/style.css" rel="stylesheet">
 
+        <!-- DataTables -->
+        <link href="views/media/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="views/media/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Plugins css-->
+        <link href="views/media/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet" />
+        <link rel="stylesheet" href="views/media/plugins/switchery/switchery.min.css">
+        <link href="views/media/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="views/media/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+        <link href="views/media/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+        <link href="views/media/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+        <link href="views/media/plugins/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+        <link href="views/media/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <!-- Summernote css -->
+        <link href="views/media/plugins/summernote/summernote.css" rel="stylesheet" />
     </head>
 
 
@@ -44,7 +68,6 @@ session_start();
                     <div class="">
                         <a href="index.html" class="logo">
                             <img src="views/media/images/logo.png" alt="logo" class="logo-lg" />
-                            <img src="views/media/images/logo_sm.png" alt="logo" class="logo-sm hidden" />
                         </a>
                     </div>
                 </div>
@@ -64,22 +87,16 @@ session_start();
 
                             <!-- Top nav left menu -->
                             <ul class="nav navbar-nav hidden-sm hidden-xs top-navbar-items">
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Help</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="#" style="color: #fff">About</a></li>
+                                <li><a href="#" style="color: #fff">Help</a></li>
+                                <li><a href="#" style="color: #fff">Contact</a></li>
                             </ul>
 
                             <!-- Top nav Right menu -->
                             <ul class="nav navbar-nav navbar-right top-navbar-items-right pull-right">
-                                <li class="hidden-xs">
-                                    <form role="search" class="navbar-left app-search pull-left">
-                                        <input type="text" placeholder="Search..." class="form-control">
-                                        <a href=""><i class="fa fa-search"></i></a>
-                                    </form>
-                                </li>
                                 <li class="dropdown top-menu-item-xs">
                                     <a href="#" data-target="#" class="dropdown-toggle menu-right-item" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="mdi mdi-bell"></i> <span class="label label-danger">3</span>
+                                        <i class="mdi mdi-bell text-white"></i> <span class="label label-danger">3</span>
                                     </a>
                                     <ul class="dropdown-menu p-0 dropdown-menu-lg">
                                         <!--<li class="notifi-title"><span class="label label-default pull-right">New 3</span>Notification</li>-->
@@ -188,10 +205,8 @@ session_start();
                                     <a href="" class="dropdown-toggle menu-right-item profile" data-toggle="dropdown" aria-expanded="true"><img src="views/media/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)"><i class="ti-user m-r-10"></i> Profile</a></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-settings m-r-10"></i> Settings</a></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-lock m-r-10"></i> Lock screen</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-power-off m-r-10"></i> Logout</a></li>
+                                        <li><a href="index.php?section=logout"><i class="ti-power-off m-r-10"></i> Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -218,8 +233,8 @@ session_start();
                                     <img src="views/media/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
                                 </div>
                                 <div class="user-info">
-                                    <a href="#">Stanley Jones</a>
-                                    <p class="text-muted m-0">Administrator</p>
+                                    <a href="#"><?php echo $_SESSION["nombre"]; ?></a>
+                                    <p class="text-muted m-0"><?php echo $_SESSION["tipo"] ?></p>
                                 </div>
                             </div>
                             <!--- End User Detail box -->
@@ -236,14 +251,19 @@ session_start();
 
                 <!-- START PAGE CONTENT -->
                 <div id="page-right-content">
-
+<?php
+}
+?>    
                     <?php
                     //creamos un objeto de mvcController
                     $mvc = new mvcController();
                     //y obtenemos el controlador para el redireccionamiento
                     $mvc -> urlController();
                     ?>
-
+<?php
+if(!empty($_SESSION["nombre"]))
+{
+?>
                     <div class="footer">
                         <div>
                             <strong>Angela Carrizales, Brian Becerra y Francisco Perales</strong> - Copyright &copy; 2018
@@ -266,15 +286,67 @@ session_start();
         <script src="views/media/js/metisMenu.min.js"></script>
         <script src="views/media/js/jquery.slimscroll.min.js"></script>
 
+        <script src="views/media/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+        <script src="views/media/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>
+        <script src="views/media/plugins/switchery/switchery.min.js"></script>
+        <script type="text/javascript" src="views/media/plugins/parsleyjs/parsley.min.js"></script>
+        <script src="views/media/plugins/moment/moment.js"></script>
+        <script src="views/media/plugins/timepicker/bootstrap-timepicker.js"></script>
+        <script src="views/media/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+        <script src="views/media/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="views/media/plugins/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+        <script src="views/media/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="views/media/plugins/summernote/summernote.min.js"></script>
+
+        <!-- Datatable js -->
+        <script src="views/media/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="views/media/plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="views/media/plugins/datatables/jszip.min.js"></script>
+        <script src="views/media/plugins/datatables/pdfmake.min.js"></script>
+        <script src="views/media/plugins/datatables/vfs_fonts.js"></script>
+        <script src="views/media/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="views/media/plugins/datatables/buttons.print.min.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="views/media/plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.scroller.min.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.colVis.js"></script>
+        <script src="views/media/plugins/datatables/dataTables.fixedColumns.min.js"></script>
+
+        <script src="views/media/plugins/select2/js/select2.min.js" type="text/javascript"></script>
         <!--Morris Chart-->
         <script src="views/media/plugins/morris/morris.min.js"></script>
         <script src="views/media/plugins/raphael/raphael-min.js"></script>
-
-        <!-- Dashboard init -->
-        <script src="views/media/pages/jquery.dashboard.js"></script>
 
         <!-- App Js -->
         <script src="views/media/js/jquery.app.js"></script>
 
     </body>
+
+    <script type="text/javascript">
+        $('#example1').DataTable
+        (
+            {
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+            }
+        );
+        
+        $(".select2").select2
+        (
+            {
+                placeholder: "Choose ...",
+                allowClear: true
+            }
+        );
+    </script>
 </html>
+<?php
+}
+?>
