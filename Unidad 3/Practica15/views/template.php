@@ -53,9 +53,11 @@ if(!empty($_SESSION["nombre"]))
         <link href="views/media/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <!-- Summernote css -->
         <link href="views/media/plugins/summernote/summernote.css" rel="stylesheet" />
+
+        <!-- Sweet Alert -->
+        <link href="views/media/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+        <script src="views/media/plugins/sweet-alert2/sweetalert2.min.js"></script>
     </head>
-
-
     <body>
 
         <div id="page-wrapper">
@@ -66,7 +68,7 @@ if(!empty($_SESSION["nombre"]))
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="">
-                        <a href="index.html" class="logo">
+                        <a href="index.php?section=dashboard" class="logo">
                             <img src="views/media/images/logo.png" alt="logo" class="logo-lg" />
                         </a>
                     </div>
@@ -90,6 +92,7 @@ if(!empty($_SESSION["nombre"]))
                                 <li><a href="#" style="color: #fff">About</a></li>
                                 <li><a href="#" style="color: #fff">Help</a></li>
                                 <li><a href="#" style="color: #fff">Contact</a></li>
+                                <li><a href="index.php?section=sessions&action=actual" style="color: #fff">CAI sessions</a></li>
                             </ul>
 
                             <!-- Top nav Right menu -->
@@ -219,51 +222,57 @@ if(!empty($_SESSION["nombre"]))
 
             <!-- Page content start -->
             <div class="page-contentbar">
+              <!-- Se verifica que la sección no sea la de las sesiones de cai porque esa no lleva menú -->
+                <?php if($_GET["section"] != "sessions"): ?>
+                  <!--left navigation start-->
+                  <aside class="sidebar-navigation">
+                      <div class="scrollbar-wrapper">
+                          <div>
+                              <button type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm">
+                                  <i class="mdi mdi-close"></i>
+                              </button>
+                              <!-- User Detail box -->
+                              <div class="user-details">
+                                  <div class="pull-left">
+                                      <img src="views/media/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
+                                  </div>
+                                  <div class="user-info">
+                                      <a href="#"><?php echo $_SESSION["nombre"]; ?></a>
+                                      <p class="text-white m-0"><?php echo $_SESSION["tipo"] ?></p>
+                                  </div>
+                              </div>
+                              <!--- End User Detail box -->
 
-                <!--left navigation start-->
-                <aside class="sidebar-navigation">
-                    <div class="scrollbar-wrapper">
-                        <div>
-                            <button type="button" class="button-menu-mobile btn-mobile-view visible-xs visible-sm">
-                                <i class="mdi mdi-close"></i>
-                            </button>
-                            <!-- User Detail box -->
-                            <div class="user-details">
-                                <div class="pull-left">
-                                    <img src="views/media/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
-                                </div>
-                                <div class="user-info">
-                                    <a href="#"><?php echo $_SESSION["nombre"]; ?></a>
-                                    <p class="text-muted m-0"><?php echo $_SESSION["tipo"] ?></p>
-                                </div>
-                            </div>
-                            <!--- End User Detail box -->
+                              <?php
+                                require_once("views/modules/menu.php");
+                              ?>
+                          </div>
+                      </div>
+                      <!--Scrollbar wrapper-->
 
-                            <?php
-                            require_once("views/modules/menu.php");
-                            ?>
-                        </div>
-                    </div>
-                    <!--Scrollbar wrapper-->
-
-                </aside>
-                <!--left navigation end-->
+                  </aside>
+                  <!--left navigation end-->
+              <?php endif ?>
 
                 <!-- START PAGE CONTENT -->
-                <div id="page-right-content">
-<?php
+                <?php if($_GET["section"] != "sessions"): ?>
+                  <div id="page-right-content">
+                <?php else: ?>
+                  <div id="page-right-content" style="margin-left: -5px !important">
+                <?php endif ?>
+                    <?php
 }
-?>    
+                    ?>
                     <?php
                     //creamos un objeto de mvcController
                     $mvc = new mvcController();
                     //y obtenemos el controlador para el redireccionamiento
                     $mvc -> urlController();
                     ?>
-<?php
-if(!empty($_SESSION["nombre"]))
-{
-?>
+                    <?php
+                    if(!empty($_SESSION["nombre"]))
+                    {
+                    ?>
                     <div class="footer">
                         <div>
                             <strong>Angela Carrizales, Brian Becerra y Francisco Perales</strong> - Copyright &copy; 2018
@@ -316,6 +325,7 @@ if(!empty($_SESSION["nombre"]))
         <script src="views/media/plugins/datatables/dataTables.fixedColumns.min.js"></script>
 
         <script src="views/media/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+
         <!--Morris Chart-->
         <script src="views/media/plugins/morris/morris.min.js"></script>
         <script src="views/media/plugins/raphael/raphael-min.js"></script>
@@ -338,6 +348,19 @@ if(!empty($_SESSION["nombre"]))
             }
         );
         
+        $('.data').DataTable
+        (
+            {
+                
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+            }
+        );
+        
         $(".select2").select2
         (
             {
@@ -346,7 +369,18 @@ if(!empty($_SESSION["nombre"]))
             }
         );
     </script>
+    <style>
+        .repairtext
+        {
+            color: #000000;
+        }
+
+        span
+        {
+            color: #000000;
+        }
+    </style>
 </html>
 <?php
-}
+                    }
 ?>

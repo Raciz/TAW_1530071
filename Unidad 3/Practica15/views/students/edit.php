@@ -12,10 +12,10 @@ if(!isset($_SESSION["nombre"]))
 if(isset($_GET["action"]) && $_GET["action"]=="edit")
 {
     //creamos un objeto de mvcUsuario
-    $edit = new mvcUsuario();
+    $edit = new mvcAlumno();
 
     //se manda a llamar el controller para modificar la informacion de un Usuario
-    $edit -> modificarUsuarioController();
+    $edit -> modificarAlumnoController();
 }
 
 ?>
@@ -29,28 +29,29 @@ if(!empty($_GET["edit"]))
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="index.php?section=users&action=list">
+                <a href="index.php?section=students&action=list">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </a>
-                <h4 class="modal-title repairtext">Edit user</h4>
+                        
+                <h4 class="modal-title repairtext">Edit student</h4>
             </div>
-            <form method="post" action="index.php?section=users&action=edit" autocomplete="off">
+            <form method="post" action="index.php?section=students&action=edit" autocomplete="off">
                 <div class="modal-body">
                     <?php
                     //creamos un objeto de mvcUsuario
-                    $edit = new mvcUsuario();
-                    
+                    $edit = new mvcAlumno();
+
                     //mandamos a llamar a el controller para obtener la informacion del usuario
-                    $edit -> editarUsuarioController();
-                    ?> 
+                    $edit -> editarAlumnoController();
+                    ?>
                 </div>
                 <div class="modal-footer">
-                    <a href="index.php?section=users&action=list">
+                    <a href="index.php?section=students&action=list">
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
                     </a>
                     <button type="submit" class="btn btn-custom waves-effect waves-light">Save</button>
                 </div>
-            </form>    
+            </form>
         </div>
     </div>
 </div>

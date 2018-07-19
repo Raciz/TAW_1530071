@@ -169,7 +169,10 @@ File: Main file css
   background-repeat: repeat;
   z-index: 99; }
 
-.user-details {
+.user-details { /*ward*/
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), #126C4A);
+  border-top: 10px solid #126C4A !important;
+  border-bottom: 2px solid #fff;
   min-height: 80px;
   padding: 20px;
   position: relative; }
@@ -217,7 +220,7 @@ File: Main file css
   .metisMenu.nav > li > a .label {
     margin-top: 2px; }
   .metisMenu.nav > li > a:hover, .metisMenu.nav > li > a:focus {
-    color: #626773;
+    color: #fff;
     background: transparent; }
   .metisMenu.nav > li > a i {
     display: inline-block;
@@ -240,7 +243,7 @@ File: Main file css
   padding-left: 48px; }
 
 .nav-second-level.nav li.active a {
-  color: #4b4e57; }
+  color: #0D4932; }
 
 .nav-third-level.nav > li > a {
   padding-left: 58px; }
@@ -249,9 +252,10 @@ File: Main file css
   color: #4b4e57; }
 
 .metisMenu.nav > li.active > a {
-  color: #23b195; }
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff; }
   .metisMenu.nav > li.active > a li.active a {
-    color: #23b195; }
+    color: #0D4932; }
 
 .metisMenu.nav > li:last-child a {
   border-bottom: 0; }
@@ -271,7 +275,7 @@ File: Main file css
   transition: margin-left 0.3s; }
 
 .footer {
-  border-top: 2px solid #f5f5f5;
+  border-top: 5px solid #126C4A;
   bottom: 0;
   left: 0;
   padding: 14px 20px;
@@ -354,12 +358,13 @@ body {
   min-height: 100vh;
 
   font-family: "Noto Sans", sans-serif;
-  color: #676a6c; }
+  color: #fff; }
 
 #page-wrapper {
   width: 90%;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.05); /*ward*/
+  /*background-color: rgba(255, 255, 255, 0.15); /*ward*/
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15));
   /*background-color: #ffffff;*/
 }
 
@@ -408,15 +413,14 @@ h1, h2, h3, h4, h5, h6 {
   padding: 6px 20px; }
 
 .card-box {
-  background-color: #ffffff;
-  border: 2px solid #f5f5f5;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.0)); /*ward*/
   padding: 20px;
   margin-bottom: 20px; }
 
 .header-title {
   margin-top: 0;
   font-weight: bold;
-  border-bottom: 1px solid gainsboro;
+  border-bottom: 2px solid gainsboro;
   padding-bottom: 12px;
   color: #fff}
 
@@ -489,6 +493,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-white {
   color: #ffffff; }
+
+.text-black {
+  color: #000000;}
 
 .text-danger {
   color: #d57171; }
@@ -885,7 +892,8 @@ h1, h2, h3, h4, h5, h6 {
    Panels
  =============*/
 .panel {
-  border: 2px solid #f5f5f5;
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: 1px solid #fff;
   box-shadow: none;
   margin-bottom: 20px; }
   .panel .panel-body {
@@ -903,12 +911,17 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px 4px 0 0; }
 
 .panel-default > .panel-heading {
-  background-color: #f5f5f5;
-  border-bottom: none;
-  color: #7a7d84; }
+  background-color: rgba(0, 0, 0, 0.3);
+
+  margin: 1px;
+  color: #fff; }
+
+.panel-default > .panel-body{
+  background-color: rgba(0, 0, 0, 0);
+}
 
 .panel-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 0;
   margin-top: 0; }
@@ -2364,6 +2377,11 @@ h3.timeline-title {
 
 /*# sourceMappingURL=style.css.map */
 .fondoTabla{
-  background-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to top, rgba(0,0,0,0.2), rgba(0,0,0,0.0));
   color: #fff;
+}
+
+table > thead > tr{
+  background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.0));
+
 }

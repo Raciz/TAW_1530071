@@ -11,16 +11,16 @@ if(!isset($_SESSION["nombre"]))
 //verificamos si se va a mostrar un mensaje de aviso al realizar alguna operacion de crud
 if(!empty($_SESSION["mensaje"]))
 {
-    //si session en mensaje es agregar un usuario
+    //si session en mensaje es agregar una unidad
     if($_SESSION["mensaje"]=="add")
     {
-        //se muestra el sweet alert de agregar un usuario
+        //se muestra el sweet alert de agregar una unidad
         echo"<script>
                     swal
                     (
                         {
                             title: 'Success:',
-                            text: 'se ha registrado una nueva carrera en el sistema',
+                            text: 'se ha registrado una nueva unidad en el sistema',
                             type: 'success',
                             confirmButtonText: 'Continuar',
                             confirmButtonColor: '#4fa7f3'
@@ -28,16 +28,16 @@ if(!empty($_SESSION["mensaje"]))
                     )
             </script>";
     }
-    //si session en mensaje es eliminar un usuario
+    //si session en mensaje es eliminar una unidad
     elseif ($_SESSION["mensaje"]=="delete")
     {
-        //se muestra el sweet alert de eliminar un usuario
+        //se muestra el sweet alert de eliminar una unidad
         echo"<script>
                 swal
                 (
                     {
                         title: 'Advertencia:',
-                        text: 'se ha eliminado una carrera del sistema',
+                        text: 'se ha eliminado una unidad del sistema',
                         type: 'warning',
                         confirmButtonText: 'Continuar',
                         confirmButtonColor: '#4fa7f3'
@@ -46,16 +46,16 @@ if(!empty($_SESSION["mensaje"]))
             </script>";
 
     }
-    //si session en mensaje es editar un usuario
+    //si session en mensaje es editar una unidad
     elseif ($_SESSION["mensaje"]=="edit")
     {
-        //se muestra elsweet alert de editar un usuario
+        //se muestra elsweet alert de editar una unidad
         echo"<script>
                 swal
                 (
                     {
                         title: 'Editado Exitoso',
-                        text: 'se ha editado la informacion de una carrera',
+                        text: 'se ha editado la informacion de una unidad',
                         type: 'success',
                         confirmButtonText: 'Continuar',
                         confirmButtonColor: '#4fa7f3'
@@ -71,24 +71,25 @@ if(!empty($_SESSION["mensaje"]))
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h4 class="m-t-0 header-title">Careers</h4>
+      <h4 class="m-t-0 header-title">Units</h4>
       <button class="btn btn-rounded btn-success" style="margin-bottom: 10px" data-toggle="modal" data-target="#agregar-modal">Add new</button>
       <div class="table-responsive m-b-20">
-        <table id="datatable" class="table">
+        <table id="example1" class="table">
           <thead>
             <tr>
-              <th>Key</th>
               <th>Name</th>
+              <th>Beginning date</th>
+              <th>Finishing date</th>
               <th>Options</th>
             </tr>
           </thead>
           <tbody>
             <?php
-              //creamos un objeto de mvcCarrera
-              $list = new mvcCarrera();
+              //creamos un objeto de mvcUnidad
+              $list = new mvcUnidad();
 
-              //se manda a llamar el control para enlistar a las carreras
-              $list -> listadoCarreraController();
+              //se manda a llamar el control para enlistar a las Unidades
+              $list -> listadoUnidadController();
             ?>
           </tbody>
         </table>
@@ -99,7 +100,7 @@ if(!empty($_SESSION["mensaje"]))
 <!-- end container -->
 <?php
 //incluimos el archivo con el modal para agregar, editar y eliminar carreras
-include_once "views/careers/add.php";
-include_once "views/careers/edit.php";
-include_once "views/careers/delete.php";
+include_once "views/units/add.php";
+include_once "views/units/edit.php";
+include_once "views/units/delete.php";
 ?>

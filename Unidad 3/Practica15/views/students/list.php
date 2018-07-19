@@ -2,7 +2,7 @@
 //verificamos si el usuario ya ha iniciado session
 if(!isset($_SESSION["nombre"]))
 {
-   //si no ha iniciado sesion, lo redirigimos al login
+    //si no ha iniciado sesion, lo redirigimos al login
     echo "<script>
             window.location.replace('index.php');
           </script>";
@@ -20,7 +20,7 @@ if(!empty($_SESSION["mensaje"]))
                     (
                         {
                             title: 'Registro Exitoso:',
-                            text: 'se ha registrado un nuevo grupo en el sistema',
+                            text: 'se ha registrado un nuevo alumno en el sistema',
                             type: 'success',
                             confirmButtonText: 'Continuar',
                             confirmButtonColor: '#4fa7f3'
@@ -37,7 +37,7 @@ if(!empty($_SESSION["mensaje"]))
                 (
                     {
                         title: 'Advertencia:',
-                        text: 'se ha eliminado un grupo del sistema',
+                        text: 'se ha eliminado un alumno del sistema',
                         type: 'warning',
                         confirmButtonText: 'Continuar',
                         confirmButtonColor: '#4fa7f3'
@@ -55,7 +55,7 @@ if(!empty($_SESSION["mensaje"]))
                 (
                     {
                         title: 'Editado Exitoso',
-                        text: 'se ha editado la informacion de un grupo',
+                        text: 'se ha editado la informacion de un alumno',
                         type: 'success',
                         confirmButtonText: 'Continuar',
                         confirmButtonColor: '#4fa7f3'
@@ -68,29 +68,30 @@ if(!empty($_SESSION["mensaje"]))
     $_SESSION["mensaje"]="";
 }
 ?>
-
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="m-t-0 header-title">Groups</h4>
+            <h4 class="m-t-0 header-title">Students</h4>
             <button class="btn btn-rounded btn-success" style="margin-bottom: 10px" data-toggle="modal" data-target="#agregar-modal">Add new</button>
             <div class="table-responsive m-b-20">
                 <table id="example1" class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Level</th>
-                            <th>Teacher</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Group</th>
+                            <th>Career</th>
                             <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        //creamos un objeto de mvcGrupo
-                        $list = new mvcGrupo();
+                        //creamos un objeto de mvcUsuario
+                        $list = new mvcAlumno();
 
-                        //se manda a llamar el control para enlistar a los grupos
-                        $list -> listadoGrupoController();
+                        //se manda a llamar el control para enlistar a los usuarios
+                        $list -> listadoAlumnoController();
                         ?>
                     </tbody>
                 </table>
@@ -101,8 +102,8 @@ if(!empty($_SESSION["mensaje"]))
 <!-- end container -->
 
 <?php
-//incluimos el archivo con el modal para agregar, editar y eliminar grupos
-include_once "views/groups/add.php";
-include_once "views/groups/edit.php";
-include_once "views/groups/delete.php";
+//incluimos el archivo con el modal para agregar, editar y eliminar estudiantes
+include_once "views/students/add.php";
+include_once "views/students/edit.php";
+include_once "views/students/delete.php";
 ?>
