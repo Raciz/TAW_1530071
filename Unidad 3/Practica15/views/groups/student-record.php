@@ -7,15 +7,18 @@ if(!isset($_SESSION["nombre"]))
             window.location.replace('index.php');
           </script>";
 }
+//creamos un objeto de mvcTeacher
+$info = new mvcTeacher();
 ?>
 
 <div class="container">
     <div class="row" style="margin-bottom: 30px;">
         <div class="col-sm-12">
             <h4 class="m-t-0 header-title">Student data</h4>
+            <a href="index.php?section=groups&action=my-students&group=<?php echo $info->idGrupoAlumno(); ?>"><button class="pull-right atras" style="margin-top: -50px">Back</button></a>
             <div class="clearfix">
                 <?php
-                $info = new mvcTeacher();
+                //mandamos a llamar el controller para obtener la informacion del alumno
                 $info -> dataAlumnoController();
                 ?>
             </div>
@@ -26,6 +29,7 @@ if(!isset($_SESSION["nombre"]))
         <div class="col-sm-12" style="margin-top: 20px">
             <h4 class="m-t-0 header-title">CAI record</h4>
             <div class="table-responsive m-b-20">
+                <!--tabla para mostrar las horas de cai realizadas por el alumno-->
                 <table id="example1" class="table">
                     <thead>
                         <tr>
@@ -37,13 +41,13 @@ if(!isset($_SESSION["nombre"]))
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class='fondoTabla'>
-                            <td>17/August/2018</td>
-                            <td>9:45 am</td>
-                            <td>1:55 pm</td>
-                            <td>Book</td>
-                            <td>1</td>
-                        </tr>
+                        <?php
+                        //creamos un objeto de mvcTeacher
+                        $list = new mvcTeacher();
+
+                        //llamamos el controler para mostrar las horas de cai realizadas por el alumno
+                        $list -> horasAlumnoController();
+                        ?>
                     </tbody>
                 </table>
             </div>

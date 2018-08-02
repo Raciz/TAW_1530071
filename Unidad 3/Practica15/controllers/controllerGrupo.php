@@ -138,15 +138,15 @@ class mvcGrupo
         echo "<script>
                 var teacher = document.getElementById('teacher');
                 var level = document.getElementById('level');
-
-                for(var i = 1; i < teacher.options.length; i++)
-                {
-                    if(teacher.options[i].value ==".$resp["id"].")
+                
+                    for(var i = 1; i < teacher.options.length; i++)
                     {
-                        teacher.selectedIndex = i;
+                        if(teacher.options[i].value =="; if(!empty($resp["id"])){print($resp["id"]);}else{print("-1");} echo")
+                        {
+                            teacher.selectedIndex = i;
+                        }
                     }
-                }
-
+                
                 for(var i = 1; i < level.options.length; i++)
                 {
                     if(level.options[i].value ==".$resp["nivel"].")
@@ -164,7 +164,7 @@ class mvcGrupo
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["id"]))
         {
-            //se guardan la informacion del usuario
+            //se guardan la informacion del del grupo
             $data = array("id" => $_POST["id"],
                           "nivel" => $_POST["nivel"],
                           "teacher" => $_POST["teacher"]);
@@ -192,10 +192,10 @@ class mvcGrupo
         //se le manda al modelo el nombre de la tabla a mostrar su informacion
         $data = CRUDGrupo::optionGrupoModel("grupo");
 
-        //mostramos el nombre de cada una de los teachers
+        //mostramos a cada uno de los grupos en el select
         foreach($data as $rows => $row)
         {
-            //se muestra cada una de los teachers en un option del select
+            //se muestra cada una de los grupos en un option del select
             echo "<option class='repairtext' value=".$row["codigo"].">".$row["codigo"]."</option>";
         }
     }

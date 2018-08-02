@@ -22,7 +22,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="add")
 <!-- Modal para agregar una nueva carrera -->
 <div id="agregar-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <!--Formulario para agregar un nuevo grupo-->
+        <!--Formulario para agregar una nueva unidad-->
         <form action="index.php?section=units&action=add" method="post">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,7 +57,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="add")
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-custom waves-effect waves-light">Save changes</button>
+                <button type="submit" class="btn btn-custom waves-effect waves-light">Save</button>
             </div>
         </div>
     </form>

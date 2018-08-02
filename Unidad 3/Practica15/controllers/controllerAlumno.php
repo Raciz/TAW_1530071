@@ -13,8 +13,83 @@ class mvcAlumno
                           "nombre" => $_POST["nombre"],
                           "apellido" => $_POST["apellido"],
                           "carrera" => $_POST["carrera"],
-                          "grupo" => $_POST["grupo"]);
+                          "img" => "views/media/img/noimg.png");
 
+            //se verifica si se envio una imagen del alumno
+            if(!empty($_FILES["img"]["name"]))
+            {
+                //se extrae el tipo de la imagen
+                $type = $_FILES["img"]["type"];
+
+                //se extrae el tamaño de la imagen
+                $size = $_FILES["img"]["size"];
+
+                //se extrae el nombre de la imagen
+                $name = $_FILES["img"]["name"];
+
+                //se extrae la ubicacion temporal de la imagen
+                $tmp = $_FILES["img"]["tmp_name"];
+
+                //se obtiene la fecha y hora en la que fue subida la imagen
+                $date = getdate();
+                
+                //se verifica si se envio una imagen jpg o png
+                if($type == "image/jpeg" || $type == "image/png")
+                {
+                    //en caso de que si sea png o jpg
+                    //se verifica que el tamaño de la imagen no supere los 5MB
+                    if($size < 5000000)
+                    {
+                        //en caso de que no supere el tamaño de 5MB
+                        //se mueve la imagen a la carpeta de imagenes
+                        if(!move_uploaded_file($tmp, "./views/media/img/".$date["mday"].$date["mon"].$date["year"].$date["hours"].$date["minutes"].$date["seconds"].$name))
+                        {
+                            //en caso de que no se pudiera mover se asigna el error copy en session error
+                            $_SESSION["error"] = "copy";
+
+                            //nos redireccionamos al listado de alumnos
+                            echo "<script>
+                                    window.location.replace('index.php?section=students&action=list');
+                                 </script>";
+                            //y se detiene la ejecucion del script
+                            exit;
+                        }
+                        else
+                        {
+                            //asignamos en data el url real de la imagen
+                            $data["img"] = "views/media/img/".$date["mday"].$date["mon"].$date["year"].$date["hours"].$date["minutes"].$date["seconds"].$name;
+                        }
+                    }
+                    else
+                    {
+                        //en caso de que la imagen supere el tamaño de 5MB se asigna el error size en session error
+                        $_SESSION["error"] = "size";
+
+                        //nos redireccionamos al listado de alumnos
+                        echo "<script>
+                                    window.location.replace('index.php?section=students&action=list');
+                              </script>";
+
+                        //y se detiene la ejecucion del script
+                        exit;
+                    }
+                }
+                else
+                {
+                    //en caso de que la imagen no sea png o jpg se asigna el error type en session error
+                    $_SESSION["error"] = "type";
+
+                    //nos redireccionamos al listado de alumnos
+                    echo "<script>
+                            window.location.replace('index.php?section=students&action=list');
+                          </script>";
+
+                    //y se detiene la ejecucion del script
+                    exit;
+                }
+            }
+
+            
             //se manda la informacion al modelo con su respectiva tabla en la que se registrara
             $resp = CRUDAlumno::agregarAlumnoModel($data,"alumno");
 
@@ -75,7 +150,7 @@ class mvcAlumno
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDAlumno::eliminarAlumnoModel($data,"alumno");
+            $resp = CRUDAlumno::eliminarAlumnoModel($data,"asistencia","alumno");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -135,8 +210,8 @@ class mvcAlumno
                     </div>
                     
                     <div class='form-group'>
-                        <label class='control-label repairtext'>Career</label>
-                        <select style='width:100%;' class='form-control select2' id='grupo' name='grupo' required>
+                        <label class='control-label repairtext'>Group</label>
+                        <select style='width:100%;' class='form-control select2' id='grupo' name='grupo'>
                             <option value=''></option>";
                             //creamos un objeto de mvcGrupo
                             $option = new mvcGrupo();
@@ -146,7 +221,7 @@ class mvcAlumno
          echo "         </select>
                     </div>";                   
 
-        //script para seleccionar en el select el option de la carrera al que pertenece el Alumno
+        //script para seleccionar en el select el option de la carrera y grupo al que pertenece el Alumno
         echo "<script>
                 var career = document.getElementById('career');
                 var grupo = document.getElementById('grupo');
@@ -176,7 +251,7 @@ class mvcAlumno
         //se verifica si mediante el formulario se envio informacion
         if(isset($_POST["matricula"]))
         {
-            //se guardan la informacion del usuario
+            //se guardan la informacion del alumno
             $data = array("matricula" => $_POST["matricula"],
                           "nombre" => $_POST["nombre"],
                           "apellido" => $_POST["apellido"],
@@ -199,6 +274,20 @@ class mvcAlumno
             }
         }
     }
+    
+    //Control para mostrar a todos los alumnos en un select
+    public function optionTodosAlumnosController()
+    {
+        //se le manda al modelo el nombre de la tabla a mostrar su informacion
+        $data = CRUDAlumno::optionTodosAlumnosModel("alumno");
+
+        //mostramos el nombre de cada una de los alumnos
+        foreach($data as $rows => $row)
+        {
+            //se muestra cada una de los alumnos en un option del select
+            echo "<option value='".$row["matricula"]."'>".$row["nombre"]." ".$row["apellido"]."</option>";
+        }
+    }
 //------------------------------------------------------------------------------------- 
     //Control para mostrar a los alumnos sin grupo en un select
     public function optionAlumnoController()
@@ -210,7 +299,7 @@ class mvcAlumno
         foreach($data as $rows => $row)
         {
             //se muestra cada una de los alumnos en un option del select
-            echo "<option class='repairtext' value=".$row["matricula"].">".$row["nombre"]."</option>";
+            echo "<option class='repairtext' value=".$row["matricula"].">".$row["nombre"]." ".$row["apellido"]."</option>";
         }
     }
     
@@ -250,7 +339,7 @@ class mvcAlumno
     function listadoAlumnoGrupoController()
     {
         //se le manda al modelo el nombre de la tabla a mostrar la informacion de los alumnos del grupo
-        $data = CRUDAlumno::listadoAlumnoGrupoModel($_GET["group"],"alumno");
+        $data = CRUDAlumno::listadoAlumnoGrupoModel($_GET["group"],"alumno","carrera");
 
         //se imprime la informacion de cada uno de los Alumnos en el grupo
         foreach($data as $rows => $row)
@@ -294,6 +383,20 @@ class mvcAlumno
                         window.location.replace('index.php?section=groups&action=students&group=".$data["grupo"]."');
                       </script>";
             }
+        }
+    }
+
+    //Control para mostrar a los alumnos con grupo en un select 
+    public function optionAlumnosController()
+    {
+        //se le manda al modelo el nombre de la tabla a mostrar su informacion
+        $data = CRUDAlumno::optionAlumnosModel("alumno");
+
+        //mostramos el nombre de cada una de los alumnos
+        foreach($data as $rows => $row)
+        {
+            //se muestra cada una de los alumnos en un option del select
+            echo "<option value='".$row["matricula"]."'>".$row["nombre"]." ".$row["apellido"]."</option>";
         }
     }
 }

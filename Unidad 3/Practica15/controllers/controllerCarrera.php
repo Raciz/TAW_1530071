@@ -21,7 +21,7 @@ class mvcCarrera
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "add";
 
-                //nos redireccionara al listado de grupos
+                //nos redireccionara al listado de carreras
                 echo "<script>
                         window.location.replace('index.php?section=careers&action=list');
                       </script>";
@@ -69,7 +69,7 @@ class mvcCarrera
             $data = $_POST["del"];
 
             //y se manda al modelo el id y el nombre de la tabla de donde se va a eliminar
-            $resp = CRUDCarrera::eliminarCarreraModel($data,"alumno","carrera");
+            $resp = CRUDCarrera::eliminarCarreraModel($data,"asistencia","alumno","carrera");
 
             //en caso de haberse eliminado correctamente
             if($resp == "success")
@@ -77,7 +77,7 @@ class mvcCarrera
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "delete";
 
-                //nos redireccionara al listado de grupos
+                //nos redireccionara al listado de carreras
                 echo "<script>
                         window.location.replace('index.php?section=careers&action=list');
                       </script>";
@@ -128,7 +128,7 @@ class mvcCarrera
                 //asignamos el tipo de mensaje a mostrar
                 $_SESSION["mensaje"] = "edit";
 
-                //nos redireccionara al listado de grupos
+                //nos redireccionara al listado de carreras
                 echo "<script>
                         window.location.replace('index.php?section=careers&action=list');
                     </script>";
@@ -142,10 +142,10 @@ class mvcCarrera
         //se le manda al modelo el nombre de la tabla a mostrar su informacion
         $data = CRUDCarrera::optionCarreraModel("carrera");
 
-        //mostramos el nombre de cada una de los teachers
+        //mostramos las carreras en el select
         foreach($data as $rows => $row)
         {
-            //se muestra cada una de los teachers en un option del select
+            //se muestra cada una de los carreras en un option del select
             echo "<option value='".$row["siglas"]."'>".$row["nombre"]."</option>";
         }
     }

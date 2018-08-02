@@ -64,12 +64,34 @@ class mvcController
                 $_SESSION["tipo"] = $resp["tipo"];
                 $_SESSION["password"] = $resp["password"];
                 $_SESSION["empleado"] = $resp["num_empleado"];
-                //si no se direccionara al dashboard
-                echo "<script>
+                
+                //se direcciona al usuario dependiendo del tipo de usuario que es
+                if($_SESSION["tipo"]=="Administrator")
+                {
+                    //si es administrador se derirecciona al dashboard
+                    echo "<script>
                         window.location.replace('index.php?section=dashboard');
                       </script>";
+                }
+                else if($_SESSION["tipo"]=="Teacher")	
+                {	
+                    //si es teacher se direccionara al listado de grupos del teacher
+                    echo "<script>	
+                        window.location.replace('index.php?section=groups&action=my-groups');	
+                      </script>";	
+                } 
             }
         }
+    }
+
+    //controller para obtener datos del sistema
+    public function dash($tabla)
+    {
+        //se manda al modelo para obtener la tabla para obtener la informacion del sistema
+        $valor = CRUD::dashModel($tabla);
+        
+        //y se retorna lo devuelto por el modelo
+        return $valor[0];
     }
 }
 ?>

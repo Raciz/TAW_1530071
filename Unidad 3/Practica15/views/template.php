@@ -88,24 +88,32 @@ if(!empty($_SESSION["nombre"]))
                             </div>
 
                             <!-- Top nav left menu -->
+                            <?php
+                            if($_SESSION["tipo"]=="Administrator")
+                            {
+                            ?>
                             <ul class="nav navbar-nav hidden-sm hidden-xs top-navbar-items">
-                                <li><a href="#" style="color: #fff">About</a></li>
+                               <!-- <li><a href="#" style="color: #fff">About</a></li>
                                 <li><a href="#" style="color: #fff">Help</a></li>
-                                <li><a href="#" style="color: #fff">Contact</a></li>
+                                <li><a href="#" style="color: #fff">Contact</a></li>-->
+                                <li><a href="index.php?section=dashboard" style="color: #fff">Home</a></li>
                                 <li><a href="index.php?section=sessions&action=actual" style="color: #fff">CAI sessions</a></li>
+                                <li><a href="index.php?section=record" style="color: #fff">CAI sessions queries</a></li>
                             </ul>
-
+                            <?php
+                            }
+                            ?>
                             <!-- Top nav Right menu -->
                             <ul class="nav navbar-nav navbar-right top-navbar-items-right pull-right">
-                                <li class="dropdown top-menu-item-xs">
+                               <!-- <li class="dropdown top-menu-item-xs">
                                     <a href="#" data-target="#" class="dropdown-toggle menu-right-item" data-toggle="dropdown" aria-expanded="true">
                                         <i class="mdi mdi-bell text-white"></i> <span class="label label-danger">3</span>
                                     </a>
                                     <ul class="dropdown-menu p-0 dropdown-menu-lg">
-                                        <!--<li class="notifi-title"><span class="label label-default pull-right">New 3</span>Notification</li>-->
+                                        <!--<li class="notifi-title"><span class="label label-default pull-right">New 3</span>Notification</li>
                                         <li class="list-group notification-list" style="height: 267px;">
                                             <div class="slimscroll">
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -120,7 +128,7 @@ if(!empty($_SESSION["nombre"]))
                                                     </div>
                                                 </a>
 
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -135,7 +143,7 @@ if(!empty($_SESSION["nombre"]))
                                                     </div>
                                                 </a>
 
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -150,7 +158,7 @@ if(!empty($_SESSION["nombre"]))
                                                     </div>
                                                 </a>
 
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -165,7 +173,7 @@ if(!empty($_SESSION["nombre"]))
                                                     </div>
                                                 </a>
 
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -180,7 +188,7 @@ if(!empty($_SESSION["nombre"]))
                                                     </div>
                                                 </a>
 
-                                                <!-- list item-->
+                                                <!-- list item
                                                 <a href="javascript:void(0);" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-left p-r-10">
@@ -196,16 +204,16 @@ if(!empty($_SESSION["nombre"]))
                                                 </a>
                                             </div>
                                         </li>
-                                        <!--<li>-->
-                                        <!--<a href="javascript:void(0);" class="list-group-item text-right">-->
-                                        <!--<small class="font-600">See all notifications</small>-->
-                                        <!--</a>-->
-                                        <!--</li>-->
+                                        <!--<li>
+                                        <!--<a href="javascript:void(0);" class="list-group-item text-right">
+                                        <!--<small class="font-600">See all notifications</small>
+                                        <!--</a>
+                                        <!--</li>
                                     </ul>
-                                </li>
+                                </li>-->
 
                                 <li class="dropdown top-menu-item-xs">
-                                    <a href="" class="dropdown-toggle menu-right-item profile" data-toggle="dropdown" aria-expanded="true"><img src="views/media/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                                    <a href="" class="dropdown-toggle menu-right-item profile" data-toggle="dropdown" aria-expanded="true"><img src="views/media/images/users/user1.png" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)"><i class="ti-user m-r-10"></i> Profile</a></li>
                                         <li class="divider"></li>
@@ -223,7 +231,7 @@ if(!empty($_SESSION["nombre"]))
             <!-- Page content start -->
             <div class="page-contentbar">
               <!-- Se verifica que la sección no sea la de las sesiones de cai porque esa no lleva menú -->
-                <?php if($_GET["section"] != "sessions"): ?>
+                <?php if(($_GET["section"] != "sessions") && ($_GET["section"] != "record")): ?>
                   <!--left navigation start-->
                   <aside class="sidebar-navigation">
                       <div class="scrollbar-wrapper">
@@ -234,7 +242,7 @@ if(!empty($_SESSION["nombre"]))
                               <!-- User Detail box -->
                               <div class="user-details">
                                   <div class="pull-left">
-                                      <img src="views/media/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
+                                      <img src="views/media/images/users/user1.png" alt="" class="thumb-md img-circle">
                                   </div>
                                   <div class="user-info">
                                       <a href="#"><?php echo $_SESSION["nombre"]; ?></a>
@@ -255,7 +263,7 @@ if(!empty($_SESSION["nombre"]))
               <?php endif ?>
 
                 <!-- START PAGE CONTENT -->
-                <?php if($_GET["section"] != "sessions"): ?>
+                <?php if(($_GET["section"] != "sessions") && ($_GET["section"] != "record")): ?>
                   <div id="page-right-content">
                 <?php else: ?>
                   <div id="page-right-content" style="margin-left: -5px !important">
@@ -347,11 +355,11 @@ if(!empty($_SESSION["nombre"]))
                 'autoWidth'   : false
             }
         );
-        
+
         $('.data').DataTable
         (
             {
-                
+
                 'paging'      : true,
                 'lengthChange': false,
                 'searching'   : true,
@@ -360,7 +368,7 @@ if(!empty($_SESSION["nombre"]))
                 'autoWidth'   : false
             }
         );
-        
+
         $(".select2").select2
         (
             {

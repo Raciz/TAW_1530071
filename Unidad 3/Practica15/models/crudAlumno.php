@@ -1,21 +1,21 @@
 <?php
 require_once "conexion.php";
 
-//clase para realizar operaciones a la base de datos para la seccion de grupo
+//clase para realizar operaciones a la base de datos para la seccion de alumno
 class CRUDAlumno
 {
-    //modelo para registrar un grupo en la base de datos
+    //modelo para registrar un alumno en la base de datos
     public static function agregarAlumnoModel($data,$tabla)
     {
         //se prepara la sentencia para realizar el insert
-        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (matricula,nombre,apellido,carrera,grupo) VALUES (:matricula,:nombre,:apellido,:carrera,:grupo)");
+        $stmt = Conexion::conectar() -> prepare("INSERT INTO $tabla (matricula,nombre,apellido,carrera,img) VALUES (:matricula,:nombre,:apellido,:carrera,:img)");
 
         //se realiza la asignacion de los datos a insertar
         $stmt -> bindParam(":matricula",$data["matricula"],PDO::PARAM_INT);
         $stmt -> bindParam(":nombre",$data["nombre"],PDO::PARAM_STR);
         $stmt -> bindParam(":apellido",$data["apellido"],PDO::PARAM_STR);
         $stmt -> bindParam(":carrera",$data["carrera"],PDO::PARAM_STR);
-        $stmt -> bindParam(":grupo",$data["grupo"],PDO::PARAM_STR);
+        $stmt -> bindParam(":img",$data["img"],PDO::PARAM_STR);
 
         //se ejecuta la sentencia
         if($stmt -> execute())
@@ -24,7 +24,7 @@ class CRUDAlumno
             return "success";
         }
         else
-        {            
+        {
             //en caso de no ser asi nos retorna fail
             return "fail";
         }
@@ -33,7 +33,7 @@ class CRUDAlumno
         $stmt -> close();
     }
 
-    //modelo para obtener la informacion de los grupos registrados
+    //modelo para obtener la informacion de los alumnos registrados
     public static function listadoAlumnoModel($tabla1,$tabla2,$tabla3)
     {
         //preparamos la consulta
@@ -51,17 +51,25 @@ class CRUDAlumno
         $stmt -> close();
     }
 
-    //modelo para borrar un grupo de la base de datos
-    public static function eliminarAlumnoModel($data,$tabla)
+    //modelo para borrar un alumno de la base de datos
+    public static function eliminarAlumnoModel($data,$tabla1,$tabla2)
     {
-        //preparamos la sentencia para realizar el Delete para eliminar el grupo
-        $stmt = Conexion::conectar() -> prepare("DELETE FROM $tabla WHERE matricula = :id");
+        //preparamos la sentencia para realizar el Delete para eliminar las asistencias de ese alumno
+        $stmt1 = Conexion::conectar() -> prepare("DELETE FROM $tabla1 WHERE alumno = :id");
 
         //se realiza la asignacion de los datos a eliminar
-        $stmt -> bindParam(":id",$data,PDO::PARAM_INT);
+        $stmt1 -> bindParam(":id",$data,PDO::PARAM_INT);
+        
+        //--------------------------
+        
+        //preparamos la sentencia para realizar el Delete para eliminar el alumno
+        $stmt2 = Conexion::conectar() -> prepare("DELETE FROM $tabla2 WHERE matricula = :id");
+
+        //se realiza la asignacion de los datos a eliminar
+        $stmt2 -> bindParam(":id",$data,PDO::PARAM_INT);
 
         //se ejecuta las sentencias
-        if($stmt -> execute())
+        if($stmt1 -> execute() && $stmt2 -> execute())
         {
             //si se ejecuto correctamente nos retorna success
             return "success";
@@ -89,7 +97,7 @@ class CRUDAlumno
 
         //se ejecuta la sentencia
         $stmt->execute();
-
+        
         //retornamos la fila obtenida con el select
         return $stmt->fetch();
 
@@ -102,6 +110,11 @@ class CRUDAlumno
     {
         //preparamos la sentencia para realizar el update
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, carrera = :carrera, grupo = :grupo WHERE matricula = :id");
+        
+        if(empty($data["grupo"]))
+        {
+            $data["grupo"] = null;
+        }
         
         //se realiza la asignacion de los datos para el update
         $stmt -> bindParam(":id", $data["matricula"], PDO::PARAM_INT);
@@ -124,6 +137,22 @@ class CRUDAlumno
 
         //cerramos la conexion
         $stmt->close();
+    }
+    
+    //modelo para obtener la informacion de todos los alumnos
+    public static function optionTodosAlumnosModel($tabla)
+    {
+        //preparamos la consulta
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla");
+
+        //se ejecuta la consulta
+        $stmt -> execute();
+
+        //retornamos la informacion de la tabla
+        return $stmt -> fetchAll();
+
+        //cerramos la conexion
+        $stmt -> close();
     }
     
     //----------------------------------------------------------------------------------------
@@ -171,13 +200,16 @@ class CRUDAlumno
     }
     
     //modelo para obtener la informacion de los alumnos en el grupos
-    public static function listadoAlumnoGrupoModel($data,$tabla)
+    public static function listadoAlumnoGrupoModel($data,$tabla1,$tabla2)
     {
         //preparamos la consulta
-        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE grupo = :grupo");
+        $stmt = Conexion::conectar() -> prepare("SELECT a.nombre, a.apellido, a.matricula, c.nombre as carrera 
+                                                 FROM $tabla1 as a 
+                                                 JOIN $tabla2 as c on c.siglas = a.carrera 
+                                                 WHERE grupo = :grupo");
+        
         $stmt -> bindParam(":grupo",$data,PDO::PARAM_STR);
 
-        
         //se ejecuta la consulta
         $stmt -> execute();
 
@@ -208,6 +240,22 @@ class CRUDAlumno
             //en caso de no ser asi nos retorna fail
             return "fail";
         }
+
+        //cerramos la conexion
+        $stmt -> close();
+    }
+
+    //modelo para obtener la informacion de los alumnos registrados que tengan grupo
+    public static function optionAlumnosModel($tabla)
+    {
+        //preparamos la consulta
+        $stmt = Conexion::conectar() -> prepare("SELECT * FROM $tabla WHERE grupo IS NOT NULL");
+
+        //se ejecuta la consulta
+        $stmt -> execute();
+
+        //retornamos la informacion de la tabla
+        return $stmt -> fetchAll();
 
         //cerramos la conexion
         $stmt -> close();

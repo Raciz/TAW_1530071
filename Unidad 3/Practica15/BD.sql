@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-07-2018 a las 00:06:16
+-- Tiempo de generación: 31-07-2018 a las 09:34:50
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -32,10 +32,20 @@ USE `CAI`;
 --
 
 CREATE TABLE `actividad` (
-  `id_actividad` int(7) NOT NULL AUTO_INCREMENT,
+  `id_actividad` int(7) NOT NULL,
   `nombre` varchar(20) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `actividad`
+--
+
+INSERT INTO `actividad` (`id_actividad`, `nombre`, `descripcion`) VALUES
+(3, 'BOOK', 'read book'),
+(4, 'PC', 'Work in computer'),
+(5, 'Game', 'Play a game'),
+(6, 'Watch Movie', 'See movie in the room');
 
 -- --------------------------------------------------------
 
@@ -48,16 +58,18 @@ CREATE TABLE `alumno` (
   `nombre` varchar(30) NOT NULL,
   `apellido` varchar(30) NOT NULL,
   `grupo` varchar(7) DEFAULT NULL,
-  `carrera` varchar(7) NOT NULL
+  `carrera` varchar(7) NOT NULL,
+  `img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `alumno`
 --
 
-INSERT INTO `alumno` (`matricula`, `nombre`, `apellido`, `grupo`, `carrera`) VALUES
-(123, 'safsaf', 'asf', 'EN-143', 'ITI'),
-(12323, 'Francisco Isaac', 'Perales Morales', 'EN-122', 'ITI');
+INSERT INTO `alumno` (`matricula`, `nombre`, `apellido`, `grupo`, `carrera`, `img`) VALUES
+(123, 'Miguel Angel', 'Perez Sanchez', 'EN-122', 'ITI', ''),
+(1530061, 'Karla Vanessa', 'Balderrama', 'EN-222', 'PYMES', 'views/media/img/2672018183229avatar-1.jpg'),
+(1530123, 'David', 'Tovias Alanis', 'EN-333', 'MECA', 'views/media/img/2672018183046avatar-3.jpg');
 
 -- --------------------------------------------------------
 
@@ -74,8 +86,28 @@ CREATE TABLE `asistencia` (
   `actividad` int(7) NOT NULL,
   `unidad` int(7) NOT NULL,
   `nivel` int(1) DEFAULT NULL,
-  `teacher` varchar(50) DEFAULT NULL
+  `teacher` varchar(50) DEFAULT NULL,
+  `grupo` varchar(7) NOT NULL,
+  `hora_completa` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`id_asistencia`, `fecha`, `hora_entrada`, `hora_salida`, `alumno`, `actividad`, `unidad`, `nivel`, `teacher`, `grupo`, `hora_completa`) VALUES
+(6, '2018-07-10', '14:39:45', '14:41:30', 1530123, 6, 7, 6, 'Angela Carrizales', 'EN-333', 0),
+(7, '2018-07-10', '14:40:38', '15:41:13', 1530061, 6, 7, 6, 'Angela Carrizales', 'EN-222', 1),
+(8, '2018-07-10', '14:42:09', '15:48:26', 1530123, 5, 7, 6, 'Angela Carrizales', 'EN-333', 1),
+(9, '2018-07-26', '15:40:19', '16:25:17', 1530123, 6, 7, 6, 'Angela Carrizales', 'EN-333', 0),
+(10, '2018-07-26', '15:40:28', '15:42:52', 1530123, 6, 7, 6, 'Angela Carrizales', 'EN-333', 0),
+(11, '2018-07-26', '15:40:28', '15:43:04', 1530123, 6, 7, 6, 'Angela Carrizales', 'EN-333', 0),
+(12, '2018-07-26', '15:40:23', '16:27:12', 1530123, 6, 7, 6, 'Angela Carrizales', 'EN-333', 1),
+(13, '2018-07-26', '15:42:33', '16:27:47', 1530061, 4, 7, 6, 'Angela Carrizales', 'EN-222', 1),
+(14, '2018-07-27', '03:01:28', '16:00:12', 1530061, 4, 7, 6, 'Angela Carrizales', 'EN-222', 1),
+(15, '2018-07-26', '16:00:56', '16:01:05', 1530061, 4, 7, 6, 'Angela Carrizales', 'EN-222', 0),
+(16, '2018-07-26', '16:02:00', '16:02:08', 1530123, 5, 7, 6, 'Angela Carrizales', 'EN-333', 0),
+(17, '2018-07-31', '11:10:53', '11:27:36', 1530061, 5, 7, 4, 'Angela Carrizales', 'EN-222', 0);
 
 -- --------------------------------------------------------
 
@@ -93,7 +125,10 @@ CREATE TABLE `carrera` (
 --
 
 INSERT INTO `carrera` (`siglas`, `nombre`) VALUES
-('ITI', ' Engineering in information technology');
+('ISA', 'Automotive systems engineering'),
+('ITI', ' Engineering in information technology'),
+('MECA', 'Engineering in mechatronics'),
+('PYMES', 'Engineering in management PYMES');
 
 -- --------------------------------------------------------
 
@@ -112,8 +147,11 @@ CREATE TABLE `grupo` (
 --
 
 INSERT INTO `grupo` (`codigo`, `nivel`, `teacher`) VALUES
-('EN-122', 1, 13),
-('EN-143', 3, 15);
+('EN-111', 3, 17),
+('EN-122', 9, 17),
+('EN-143', 3, 15),
+('EN-222', 4, 16),
+('EN-333', 6, 16);
 
 -- --------------------------------------------------------
 
@@ -130,8 +168,9 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher`) VALUES
-(13),
-(15);
+(15),
+(16),
+(17);
 
 -- --------------------------------------------------------
 
@@ -145,6 +184,16 @@ CREATE TABLE `unidad` (
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `unidad`
+--
+
+INSERT INTO `unidad` (`id_unidad`, `nombre`, `fecha_inicio`, `fecha_fin`) VALUES
+(5, 'Unit 1 2018-2', '2018-05-01', '2018-05-31'),
+(6, 'Unit 2 2018-2', '2018-06-01', '2018-06-30'),
+(7, 'Unit 3 2018-2', '2018-07-01', '2018-07-31'),
+(8, 'Unit 4 2018-2', '2018-08-01', '2018-08-31');
 
 -- --------------------------------------------------------
 
@@ -167,8 +216,10 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`num_empleado`, `nombre`, `username`, `password`, `email`, `tipo`) VALUES
 (12, 'Francisco Isaac Perales Morales', 'admin', 'admin', '1530071@upv.edu.mx', 'Administrator'),
-(13, 'Angela Carrizales', 'angie', 'angie', 'angie@upv.edu.mx', 'Teacher'),
-(15, 'Brian Becerra', 'brian', 'brian', 'Brian@Brian.com', 'Teacher');
+(15, 'Brian Becerra', 'brian', 'brian', 'Brian@Brian.com', 'Teacher'),
+(16, 'Angela Carrizales', 'angie', 'angie', 'angel@gmail.com', 'Teacher'),
+(17, 'Talia Caballero', 'talia', 'talis', 'talia@gmail.com', 'Teacher'),
+(18, 'Mario Rodriguez', 'mario', 'mario', 'mario@gmail.com', 'Administrator');
 
 --
 -- Índices para tablas volcadas
@@ -236,16 +287,28 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+  MODIFY `id_actividad` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  MODIFY `id_asistencia` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT de la tabla `unidad`
 --
 ALTER TABLE `unidad`
-  MODIFY `id_unidad` int(7) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_unidad` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `num_empleado` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `num_empleado` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
