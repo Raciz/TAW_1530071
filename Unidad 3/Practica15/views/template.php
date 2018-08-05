@@ -215,8 +215,8 @@ if(!empty($_SESSION["nombre"]))
                                 <li class="dropdown top-menu-item-xs">
                                     <a href="" class="dropdown-toggle menu-right-item profile" data-toggle="dropdown" aria-expanded="true"><img src="views/media/images/users/user1.png" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"><i class="ti-user m-r-10"></i> Profile</a></li>
-                                        <li class="divider"></li>
+                                        <!--<li><a href="javascript:void(0)"><i class="ti-user m-r-10"></i> Profile</a></li>
+                                        <li class="divider"></li>-->
                                         <li><a href="index.php?section=logout"><i class="ti-power-off m-r-10"></i> Logout</a></li>
                                     </ul>
                                 </li>
@@ -344,30 +344,41 @@ if(!empty($_SESSION["nombre"]))
     </body>
 
     <script type="text/javascript">
-        $('#example1').DataTable
-        (
-            {
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
+                var handleDataTableButtons = 
+        function () 
+        {
+            "use strict";
+            0 !== $(".data").length && $(".data").DataTable({
+            dom: "Bfrtip",
+            buttons: 
+                [ 
+                    {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, 
+                    {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, 
+                    {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }
+                ],
+            responsive: !0
+        })
+    },
+    
+    TableManageButtons = function () {
+        "use strict";
+        return {
+            init: function () {
+                handleDataTableButtons()
             }
-        );
+        }
+    }();
 
-        $('.data').DataTable
-        (
-            {
-
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            }
-        );
+        TableManageButtons.init();
 
         $(".select2").select2
         (
@@ -376,7 +387,18 @@ if(!empty($_SESSION["nombre"]))
                 allowClear: true
             }
         );
+        
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {
+            $(".select2").select2
+        (
+            {
+                placeholder: "Choose ...",
+                allowClear: true
+            }
+        );
+        };
     </script>
+    
     <style>
         .repairtext
         {

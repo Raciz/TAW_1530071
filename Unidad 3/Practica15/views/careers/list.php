@@ -55,7 +55,7 @@ if(!empty($_SESSION["mensaje"]))
                 (
                     {
                         title: 'Successful Edited:',
-                        text: 'the information of a race has been edited',
+                        text: 'the information of a career has been edited',
                         type: 'success',
                         confirmButtonText: 'continue',
                         confirmButtonColor: '#4fa7f3'
@@ -75,7 +75,7 @@ if(!empty($_SESSION["mensaje"]))
       <button class="btn btn-rounded btn-success" style="margin-bottom: 10px" data-toggle="modal" data-target="#agregar-modal">Add new</button>
       <div class="table-responsive m-b-20">
         <!--tabla para mostrar las carreras del sistema-->
-        <table id="datatable" class="table">
+        <table class="data table">
           <thead>
             <tr>
               <th>Key</th>

@@ -47,9 +47,10 @@ if(!empty($_SESSION["mensaje"]))
             </script>";
 
     }
+    //si session en mensaje es finalizacion de la hora automatica
     elseif ($_SESSION["mensaje"]=="die")
     {
-
+        //se muestra el sweet alert de finalizacion de la hora automatica
         echo"<script>
                 swal
                 (
@@ -57,6 +58,23 @@ if(!empty($_SESSION["mensaje"]))
                         title: 'Terminated:',
                         text: 'Hour finished',
                         type: 'success',
+                        confirmButtonText: 'Continue',
+                        confirmButtonColor: '#4fa7f3'
+                    }
+                )
+            </script>";
+    }
+    //si session en mensaje de error
+    elseif ($_SESSION["mensaje"]=="error")
+    {
+        //se muestra el sweet alert de error
+        echo"<script>
+                swal
+                (
+                    {
+                        title: 'Error:',
+                        text: 'Something happened',
+                        type: 'error',
                         confirmButtonText: 'Continue',
                         confirmButtonColor: '#4fa7f3'
                     }
@@ -134,7 +152,12 @@ if(!empty($_SESSION["mensaje"]))
                             t1.setHours(t1.getHours() - t2.getHours(), 
                             t1.getMinutes() - t2.getMinutes(), t1.getSeconds() - t2.getSeconds());
                             //tolerancia de 10 minutos
-                            if(t1.getMinutes()<=10 && t1.getHours()==0){
+                            if(t1.getMinutes()<=10 && t1.getHours()==0)
+                            {
+                                if(t1.getMinutes()==0 && t1.getHours()==0 && t1.getSeconds()==0)
+                                {
+                                    window.location.href = "index.php?section=terminar";
+                                }
                                 valor = i;
                                 break;
                             }else{
@@ -143,9 +166,12 @@ if(!empty($_SESSION["mensaje"]))
                         }
                         
                         //si no es una hora valida se deshabilita el boton para agregar
-                        if(valor==-1){
+                        if(valor==-1)
+                        {
                             elementoBoton.disabled = true;
-                        }else{
+                        }
+                        else
+                        {
                             elementoBoton.disabled = false; //y si es una hora valida se habilita
                         }
                         setTimeout(mostrarhora,1000);
@@ -157,7 +183,7 @@ if(!empty($_SESSION["mensaje"]))
             <button id="agregarStudent" class="btn btn-rounded btn-success" style="margin-bottom: 10px"
              data-toggle="modal" data-target="#agregar-modal">Add student</button>
             <div class="table-responsive m-b-20">
-                <table id="example1" class="table">
+                <table class="data table">
                     <thead>
                         <tr>
                             <th>ID</th>

@@ -8,18 +8,18 @@ if(!isset($_SESSION["nombre"]))
           </script>";
 }
 
-//verificamos si se debe mandar a llamar el controller para eliminar un grupo del sistema
+//verificamos si se debe mandar a llamar el controller para finalizar una session
 if(isset($_GET["action"]) && $_GET["action"]=="delete")
 {
     //se crea un objeto de mvcSession
     $delete = new mvcSession();
 
-    //se manda a llamar el controller para eliminar un Grupo
+    //se manda a llamar el controller para eliminar una session
     $delete -> finalizarSessionController();
 }
 ?>
 
-<!-- Modal para eliminar un grupo del sistema -->
+<!-- Modal para eliminar una session-->
 <div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <form id="formDel" action="index.php?section=sessions&action=delete" method="post">
@@ -32,6 +32,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="delete")
 
                     <input type="hidden" id="del" name="del">
                     <input type="hidden" id="completa" name="completa">
+                    <input type="hidden" id="salida" name="salida">
 
                     <div class="form-group">
                         <label class="control-label repairtext">Password</label>
@@ -54,22 +55,17 @@ if(isset($_GET["action"]) && $_GET["action"]=="delete")
     //variable para modificar el formulario
     var form = document.getElementById("formDel");
 
-    //funcion para obtener el id del grupo a eliminar
+    //funcion para obtener el id de la session a terminar
     function idDel(del,horaE)
     {
         //obtenemos el objeto del input hidden
         var input = document.getElementById("del");
 
-        //le asignamos a value del que es el id del grupo a eliminar 
+        //le asignamos a value del que es el id de la session a terminar 
         input.setAttribute("value",del);
 
-        var result = horaCompleta(horaE);
-        
-       //obtenemos el objeto del input hidden
-        var inputCompleta = document.getElementById("completa");
-
-        //le asignamos a value del que es el id del grupo a eliminar 
-        inputCompleta.setAttribute("value",result);
+        //ejecutamos la funcion para saber si es hora completa
+        horaCompleta(horaE);
     }
 
     function horaCompleta(horaE)
@@ -116,17 +112,28 @@ if(isset($_GET["action"]) && $_GET["action"]=="delete")
         t1.setHours(horas, minutos, segundos);
         t2.setHours(hora2[0], hora2[1], hora2[2]);
 
+
         //se obtiene la diferencia entre las dos horas
         t1.setHours(t1.getHours() - t2.getHours(), t1.getMinutes() - t2.getMinutes(), t1.getSeconds() - t2.getSeconds());
 
         var completa = 0;
-        
+
         if(t1.getMinutes()>=45 || t1.getHours() >= 1)
         {
             completa = 1;
         }
 
-        return completa;
+        //obtenemos el objeto del input hidden
+        var inputCompleta = document.getElementById("completa");
+
+        //le asignamos a value completa si es hora completa
+        inputCompleta.setAttribute("value",completa);
+
+        //obtenemos el objeto del input hidden
+        var inputCompleta = document.getElementById("salida");
+
+        //le asignamos a value salida la hora de salida 
+        inputCompleta.setAttribute("value",horas+":"+minutos+":"+segundos);
     }
 
 

@@ -11,7 +11,7 @@ if(!isset($_SESSION["nombre"]))
 //verificamos si se debe llamar al controller para agregar un nuevo alumno
 if(isset($_GET["action"]) && $_GET["action"]=="add")
 {
-    //se crea un objeto de mvcUsuario
+    //se crea un objeto de mvcAlumno
     $add = new mvcAlumno();
 
     //se manda a llamar el controller para agregar un nuevo alumno al sistema
@@ -33,7 +33,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="add")
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label repairtext">ID</label>
-                        <input type="text" class="form-control" name="matricula" placeholder="ID" required>
+                        <input type="number" max="9999999" class="form-control" name="matricula" placeholder="ID" required>
                     </div>
 
                     <div class="form-group">

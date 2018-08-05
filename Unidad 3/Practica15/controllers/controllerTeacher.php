@@ -11,7 +11,7 @@ class mvcTeacher
         //se imprime la informacion de cada uno de los grupos del teacher
         foreach($data as $rows => $row)
         {
-            $size = CRUDAlumno::listadoAlumnoGrupoModel($row["codigo"],"alumno");
+            $size = CRUDAlumno::listadoAlumnoGrupoModel($row["codigo"],"alumno","carrera");
 
             //e imprimimos la informacion de cada uno de los grupos
             echo "<tr class='fondoTabla'>
@@ -131,10 +131,13 @@ class mvcTeacher
         ";
     }
 
-    function idGrupoAlumno(){
-        //se le manda al modelo el nombre de la tabla a mostrar la informacion del alumno
+    //controller para obtener el nombre del grupo de un alumno 
+    function idGrupoAlumno()
+    {
+        //se le manda al modelo el nombre de la tabla a mostrar la informacion del grupo alumno
         $data = CRUDTeacher::dataAlumnoModel($_GET["student"],"alumno");
 
+        //se retorna el nombre del grupo
         return $data["grupo"];
     }
 
